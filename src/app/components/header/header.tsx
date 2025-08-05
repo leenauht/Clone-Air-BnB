@@ -1,16 +1,10 @@
-'use client';
-
 import Link from 'next/link';
 
-import { Logo } from '../icons/Logo';
-// import { usePathname } from 'next/navigation';
-
-import NavAvatarMenu from './NavAvatarMenu';
-import NavItems from './NavItems';
+import { Logo } from '../icons/logo';
+import NavAvatarMenu from './navAvatarMenu';
+import NavItems from './navItems';
 
 export default function Header() {
-  // const pathname = usePathname();
-
   return (
     <nav className="fixed w-full z-[1000] bg-bg-opacity-4 shadow-box-shadow-1">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">

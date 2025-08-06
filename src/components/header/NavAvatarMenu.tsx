@@ -1,17 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
-
-import { ICONS } from '@/app/components/icons/icon';
-import { useOutsideClick } from '@/app/hooks/useClickOutSide';
-
-import DivItem from '../divItem/divItem';
-import DropdownMenu from '../dropdownMenu/dropdownMenu';
+import DivItem from '@components/divItem/divItem';
+import DropdownMenu from '@components/dropdownMenu/dropdownMenu';
+import { ICONS } from '@components/icons/icon';
 
 export default function NavAvatarMenu() {
   const { Account, Login, Menu, Setting, SignCircle } = ICONS;
-  const [open, setOpen] = useState(false);
-  const dropDownRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="relative">

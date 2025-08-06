@@ -1,5 +1,6 @@
-import { ICONS } from '@/app/components/icons/icon';
 import Link from 'next/link';
+
+import { ICONS } from '@components/icons/icon';
 
 const NAV_LIST = [
   { to: '/', name: 'Home', svg: <ICONS.Home width={32} height={32} /> },

@@ -8,7 +8,7 @@ interface IconProps {
 }
 
 export const ICONS = {
-  Home: ({ color, width, height }: IconProps) => (
+  Home: ({ width, height }: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={width}
@@ -21,7 +21,7 @@ export const ICONS = {
       />
     </svg>
   ),
-  Shop: ({ color, width, height }: IconProps) => (
+  Shop: ({ width, height }: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={width}

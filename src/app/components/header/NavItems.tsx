@@ -13,11 +13,11 @@ interface NavItem {
 }
 
 interface RenderNavListProps {
-  NavList: NavItem[];
+  navList: NavItem[];
 }
 
-export function RenderNavList({ NavList }: RenderNavListProps) {
-  return NavList.map((item) => {
+export function NavList({ navList }: RenderNavListProps) {
+  return navList.map((item) => {
     return (
       <li key={item.to}>
         <Link
@@ -38,7 +38,7 @@ export default function NavItems() {
   return (
     <div className="hidden w-full md:block md:w-auto">
       <ul className="font-medium text-white text-lg flex items-center justify-center gap-5">
-        <RenderNavList NavList={NAV_LIST} />
+        <NavList navList={NAV_LIST} />
       </ul>
     </div>
   );

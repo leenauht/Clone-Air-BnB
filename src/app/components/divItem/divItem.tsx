@@ -1,5 +1,10 @@
-export default function DivItem(props) {
-  const { icon, text, fontSize } = props;
+interface DivItemProps {
+  icon: React.ReactNode;
+  text: string;
+  fontSize: number | string;
+}
+
+export default function DivItem({ icon, text, fontSize }: DivItemProps) {
   return (
     <div className="flex items-center gap-2 cursor-pointer hover:text-blue-500 transition duration-300">
       <span>{icon}</span>

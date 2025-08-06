@@ -1,6 +1,6 @@
+import { ICONS } from '@/app/components/icons/icon';
 import Link from 'next/link';
 
-import { Logo } from '../icons/logo';
 import NavAvatarMenu from './navAvatarMenu';
 import NavItems from './navItems';
 
@@ -12,7 +12,7 @@ export default function Header() {
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <Logo color="red" width={102} height={32} text={true} />
+          <ICONS.Logo color="red" width={102} height={32} text={true} />
         </Link>
         <NavItems />
         <NavAvatarMenu />

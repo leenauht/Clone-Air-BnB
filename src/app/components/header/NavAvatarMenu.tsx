@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState } from 'react';
 
 import { ICONS } from '@/app/components/icons/icon';

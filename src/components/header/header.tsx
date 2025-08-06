@@ -1,8 +1,9 @@
-import { ICONS } from '@/app/components/icons/icon';
 import Link from 'next/link';
 
-import NavAvatarMenu from './navAvatarMenu';
-import NavItems from './navItems';
+import { ICONS } from '@components/icons/icon';
+
+import NavAvatarMenu from './NavAvatarMenu';
+import NavItems from './NavItems';
 
 export default function Header() {
   return (

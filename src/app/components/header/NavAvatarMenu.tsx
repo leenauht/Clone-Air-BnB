@@ -8,8 +8,9 @@ import { useOutsideClick } from '@/app/hooks/useClickOutSide';
 import DivItem from '@/components/divItem/divItem';
 import DropdownMenu from '@/components/dropdownMenu/dropdownMenu';
 
+const { Account, Login, Menu, Setting, SignCircle } = ICONS;
+
 export default function NavAvatarMenu() {
-  const { Account, Login, Menu, Setting, SignCircle } = ICONS;
   const [open, setOpen] = useState(false);
   const dropDownMenu = useRef<HTMLDivElement>(null);
 

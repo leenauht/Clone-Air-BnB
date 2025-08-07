@@ -7,7 +7,7 @@ import NavItems from './NavItems';
 
 export default function Header() {
   return (
-    <nav className="fixed w-full z-[1000] bg-bg-opacity-4 shadow-box-shadow-1">
+    <nav className="fixed w-full shadow-box-shadow-1 bg-gray-300">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
         <Link
           href="/"

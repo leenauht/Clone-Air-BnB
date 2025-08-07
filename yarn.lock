@@ -587,6 +587,25 @@
     postcss "^8.4.41"
     tailwindcss "4.1.11"
 
+"@tanstack/eslint-plugin-query@^5.83.1":
+  version "5.83.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.83.1.tgz#1297b2092e27ad83fd1bdc918df84b0b2d76bd46"
+  integrity sha512-tdkpPFfzkTksN9BIlT/qjixSAtKrsW6PUVRwdKWaOcag7DrD1vpki3UzzdfMQGDRGeg1Ue1Dg+rcl5FJGembNg==
+  dependencies:
+    "@typescript-eslint/utils" "^8.37.0"
+
+"@tanstack/query-core@5.83.1":
+  version "5.83.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.83.1.tgz#eed82970b30cb24536f561613b5630e03d349628"
+  integrity sha512-OG69LQgT7jSp+5pPuCfzltq/+7l2xoweggjme9vlbCPa/d7D7zaqv5vN/S82SzSYZ4EDLTxNO1PWrv49RAS64Q==
+
+"@tanstack/react-query@^5.84.1":
+  version "5.84.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.84.1.tgz#de36a13a07d3c38abfef20e215f7c97c66a03947"
+  integrity sha512-zo7EUygcWJMQfFNWDSG7CBhy8irje/XY0RDVKKV4IQJAysb+ZJkkJPcnQi+KboyGUgT+SQebRFoTqLuTtfoDLw==
+  dependencies:
+    "@tanstack/query-core" "5.83.1"
+
 "@trivago/prettier-plugin-sort-imports@^5.2.2":
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/@trivago/prettier-plugin-sort-imports/-/prettier-plugin-sort-imports-5.2.2.tgz#38983f0b83490a0a7d974a6f1e409fb4bf678d02"
@@ -727,7 +746,7 @@
     semver "^7.6.0"
     ts-api-utils "^2.1.0"
 
-"@typescript-eslint/utils@8.39.0":
+"@typescript-eslint/utils@8.39.0", "@typescript-eslint/utils@^8.37.0":
   version "8.39.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.39.0.tgz#dfea42f3c7ec85f9f3e994ff0bba8f3b2f09e220"
   integrity sha512-4GVSvNA0Vx1Ktwvf4sFE+exxJ3QGUorQG1/A5mRfRNZtkBT2xrA/BCO2H0eALx/PnvCS6/vmYwRdDA41EoffkQ==
@@ -3224,3 +3243,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zustand@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.7.tgz#e325364e82c992a84bf386d8445aa7f180c450dc"
+  integrity sha512-Ot6uqHDW/O2VdYsKLLU8GQu8sCOM1LcoE8RwvLv9uuRT9s6SOHCKs0ZEOhxg+I1Ld+A1Q5lwx+UlKXXUoCZITg==

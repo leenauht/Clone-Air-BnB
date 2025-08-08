@@ -1,13 +1,13 @@
 'use client';
 
-import { RoomData, TypeRoomData } from '@/mockupData/roomData';
+import { RoomData } from '@/mockupData/roomData';
 import { FetchData } from '@/services/fetchData';
+import { TypeRoomData } from '@/types/room';
 
 import Room from './room';
 
 export default function RoomList() {
-  const data = FetchData<TypeRoomData>(RoomData);
-  const { data: dataRoom } = data;
+  const { data: dataRoom } = FetchData<TypeRoomData>(RoomData);
 
   return (
     <div className="container mx-auto pt-40 w-full">

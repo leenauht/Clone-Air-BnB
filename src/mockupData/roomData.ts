@@ -1,29 +1,3 @@
-type RoomItem = {
-  banLa: boolean;
-  banUi: boolean;
-  bep: boolean;
-  dieuHoa: boolean;
-  doXe: boolean;
-  giaTien: number;
-  giuong: number;
-  hinhAnh: string;
-  hoBoi: boolean;
-  id: number;
-  khach: number;
-  maViTri: number;
-  mayGiat: boolean;
-  moTa: string;
-  phongNgu: number;
-  phongTam: number;
-  tenPhong: string;
-  tivi: boolean;
-  wifi: boolean;
-};
-
-export type TypeRoomData = {
-  statusCode: number;
-  content: RoomItem[];
-};
 export const RoomData = {
   statusCode: 200,
   content: [

@@ -1,31 +1,5 @@
 import Card from '@/components/card/card';
-
-type RoomItem = {
-  banLa: boolean;
-  banUi: boolean;
-  bep: boolean;
-  dieuHoa: boolean;
-  doXe: boolean;
-  giaTien: number;
-  giuong: number;
-  hinhAnh: string;
-  hoBoi: boolean;
-  id: number;
-  khach: number;
-  maViTri: number;
-  mayGiat: boolean;
-  moTa: string;
-  phongNgu: number;
-  phongTam: number;
-  tenPhong: string;
-  tivi: boolean;
-  wifi: boolean;
-};
-type RoomData = {
-  data: {
-    content: RoomItem[];
-  };
-};
+import { RoomData } from '@/types/room';
 
 export default function Room({ data }: RoomData) {
   console.log('data', data);

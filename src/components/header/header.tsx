@@ -2,12 +2,12 @@ import Link from 'next/link';
 
 import { ICONS } from '@components/icons/icon';
 
-import NavAvatarMenu from './NavAvatarMenu';
-import NavItems from './NavItems';
+import NavAvatarMenu from './navAvatarMenu';
+import NavItems from './navItems';
 
 export default function Header() {
   return (
-    <nav className="fixed w-full z-[1000] bg-bg-opacity-4 shadow-box-shadow-1">
+    <nav className="fixed w-full shadow-box-shadow-1 bg-gray-300">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
         <Link
           href="/"

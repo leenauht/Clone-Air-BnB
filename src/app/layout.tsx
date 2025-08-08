@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import Header from '@components/header/header';
 
 import './globals.css';
+import QueryProvider from './queryProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,10 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="text-base">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header />
-        {children}
+        <QueryProvider>
+          <Header />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-export const FetchData = <Type>(mockupData: Type) => {
+export const FetchData = <Type>(mockupData: Type, key: string) => {
   return useQuery({
-    queryKey: ['repoData'],
+    queryKey: [key],
     queryFn: async () => {
       return mockupData;
     },

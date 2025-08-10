@@ -1,4 +1,4 @@
-export const RoomData = {
+export const MockupRoomData = {
   statusCode: 200,
   content: [
     {

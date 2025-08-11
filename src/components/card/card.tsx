@@ -1,20 +1,23 @@
 import Image from 'next/image';
 
 interface CardProps {
-  width?: number;
-  height?: number;
+  className: string;
+  url: string;
+  contentImg: React.ReactNode;
   children: React.ReactNode;
 }
 
-export default function Card({ children }: CardProps) {
+export default function Card({
+  children,
+  contentImg,
+  className,
+  url,
+}: CardProps) {
   return (
-    <div className="bg-gray-300 text-black rounded-lg overflow-hidden">
+    <div className={`rounded-lg overflow-hidden ${className}`}>
       <div className="relative h-60">
-        <Image
-          src="https://airbnbnew.cybersoft.edu.vn/images/vt6.jpg"
-          alt="room"
-          fill={true}
-        />
+        <Image src={url} alt="room" priority fill={true} />
+        {contentImg}
       </div>
       {children}
     </div>

@@ -3,7 +3,12 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['airbnbnew.cybersoft.edu.vn'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // Cho phép tất cả domain (ít bảo mật hơn)
+      },
+    ],
   },
 };
 

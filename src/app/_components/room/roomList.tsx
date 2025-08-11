@@ -1,16 +1,19 @@
 'use client';
 
-import { MockupRoomData } from '@/mockupData/roomData';
-import { FetchData } from '@/services/fetchData';
-import { TypeRoomData } from '@/types/room';
+import { useLocation } from '@/hooks/useLocation';
+import { useRoom } from '@/hooks/useRoom';
 
-import Room from './room';
+import RoomListContent from './roomListContent';
 
 export default function RoomList() {
-  const { data: dataRoom } = FetchData<TypeRoomData>(MockupRoomData, 'room');
+  const locationData = useLocation();
+  const roomData = useRoom();
+
   return (
     <div className="container mx-auto pt-40 w-full">
-      {dataRoom && <Room data={dataRoom} />}
+      <div className="grid grid-cols-4 gap-5">
+        <RoomListContent locationData={locationData} roomData={roomData} />
+      </div>
     </div>
   );
 }

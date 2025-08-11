@@ -8,11 +8,12 @@ export type LocationItem = {
 
 export type TypeLocationData = {
   statusCode: number;
+  dateTime: string;
   content: LocationItem[];
 };
 
 export type LocationData = {
-  data: {
+  dataLoca: {
     content: LocationItem[];
   };
 };

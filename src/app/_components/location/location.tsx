@@ -4,7 +4,7 @@ import { apiFetch } from '@/services/api';
 import { TypeLocationData } from '@/types/location';
 
 const fetchLocationData = async (): Promise<TypeLocationData> => {
-  return apiFetch('/vi-tri');
+  return apiFetch('https://airbnbnew.cybersoft.edu.vn/api/vi-tri');
 };
 
 export const fetchMockupLocationData = (): Promise<TypeLocationData> => {

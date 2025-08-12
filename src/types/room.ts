@@ -1,3 +1,5 @@
+import { CustomReponseType } from './customReponseType';
+
 export type RoomItem = {
   banLa: boolean;
   banUi: boolean;
@@ -20,13 +22,10 @@ export type RoomItem = {
   wifi: boolean;
 };
 
-export type TypeRoomData = {
-  statusCode: number;
-  content: RoomItem[];
-};
+export type TypeRoomData = CustomReponseType<RoomItem[]>;
 
-export type RoomData = {
-  data: {
-    content: RoomItem[];
-  };
+export const DEFAULT_ROOM_DATA: TypeRoomData = {
+  statusCode: 200,
+  dateTime: '',
+  content: [],
 };

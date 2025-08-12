@@ -9,3 +9,9 @@ export type LocationItem = {
 };
 
 export type TypeLocationData = CustomReponseType<LocationItem[]>;
+
+export const DEFAULT_LOCATION_DATA: TypeLocationData = {
+  statusCode: 200,
+  dateTime: '',
+  content: [],
+};

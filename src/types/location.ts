@@ -1,3 +1,5 @@
+import { CustomReponseType } from './customReponseType';
+
 export type LocationItem = {
   id: number;
   tenViTri: string;
@@ -6,13 +8,4 @@ export type LocationItem = {
   hinhAnh: string;
 };
 
-export type TypeLocationData = {
-  statusCode: number;
-  content: LocationItem[];
-};
-
-export type LocationData = {
-  data: {
-    content: LocationItem[];
-  };
-};
+export type TypeLocationData = CustomReponseType<LocationItem[]>;

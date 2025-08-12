@@ -1,7 +1,11 @@
 import Card from '@/components/card/card';
-import { RoomData } from '@/types/room';
+import { TypeRoomData } from '@/types/room';
 
-export default function Room({ data }: RoomData) {
+interface RoomProps {
+  data: TypeRoomData;
+}
+
+export default function Room({ data }: RoomProps) {
   // const locationData = useQueryCustom({
   //   key: 'location',
   //   url: 'https://airbnbnew.cybersoft.edu.vn/api/vi-tri',

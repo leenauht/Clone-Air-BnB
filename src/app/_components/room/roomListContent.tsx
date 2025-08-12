@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import Card from '@/components/card/card';
 import { ICONS } from '@/components/icons/icon';
@@ -24,12 +24,6 @@ export function IconImg() {
 export function ListRoom({ roomData, locationData }: RenderListContent) {
   const roomContent = roomData?.content;
   const locationContent = locationData?.content;
-  useEffect(() => {
-    if (roomData?.content && locationData?.content) {
-      console.log('locationData', locationData.content);
-      console.log('roomData', roomData.content);
-    }
-  }, [roomData, locationData]);
 
   const findLocation = useMemo(() => {
     return (id: number) =>
@@ -52,7 +46,7 @@ export function ListRoom({ roomData, locationData }: RenderListContent) {
               <BoldTitle className="line-clamp-1 font-medium">
                 {loc.tenViTri} - {loc.tinhThanh} - {loc.quocGia}
               </BoldTitle>
-              <NormalText className="line-clamp-2 text-gray-800 min-h-[3rem]">
+              <NormalText className="line-clamp-2 text-gray-800 min-h-[3rem] flex items-center">
                 {room.tenPhong}
               </NormalText>
               <PriceWithUnit

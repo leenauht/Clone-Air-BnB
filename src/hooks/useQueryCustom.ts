@@ -1,20 +1,21 @@
+import { apiFetch } from '@/services/api';
+
 import { useQuery } from '@tanstack/react-query';
 
 type UseQueryOptions<Type> = {
   key: string;
-  queryFn: () => Promise<Type>;
+  url: string;
   options?: Omit<UseQueryOptions<Type>, 'queryKey' | 'queryFn'>;
 };
 
 export function useQueryCustom<Type>({
   key,
-  queryFn,
+  url,
   options,
 }: UseQueryOptions<Type>) {
-  const { data: dataRes } = useQuery<Type>({
+  return useQuery<Type>({
     queryKey: [key],
-    queryFn,
+    queryFn: () => apiFetch<Type>(url),
     ...options,
   });
-  return dataRes;
 }

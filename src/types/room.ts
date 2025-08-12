@@ -22,6 +22,7 @@ export type RoomItem = {
 
 export type TypeRoomData = {
   statusCode: number;
+  dateTime: string;
   content: RoomItem[];
 };
 

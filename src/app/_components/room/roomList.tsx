@@ -1,16 +1,18 @@
 'use client';
 
-import { MockupRoomData } from '@/mockupData/roomData';
-import { FetchData } from '@/services/fetchData';
-import { TypeRoomData } from '@/types/room';
+import { useQueryCustom } from '@/hooks/useQueryCustom';
 
 import Room from './room';
 
 export default function RoomList() {
-  const { data: dataRoom } = FetchData<TypeRoomData>(MockupRoomData, 'room');
+  const roomData = useQueryCustom<React.ReactNode>({
+    key: 'room',
+    url: 'https://airbnbnew.cybersoft.edu.vn/api/phong-thue',
+  });
+
   return (
     <div className="container mx-auto pt-40 w-full">
-      {dataRoom && <Room data={dataRoom} />}
+      {roomData && <Room data={roomData} />}
     </div>
   );
 }

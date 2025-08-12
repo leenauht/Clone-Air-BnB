@@ -1,11 +1,11 @@
 import Card from '@/components/card/card';
 import { RoomData } from '@/types/room';
 
-import { useLocation } from '../location/location';
-
 export default function Room({ data }: RoomData) {
-  const locationData = useLocation();
-  console.log('locationData', locationData);
+  // const locationData = useQueryCustom({
+  //   key: 'location',
+  //   url: 'https://airbnbnew.cybersoft.edu.vn/api/vi-tri',
+  // });
 
   return (
     <div className="grid grid-cols-4 gap-5">

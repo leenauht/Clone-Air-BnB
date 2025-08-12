@@ -1,19 +1,22 @@
+import { apiFetch } from '@/services/api';
+import { RoomItem } from '@/types/room';
+
 import { useQuery } from '@tanstack/react-query';
 
 type UseQueryOptions<Type> = {
   key: string;
-  queryFn: () => Promise<Type>;
+  url: string;
   options?: Omit<UseQueryOptions<Type>, 'queryKey' | 'queryFn'>;
 };
 
 export function useQueryCustom<Type>({
   key,
-  queryFn,
+  url,
   options,
 }: UseQueryOptions<Type>) {
-  const { data: dataRes } = useQuery<Type>({
+  const { data: dataRes } = useQuery<{ content: RoomItem[] }>({
     queryKey: [key],
-    queryFn,
+    queryFn: () => apiFetch<{ content: RoomItem[] }>(url),
     ...options,
   });
   return dataRes;

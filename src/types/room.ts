@@ -31,3 +31,9 @@ export type RoomData = {
     content: RoomItem[];
   };
 };
+
+export const DEFAULT_ROOM_DATA: TypeRoomData = {
+  statusCode: 200,
+  dateTime: '',
+  content: [],
+};

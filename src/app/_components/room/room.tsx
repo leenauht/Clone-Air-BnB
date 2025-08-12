@@ -6,6 +6,7 @@ export default function Room({ data }: RoomData) {
   //   key: 'location',
   //   url: 'https://airbnbnew.cybersoft.edu.vn/api/vi-tri',
   // });
+  console.log(data);
 
   return (
     <div className="grid grid-cols-4 gap-5">

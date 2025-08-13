@@ -1,29 +1,34 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import Card from '@/components/card/card';
-import { ICONS } from '@/components/icons/icon';
 import BoldTitle from '@/components/text/boldTitle';
 import NormalText from '@/components/text/normalText';
 import PriceWithUnit from '@/components/text/priceWithUnit';
+import { useLikeSore } from '@/store/likeStore';
 import { TypeLocationData } from '@/types/location';
 import { TypeRoomData } from '@/types/room';
+
+import { IconImgCard } from './iconImgCard';
 
 interface RenderListContent {
   roomData?: TypeRoomData;
   locationData?: TypeLocationData;
 }
 
-export function IconImg() {
-  return (
-    <div className="absolute right-2 top-2 flex justify-center items-center">
-      <ICONS.Heart width={24} height={24} />
-    </div>
-  );
-}
-
-export function ListRoom({ roomData, locationData }: RenderListContent) {
+export default function RoomListContent({
+  locationData,
+  roomData,
+}: RenderListContent) {
   const roomContent = roomData?.content;
   const locationContent = locationData?.content;
+
+  const { initLikes } = useLikeSore();
+
+  useEffect(() => {
+    if (roomContent?.length) {
+      initLikes(roomContent.map((room) => room.id));
+    }
+  }, [roomContent, initLikes]);
 
   const findLocation = useMemo(() => {
     return (id: number) =>
@@ -32,15 +37,13 @@ export function ListRoom({ roomData, locationData }: RenderListContent) {
 
   return roomContent?.map((room) => {
     const loc = findLocation(room.maViTri);
-
     return (
       <div key={room.id} className={`${loc === undefined ? 'hidden' : ''}`}>
         {loc && (
           <Card
-            key={room.id}
-            className="shadow-shadow1 bg-gray-100"
+            className="cursor-pointer shadow-shadow3 hover:shadow-shadow2 transition duration-200"
             url={loc?.hinhAnh}
-            contentImg={<IconImg />}
+            contentImg={<IconImgCard id={room.id} />}
           >
             <div className="p-4 space-y-2">
               <BoldTitle className="line-clamp-1 font-medium">
@@ -60,11 +63,4 @@ export function ListRoom({ roomData, locationData }: RenderListContent) {
       </div>
     );
   });
-}
-
-export default function RoomListContent({
-  locationData,
-  roomData,
-}: RenderListContent) {
-  return <ListRoom locationData={locationData} roomData={roomData} />;
 }

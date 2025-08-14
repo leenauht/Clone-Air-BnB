@@ -4,5 +4,5 @@ type BoldTitleProps = {
 };
 
 export default function BoldTitle({ children, className }: BoldTitleProps) {
-  return <p className={`font-medium ${className || ''}`}>{children}</p>;
+  return <div className={`font-medium ${className || ''}`}>{children}</div>;
 }

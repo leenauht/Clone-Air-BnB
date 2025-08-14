@@ -14,10 +14,16 @@ export default function Card({
   url,
 }: CardProps) {
   return (
-    <div className={`rounded-lg overflow-hidden ${className}`}>
-      <div className="relative h-60">
-        <Image src={url} alt="room" priority fill={true} />
-        {contentImg}
+    <div className={className}>
+      <div className="relative aspect-[16/9]">
+        <Image
+          src={url}
+          alt="room"
+          priority
+          fill={true}
+          className="object-cover"
+        />
+        s{contentImg}
       </div>
       {children}
     </div>

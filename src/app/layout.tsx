@@ -27,8 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="text-base">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen gap-20 overflow-y-auto`}
+      >
         <QueryProvider>
           <Header />
           {children}

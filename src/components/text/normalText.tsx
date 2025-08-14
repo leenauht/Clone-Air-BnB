@@ -4,7 +4,5 @@ type NormalTextProps = {
 };
 
 export default function NormalText({ children, className }: NormalTextProps) {
-  return (
-    <p className={`font-normal text-base ${className || ''}`}>{children}</p>
-  );
+  return <div className={`font-normal ${className || ''}`}>{children}</div>;
 }

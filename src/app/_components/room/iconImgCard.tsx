@@ -6,8 +6,9 @@ interface IconImgCardProps {
 }
 
 export function IconImgCard({ id }: IconImgCardProps) {
-  const { likes, toggleLike } = useLikeSore();
-  const isLiked = likes.some((item) => item.id === id && item.isLike);
+  const { toggleLike, isLiked } = useLikeSore();
+  const liked = isLiked(id);
+
   return (
     <div
       onClick={() => toggleLike(id)}
@@ -16,9 +17,7 @@ export function IconImgCard({ id }: IconImgCardProps) {
       <ICONS.Heart
         width={24}
         height={24}
-        color={`${
-          isLiked === true ? 'rgba(255, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.7)'
-        }`}
+        color={`${liked ? 'rgba(255, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.7)'}`}
       />
     </div>
   );

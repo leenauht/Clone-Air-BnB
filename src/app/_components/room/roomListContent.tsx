@@ -1,10 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import Card from '@/components/card/card';
 import BoldTitle from '@/components/text/boldTitle';
 import NormalText from '@/components/text/normalText';
 import PriceWithUnit from '@/components/text/priceWithUnit';
-import { useLikeSore } from '@/store/likeStore';
 import { TypeLocationData } from '@/types/location';
 import { TypeRoomData } from '@/types/room';
 
@@ -21,14 +20,6 @@ export default function RoomListContent({
 }: RenderListContent) {
   const roomContent = roomData?.content;
   const locationContent = locationData?.content;
-
-  const { initLikes } = useLikeSore();
-
-  useEffect(() => {
-    if (roomContent?.length) {
-      initLikes(roomContent.map((room) => room.id));
-    }
-  }, [roomContent, initLikes]);
 
   const findLocation = useMemo(() => {
     return (id: number) =>

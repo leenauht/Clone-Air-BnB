@@ -156,29 +156,41 @@ export const ICONS = {
       )}
     </svg>
   ),
-  Heart: ({ width, height, color }: IconProps) => {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 32 32"
-        aria-hidden="true"
-        role="presentation"
-        focusable="false"
-        width={width}
-        height={height}
-        style={{
-          display: 'block',
-          fill: `${color ? color : 'rgba(255, 0, 0, 0.9)'}`,
-          stroke: 'var(--linaria-theme_palette-icon-primary-inverse)',
-          strokeWidth: 2,
-          overflow: 'visible',
-        }}
-      >
-        <path
-          stroke="#fff"
-          d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"
-        />
-      </svg>
-    );
-  },
+  Heart: ({ width, height, color }: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 30 30"
+      aria-hidden="true"
+      role="presentation"
+      focusable="false"
+      width={width}
+      height={height}
+      style={{
+        display: 'block',
+        fill: color,
+        stroke: 'var(--linaria-theme_palette-icon-primary-inverse)',
+        strokeWidth: 2,
+        overflow: 'visible',
+      }}
+    >
+      <path
+        stroke="#fff"
+        d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"
+      />
+    </svg>
+  ),
+  Close: ({ width, height }: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 1024 1024"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M799.855 166.312c.023.007.043.018.084.059l57.69 57.69c.041.041.052.06.059.084a.118.118 0 0 1 0 .069c-.007.023-.018.042-.059.083L569.926 512l287.703 287.703c.041.04.052.06.059.083a.118.118 0 0 1 0 .07c-.007.022-.018.042-.059.083l-57.69 57.69c-.041.041-.06.052-.084.059a.118.118 0 0 1-.069 0c-.023-.007-.042-.018-.083-.059L512 569.926L224.297 857.629c-.04.041-.06.052-.083.059a.118.118 0 0 1-.07 0c-.022-.007-.042-.018-.083-.059l-57.69-57.69c-.041-.041-.052-.06-.059-.084a.118.118 0 0 1 0-.069c.007-.023.018-.042.059-.083L454.073 512L166.371 224.297c-.041-.04-.052-.06-.059-.083a.118.118 0 0 1 0-.07c.007-.022.018-.042.059-.083l57.69-57.69c.041-.041.06-.052.084-.059a.118.118 0 0 1 .069 0c.023.007.042.018.083.059L512 454.073l287.703-287.702c.04-.041.06-.052.083-.059a.118.118 0 0 1 .07 0Z"
+      />
+    </svg>
+  ),
 };

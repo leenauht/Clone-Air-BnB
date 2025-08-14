@@ -1,9 +1,9 @@
 import Image from 'next/image';
 
 interface CardProps {
-  className: string;
+  className?: string;
   url: string;
-  contentImg: React.ReactNode;
+  contentImg?: React.ReactNode;
   children: React.ReactNode;
 }
 

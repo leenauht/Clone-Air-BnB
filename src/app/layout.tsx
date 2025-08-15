@@ -6,6 +6,8 @@ import Header from '@components/header/header';
 import './globals.css';
 import QueryProvider from './queryProvider';
 
+// import Register from './register/register';
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -27,8 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="text-base">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen gap-20 overflow-y-auto`}
+      >
         <QueryProvider>
           <Header />
           {children}

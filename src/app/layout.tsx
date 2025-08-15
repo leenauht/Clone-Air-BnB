@@ -6,6 +6,8 @@ import Header from '@components/header/header';
 import './globals.css';
 import QueryProvider from './queryProvider';
 
+// import Register from './register/register';
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],

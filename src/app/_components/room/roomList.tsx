@@ -18,7 +18,7 @@ export default function RoomList() {
   });
 
   return (
-    <div className="w-full mx-auto px-4 sm:px-6 xl:px-0 max-w-7xl">
+    <div className="w-full mx-auto px-4 sm:px-6 max-w-7xl">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-5 md:gap-4 xl:gap-5">
         <RoomListContent
           locationData={locationData ?? DEFAULT_LOCATION_DATA}

@@ -37,7 +37,7 @@ export default function Modal({
         className="w-[90%] xl:w-1/3 h-auto px-4 shadow-shadow3 bg-white rounded-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex justify-end items-center">
+        <div className="flex justify-end items-center mb-5">
           {title && (
             <CustomText
               heading="p"

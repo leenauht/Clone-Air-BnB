@@ -24,7 +24,7 @@
   --shadow-shadow3:
     0 3px 12px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
   /* ---------------------------------------- */
-  --label-width: 5rem;
+  --label-width: 6rem;
 }
 
 body {
@@ -34,4 +34,13 @@ body {
 code,
 pre {
   font-family: var(--font-mono);
+}
+
+form .formItem::before {
+  display: block;
+  margin-inline-end: 4px;
+  color: #ff4d4f;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  content: '*';
 }

@@ -3,15 +3,21 @@ import { useLikeSore } from '@/store/likeStore';
 
 interface IconImgCardProps {
   id: number;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
-export function IconImgCard({ id }: IconImgCardProps) {
+export function IconImgCard({ id, onClick }: IconImgCardProps) {
   const { toggleLike, isLiked } = useLikeSore();
   const liked = isLiked(id);
 
   return (
     <div
-      onClick={() => toggleLike(id)}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        toggleLike(id);
+        onClick?.(e);
+      }}
       className="absolute right-2 top-2 flex justify-center items-center cursor-pointer hover:scale-110 transition duration-300"
     >
       <ICONS.Heart

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import Card from '@/components/card/card';
+import { ROUTES } from '@/components/constants/constants';
 import CustomText from '@/components/text/customText';
 import PriceWithUnit from '@/components/text/priceWithUnit';
 import { TypeLocationData } from '@/types/location';
@@ -31,7 +32,7 @@ export default function RoomListContent({
     const address = `${loc?.tenViTri} - ${loc?.tinhThanh} - ${loc?.quocGia}`;
     return (
       <Link
-        href="/roomDetail"
+        href={ROUTES.ROOM_DETAIL}
         key={room.id}
         className={`${loc === undefined ? 'hidden' : ''}`}
       >
@@ -39,7 +40,15 @@ export default function RoomListContent({
           <Card
             className="cursor-pointer shadow-shadow3 hover:shadow-shadow2 transition duration-300 rounded-lg overflow-hidden"
             url={loc?.hinhAnh}
-            contentImg={<IconImgCard id={room.id} />}
+            contentImg={
+              <IconImgCard
+                id={room.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+              />
+            }
           >
             <div className="p-4">
               <CustomText

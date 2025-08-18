@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 import { ICONS } from '@components/icons/icon';
 
-import NavAvatarMenu from './navAvatarMenu';
-import NavItems from './navItems';
+import NavAvatarMenu from './NavAvatarMenu';
+import NavItems from './NavItems';
 
 export default function Header() {
   return (

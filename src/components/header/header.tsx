@@ -2,12 +2,12 @@ import Link from 'next/link';
 
 import { ICONS } from '@components/icons/icon';
 
-import NavAvatarMenu from './NavAvatarMenu';
-import NavItems from './NavItems';
+import NavAvatarMenu from './navAvatarMenu';
+import NavItems from './navItems';
 
 export default function Header() {
   return (
-    <nav className="sticky top-0 shadow-shadow3 bg-white z-10">
+    <header className="sticky top-0 shadow-shadow3 bg-white z-10">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
         <Link
           href="/"
@@ -18,6 +18,6 @@ export default function Header() {
         <NavItems />
         <NavAvatarMenu />
       </div>
-    </nav>
+    </header>
   );
 }

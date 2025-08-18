@@ -11,12 +11,12 @@ import RoomListContentSkeleton from './roomSkeleton';
 export default function RoomList() {
   const { data: roomData, isLoading } = useQueryCustom<TypeRoomData>({
     key: 'room',
-    url: API_URL.RENTAL_ROOM,
+    url: `${API_URL}/phong-thue`,
   });
 
   const { data: locationData } = useQueryCustom<TypeLocationData>({
     key: 'location',
-    url: API_URL.ROOM_LOCATION,
+    url: `${API_URL}/vi-tri`,
   });
 
   return (

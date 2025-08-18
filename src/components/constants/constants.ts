@@ -3,10 +3,7 @@ export const ROUTES = {
   ROOM_DETAIL: '/roomDetail',
 };
 
-export const API_URL = {
-  RENTAL_ROOM: 'https://airbnbnew.cybersoft.edu.vn/api/phong-thue',
-  ROOM_LOCATION: 'https://airbnbnew.cybersoft.edu.vn/api/vi-tri',
-};
+export const API_URL = 'https://airbnbnew.cybersoft.edu.vn/api';
 
 export const API_TOKEN = {
   TOKEN_CYBERSOFT:

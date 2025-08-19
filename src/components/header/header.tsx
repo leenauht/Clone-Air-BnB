@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 import { ICONS } from '@components/icons/icon';
 
-import NavAvatarMenu from './navAvatarMenu';
-import NavItems from './navItems';
+import HeaderAvatarMenu from './headerAvatarMenu';
+import NavItems from './headerItems';
 
 export default function Header() {
   return (
@@ -16,7 +16,7 @@ export default function Header() {
           <ICONS.Logo color="red" width={102} height={32} text={true} />
         </Link>
         <NavItems />
-        <NavAvatarMenu />
+        <HeaderAvatarMenu />
       </div>
     </header>
   );

@@ -34,15 +34,15 @@ export default function Modal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[90%] xl:w-1/3 h-auto px-4 shadow-shadow3 bg-white rounded-xl overflow-hidden"
+        className="w-[90%] xl:w-1/3 h-auto px-5 pb-6 shadow-shadow3 bg-white rounded-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex justify-end items-center mb-5">
+        <div className="flex justify-end items-center mb-4">
           {title && (
             <CustomText
               heading="p"
               bold
-              className="flex-1 h-10 justify-center items-center flex text-xl"
+              className="flex-1 h-12 justify-center items-center flex text-xl"
             >
               {title}
             </CustomText>
@@ -55,7 +55,7 @@ export default function Modal({
           </button>
         </div>
         {/* Body */}
-        <div>{children}</div>
+        {children}
       </div>
     </div>
   );

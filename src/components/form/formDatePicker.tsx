@@ -18,16 +18,14 @@ export default function FormDatePicker({
   const [dateValue, setDateValue] = useState(value ?? '');
 
   return (
-    <div className="flex gap-2 items-center">
-      <div className="basis-[var(--label-width)] shrink-0">
-        <label className="formItem flex items-center p-1.5 font-medium">
+    <div>
+      <div className="flex items-center">
+        <label
+          htmlFor={name}
+          className="label-required label-colon basis-[var(--label-width)] shrink-0 flex items-center p-1.5 font-medium"
+        >
           {label}
-          <span className="font-normal">:</span>
         </label>
-        <p className="min-h-[20px]"></p>
-      </div>
-
-      <div className="relative">
         <input
           id={name}
           name={name}
@@ -39,8 +37,8 @@ export default function FormDatePicker({
             onChange(e.target.value);
           }}
         />
-        <p className="min-h-[20px] text-red-500 text-sm">{error ?? ''}</p>
       </div>
+      <p className="min-h-[20px] text-red-500 text-sm">{error ?? ''}</p>
     </div>
   );
 }

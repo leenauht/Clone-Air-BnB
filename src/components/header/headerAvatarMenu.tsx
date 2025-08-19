@@ -10,7 +10,7 @@ import { useOutsideClick } from '@/hooks/useClickOutSide';
 
 const { Account, Login, Menu, Setting } = ICONS;
 
-export default function NavAvatarMenu() {
+export default function HeaderAvatarMenu() {
   const [open, setOpen] = useState(false);
   const dropDownMenu = useRef<HTMLDivElement>(null);
 

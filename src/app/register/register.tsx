@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import Button from '@/components/button/button';
 import DivItem from '@/components/divItem/divItem';
 import FormDatePicker from '@/components/form/formDatePicker';
 import FormItem from '@/components/form/formItem';
@@ -14,7 +15,7 @@ import { validateFiled } from './validateFiled';
 
 export default function Register() {
   const [open, setOpen] = useState(false);
-  const [formInput, setFormInput] = useState({
+  const [form, setForm] = useState({
     username: '',
     email: '',
     password: '',
@@ -24,13 +25,18 @@ export default function Register() {
   });
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
-  const [errors, setErrors] = useState<Partial<typeof formInput>>({});
+  const [errors, setErrors] = useState<Partial<typeof form>>({});
 
   const handleChange = (name: string, value: string) => {
-    setFormInput((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
 
     const errorMgs = validateFiled(name, value);
     setErrors((prev) => ({ ...prev, [name]: errorMgs }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('form submit', form);
   };
 
   return (
@@ -42,33 +48,30 @@ export default function Register() {
         className="text-sm"
       />
       <Modal isOpen={open} onClose={() => setOpen(false)} title="Sign up">
-        <form className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <FormItem
-            // horizontal={true}
+            horizontal={true}
             label="Username"
             name="username"
-            value={formInput.username}
+            value={form.username}
             onChange={handleChange}
             error={errors.username}
-            placeholder="Input username"
           />
           <FormItem
             horizontal={true}
             label="Email"
             name="email"
-            value={formInput.email}
+            value={form.email}
             onChange={handleChange}
             error={errors.email}
-            placeholder="Input email"
           />
           <FormItem
             horizontal={true}
             label="Password"
             name="password"
-            value={formInput.password}
+            value={form.password}
             onChange={handleChange}
             error={errors.password}
-            placeholder="Input password"
           />
 
           <FormItem
@@ -76,10 +79,9 @@ export default function Register() {
             type="number"
             label="Phone"
             name="phone"
-            value={formInput.phone}
+            value={form.phone}
             onChange={handleChange}
             error={errors.phone}
-            placeholder="Input phone"
           />
           <FormRadio
             label="Gender"
@@ -101,6 +103,9 @@ export default function Register() {
             onChange={setDob}
             error={errors.dob}
           />
+          <Button type="submit" className="w-full">
+            Continue
+          </Button>
         </form>
       </Modal>
     </>

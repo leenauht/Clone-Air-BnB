@@ -2,8 +2,7 @@ export const ROUTES = {
   HOME: '/',
   ROOM_DETAIL: '/roomDetail',
 };
-
-export const API_URL = 'https://airbnbnew.cybersoft.edu.vn/api';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const API_TOKEN = {
   TOKEN_CYBERSOFT:

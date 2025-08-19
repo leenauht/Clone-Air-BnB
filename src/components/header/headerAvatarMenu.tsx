@@ -2,14 +2,15 @@
 
 import { useRef, useState } from 'react';
 
+import Register from '@/app/register/register';
 import DivItem from '@/components/divItem/divItem';
 import DropdownMenu from '@/components/dropdownMenu/dropdownMenu';
 import { ICONS } from '@/components/icons/icon';
 import { useOutsideClick } from '@/hooks/useClickOutSide';
 
-const { Account, Login, Menu, Setting, SignCircle } = ICONS;
+const { Account, Login, Menu, Setting } = ICONS;
 
-export default function NavAvatarMenu() {
+export default function HeaderAvatarMenu() {
   const [open, setOpen] = useState(false);
   const dropDownMenu = useRef<HTMLDivElement>(null);
 
@@ -33,17 +34,13 @@ export default function NavAvatarMenu() {
           <DivItem
             icon={<Login width={20} height={20} />}
             text="Đăng nhập"
-            fontSize={14}
+            className="text-sm"
           />
-          <DivItem
-            icon={<SignCircle width={20} height={20} />}
-            text="Đăng ký"
-            fontSize={14}
-          />
+          <Register />
           <DivItem
             icon={<Setting width={20} height={20} />}
             text="Cài đặt"
-            fontSize={14}
+            className="text-sm"
           />
         </DropdownMenu>
       )}

@@ -1,21 +1,15 @@
 import { apiFetch } from '@/services/api';
 
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions } from '@tanstack/react-query';
 
-type UseQueryOptions<Type> = {
+type CustomQueryOptions = {
   key: string;
   url: string;
-  options?: Omit<UseQueryOptions<Type>, 'queryKey' | 'queryFn'>;
 };
 
-export function useQueryCustom<Type>({
-  key,
-  url,
-  options,
-}: UseQueryOptions<Type>) {
-  return useQuery<Type>({
+export function useQueryCustomOptions<T>({ key, url }: CustomQueryOptions) {
+  return queryOptions<T>({
     queryKey: [key],
-    queryFn: () => apiFetch<Type>(url),
-    ...options,
+    queryFn: () => apiFetch<T>(url),
   });
 }

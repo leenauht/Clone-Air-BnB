@@ -23,7 +23,7 @@ export default function Card({
           fill={true}
           className="object-cover"
         />
-        s{contentImg}
+        {contentImg}
       </div>
       {children}
     </div>

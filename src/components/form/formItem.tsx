@@ -1,11 +1,12 @@
+import { FormField } from '@/app/register/validateFiled';
 import clsx from 'clsx';
 
 interface FormItemProps {
   label: string;
-  name: string;
+  name: FormField;
   type?: string;
-  value: string | number;
-  onChange: (name: string, value: string) => void;
+  value: string;
+  onChange: (name: FormField, value: string) => void;
   error?: string;
   placeholder?: string;
   horizontal?: boolean;
@@ -21,13 +22,18 @@ export default function FormItem({
   horizontal,
 }: FormItemProps) {
   return (
-    <div className={clsx(horizontal && 'flex')}>
-      <div className="basis-[var(--label-width)] shrink-0">
+    <div
+      className={clsx(
+        'space-y-1',
+        horizontal && 'flex flex-col sm:flex-row sm:gap-1',
+      )}
+    >
+      <div className="sm:basis-[var(--label-width)] shrink-0">
         <label
           htmlFor={name}
           className={clsx(
-            'label-required flex items-center p-1.5 font-medium',
-            horizontal && 'label-colon',
+            'label-required flex items-center font-medium',
+            horizontal && 'sm:p-1.5 label-colon',
           )}
         >
           {label}
@@ -45,7 +51,9 @@ export default function FormItem({
             error ? 'border-red-500' : 'border-gray-300'
           }`}
         />
-        <p className="min-h-[20px] text-red-500 text-sm">{error ?? ''}</p>
+        <p className="min-h-[20px] text-red-500 text-sm mt-0.5">
+          {error ?? ''}
+        </p>
       </div>
     </div>
   );

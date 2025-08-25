@@ -1,29 +1,38 @@
-export const validateFiled = (name: string, value: string): string => {
-  let error = '';
+export type FormField =
+  | 'name'
+  | 'email'
+  | 'password'
+  | 'phone'
+  | 'gender'
+  | 'birthday'
+  | 'role';
+
+export const validateFiled = (name: FormField, value: string): string => {
+  const requiredMsgs: Record<FormField, string> = {
+    name: 'Username is required',
+    email: 'Email is required',
+    password: 'Password is required',
+    phone: 'Phone is required',
+    gender: 'Gender is required',
+    birthday: 'Date of birth is required',
+    role: '',
+  };
+
+  if (!value) return requiredMsgs[name];
 
   switch (name) {
-    case 'username':
-      if (!value) error = 'Username is required';
-      break;
     case 'email':
-      if (!value) error = 'Email is required';
-      else if (!/\S+@\S+\.\S+/.test(value)) error = 'Invalid email format';
+      if (!/\S+@\S+\.\S+/.test(value)) return 'Invalid email format';
       break;
+
     case 'password':
-      if (!value) error = 'Password is required';
-      else if (value.length < 6) error = 'Password must be at least 6 chars';
+      if (value.length < 6) return 'Password must be at least 6 chars';
       break;
+
     case 'phone':
-      if (!value) error = 'Phone is required';
-      else if (!/^\d{10}$/.test(value)) error = 'Phone must be 10 digits';
-      break;
-    case 'gender':
-      if (!value) error = 'Gender is required';
-      break;
-    case 'dob':
-      if (!value) error = 'Date of birth is required';
+      if (!/^\d{10}$/.test(value)) return 'Phone must be 10 digits';
       break;
   }
 
-  return error;
+  return '';
 };

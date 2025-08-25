@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Toaster } from 'sonner';
 
 import Header from '@components/header/header';
 
@@ -21,6 +22,19 @@ export default function RootLayout({
         <QueryProvider>
           <Header />
           {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                width: 'max-content',
+                minWidth: '150px',
+                minHeight: '60px',
+                padding: '16px',
+                borderRadius: '8px',
+                fontSize: '16px',
+              },
+            }}
+          />
         </QueryProvider>
       </body>
     </html>

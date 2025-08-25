@@ -1,3 +1,6 @@
+import { FormField } from '@/app/register/validateFiled';
+import clsx from 'clsx';
+
 interface RadioOption {
   label: string;
   value: string;
@@ -5,11 +8,12 @@ interface RadioOption {
 
 interface FormRadioProps {
   label: string;
-  name: string;
+  name: FormField;
   value: string;
   options: RadioOption[];
-  onChange: (value: string) => void;
+  onChange: (name: FormField, value: string) => void;
   error?: string;
+  horizontal?: boolean;
 }
 
 export default function FormRadio({
@@ -19,37 +23,51 @@ export default function FormRadio({
   options,
   onChange,
   error,
+  horizontal,
 }: FormRadioProps) {
   return (
-    <div className="flex items-center">
-      <div className="basis-[var(--label-width)] shrink-0">
+    <div
+      className={clsx(
+        'space-y-1',
+        horizontal && 'flex flex-col sm:flex-row sm:gap-1',
+      )}
+    >
+      <div className="sm:basis-[var(--label-width)] shrink-0">
         <label
           htmlFor={name}
-          className="label-required label-colon flex items-center p-1.5 font-medium"
+          className={clsx(
+            'label-required flex items-center font-medium',
+            horizontal && 'sm:p-1.5 label-colon',
+          )}
         >
           {label}
         </label>
       </div>
 
-      <div className="flex w-full gap-5">
-        {options.map((opt) => (
-          <label
-            key={opt.value}
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            <input
-              type="radio"
-              name={name}
-              value={opt.value}
-              checked={value === opt.value}
-              onChange={() => onChange(opt.value)}
-              className="accent-blue-500 cursor-pointer translate-y-[1px]"
-            />
-            <span className="leading-none align-middle">{opt.label}</span>
-          </label>
-        ))}
+      <div className="w-full">
+        <div className="flex gap-5">
+          {options.map((opt) => (
+            <label
+              key={opt.value}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name={name}
+                value={opt.value}
+                checked={value === opt.value}
+                onChange={() => onChange(name, opt.value)}
+                className="accent-blue-500 cursor-pointer translate-y-[1px]"
+              />
+              <span className="leading-6 align-middle">{opt.label}</span>
+            </label>
+          ))}
+        </div>
+
+        <p className="min-h-[20px] text-red-500 text-sm mt-0.5">
+          {error ?? ''}
+        </p>
       </div>
-      <p className="min-h-[20px] text-red-500 text-sm">{error ?? ''}</p>
     </div>
   );
 }

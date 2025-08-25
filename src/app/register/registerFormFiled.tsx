@@ -51,13 +51,6 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         horizontal={true}
         label="Gender"
         name="gender"
-        value={form.gender}
-        options={[
-          { label: 'Male', value: 'true' },
-          { label: 'Female', value: 'false' },
-          { label: 'Female', value: 'false' },
-        ]}
-        onChange={onChange}
         error={errors.gender}
       />
 

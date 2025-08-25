@@ -3,47 +3,59 @@
 import { useRef, useState } from 'react';
 
 import Register from '@/app/register/register';
-import DivItem from '@/components/divItem/divItem';
-import DropdownMenu from '@/components/dropdownMenu/dropdownMenu';
 import { ICONS } from '@/components/icons/icon';
 import { useOutsideClick } from '@/hooks/useClickOutSide';
 
-const { Account, Login, Menu, Setting } = ICONS;
+import Dropdown from '../dropdown/dropdown';
+
+const { Account, Login, Menu, Setting, SignCircle } = ICONS;
+const OPTIONS_DROPDOWN = [
+  {
+    label: 'Sign in',
+    value: 'sign in',
+    prefix: <Login width={20} height={20} />,
+  },
+  {
+    label:
+      'Sign up Phòng sang trọng với ban công tại D.1 - 200m đến Bitexco Phòng sang trọng với ban công tại D.1 - 200m đến Bitexco',
+    value: 'sign up',
+    prefix: <SignCircle width={20} height={20} />,
+  },
+  {
+    label: 'Settings',
+    value: 'settings',
+    prefix: <Setting width={20} height={20} />,
+  },
+];
 
 export default function HeaderAvatarMenu() {
   const [open, setOpen] = useState(false);
   const dropDownMenu = useRef<HTMLDivElement>(null);
+  const [openRegister, setOpenRegister] = useState(false);
 
   useOutsideClick(dropDownMenu, () => {
     if (open) setOpen(false);
   });
 
   return (
-    <div className="relative" ref={dropDownMenu}>
-      <div
-        onClick={() => setOpen(!open)}
-        className="flex justify-center items-center gap-2 py-1 px-5 border rounded-full cursor-pointer"
-      >
-        <Menu />
-        <Account width={40} height={40} color="gray" />
-      </div>
-
-      {/* Dropdown menu */}
-      {open && (
-        <DropdownMenu>
-          <DivItem
-            icon={<Login width={20} height={20} />}
-            text="Đăng nhập"
-            className="text-sm"
-          />
-          <Register />
-          <DivItem
-            icon={<Setting width={20} height={20} />}
-            text="Cài đặt"
-            className="text-sm"
-          />
-        </DropdownMenu>
+    <>
+      <Dropdown
+        className="border hover:border-blue-500 rounded-full py-1 px-5"
+        trigger={
+          <>
+            <Menu />
+            <Account width={40} height={40} color="gray" />
+          </>
+        }
+        isChevronDown
+        options={OPTIONS_DROPDOWN}
+        onChange={(val) => {
+          if (val === 'sign up') setOpenRegister(true);
+        }}
+      />
+      {openRegister && (
+        <Register open={openRegister} onClose={() => setOpenRegister(false)} />
       )}
-    </div>
+    </>
   );
 }

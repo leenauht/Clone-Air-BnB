@@ -21,6 +21,48 @@ interface DropdownProps {
   isChevronDown?: boolean;
 }
 
+function dropdownMenu({
+  open,
+  options,
+  value,
+  onChange,
+  setOpen,
+}: {
+  open: boolean;
+  options: DropdownOption[];
+  value?: string;
+  onChange: (value: string) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const liClassName = clsx(
+    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-50',
+  );
+
+  if (!open) return null;
+  return (
+    <ul className="absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden min-w-full max-w-sm">
+      {options.map(({ value: val, prefix, label, subfix }, idx) => (
+        <li
+          key={value}
+          className={clsx(
+            liClassName,
+            value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
+            idx !== options.length - 1 && 'border-b border-gray-300',
+          )}
+          onClick={() => {
+            onChange(val);
+            setOpen(false);
+          }}
+        >
+          <span>{prefix}</span>
+          <span className="flex-1 break-words line-clamp-3">{label}</span>
+          <span>{subfix}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function Dropdown({
   label,
   trigger,
@@ -66,32 +108,7 @@ export default function Dropdown({
       </div>
 
       {/* Dropdown */}
-      {open && (
-        <ul className="absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden min-w-full max-w-sm">
-          {options.map((opt, idx) => (
-            <li
-              key={opt.value}
-              className={clsx(
-                'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-50',
-                value === opt.value
-                  ? 'text-blue-600 font-medium'
-                  : 'text-gray-700',
-                idx !== options.length - 1 && 'border-b border-gray-300',
-              )}
-              onClick={() => {
-                onChange(opt.value);
-                setOpen(false);
-              }}
-            >
-              <span>{opt.prefix}</span>
-              <span className="flex-1 break-words line-clamp-3">
-                {opt.label}
-              </span>
-              <span>{opt.subfix}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      {dropdownMenu({ open, options, value, onChange, setOpen })}
     </div>
   );
 }

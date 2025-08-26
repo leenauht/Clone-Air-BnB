@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FormField } from '@/app/register/validateFiled';
+import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 
 import Dropdown from '../dropdown/dropdown';

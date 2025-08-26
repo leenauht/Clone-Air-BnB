@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 
-import Register from '@/app/register/register';
+import Register from '@/app/_components/register/register';
 import { ICONS } from '@/components/icons/icon';
 import { useOutsideClick } from '@/hooks/useClickOutSide';
 

@@ -21,7 +21,7 @@ interface DropdownProps {
   isChevronDown?: boolean;
 }
 
-function dropdownMenu({
+export function DropdownMenu({
   open,
   options,
   value,
@@ -108,7 +108,13 @@ export default function Dropdown({
       </div>
 
       {/* Dropdown */}
-      {dropdownMenu({ open, options, value, onChange, setOpen })}
+      <DropdownMenu
+        open={open}
+        options={options}
+        value={value}
+        onChange={onChange}
+        setOpen={setOpen}
+      />
     </div>
   );
 }

@@ -26,8 +26,12 @@ const INITIAL_FORM: FormData = {
   role: 'user',
 };
 
-export default function Register() {
-  const [open, setOpen] = useState(false);
+interface RegisterProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function Register({ open, onClose }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
@@ -69,20 +73,22 @@ export default function Register() {
   const resetForm = () => {
     setForm({ ...INITIAL_FORM });
     setErrors({});
-    setOpen(false);
+    onClose();
     setLoading(false);
   };
 
   return (
     <>
-      <DivItem
-        onClick={() => setOpen(true)}
-        icon={<ICONS.SignCircle width={20} height={20} />}
-        text="Sign up"
-        className="text-sm"
-      />
+      {!open ? (
+        <DivItem
+          prefix={<ICONS.SignCircle width={20} height={20} />}
+          text="Sign up"
+          className="text-sm"
+        />
+      ) : null}
+
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="space-y-1 sm:space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-0.5 sm:space-y-2">
           <RegisterFormFiled
             form={form}
             errors={errors}

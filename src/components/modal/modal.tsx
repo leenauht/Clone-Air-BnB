@@ -34,7 +34,7 @@ export default function Modal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[90%] sm:w-2/3 md:w-3/5 lg:w-2/5 xl:w-1/3 h-auto px-5 pb-6 shadow-shadow3 bg-white rounded-xl overflow-hidden"
+        className="w-full h-full sm:h-auto sm:w-2/3 md:w-3/5 lg:w-2/5 xl:w-1/3 px-5 pb-6 shadow-shadow3 bg-white sm:rounded-xl overflow-hidden"
       >
         {/* Header */}
         <div className="flex justify-end items-center mb-4">

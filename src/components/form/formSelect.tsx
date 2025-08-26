@@ -19,6 +19,7 @@ export default function FormSelect({
   horizontal,
 }: FormSelectProps) {
   const [gender, setGender] = useState('');
+  console.log('gender', gender);
 
   return (
     <div
@@ -38,10 +39,13 @@ export default function FormSelect({
           {label}
         </label>
       </div>
-      <div className="">
+      <div>
         <Dropdown
           value={gender}
-          className="w-full p-1.5 border rounded-lg hover:border-blue-400"
+          className={clsx(
+            'w-full p-1.5 border border-gray-300 rounded-lg hover:border-blue-300',
+            gender && 'bg-[#e8f0fe]',
+          )}
           options={[
             { label: 'Male', value: 'true' },
             { label: 'Female', value: 'false' },

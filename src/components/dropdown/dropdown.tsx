@@ -43,7 +43,7 @@ function dropdownMenu({
     <ul className="absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden min-w-full max-w-sm">
       {options.map(({ value: val, prefix, label, subfix }, idx) => (
         <li
-          key={value}
+          key={val}
           className={clsx(
             liClassName,
             value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
@@ -86,7 +86,7 @@ export default function Dropdown({
       className={clsx('relative inline-block text-left', className)}
     >
       <div
-        className="flex items-center justify-center gap-2 cursor-pointer hover:border-blue-500"
+        className="flex items-center justify-between gap-2 cursor-pointer hover:border-blue-500"
         onClick={() => setOpen(!open)}
       >
         {trigger ? (

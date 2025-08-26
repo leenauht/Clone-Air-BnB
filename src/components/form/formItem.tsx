@@ -24,7 +24,7 @@ export default function FormItem({
   return (
     <div
       className={clsx(
-        'space-y-1',
+        'md:space-y-0.5',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >
@@ -47,7 +47,7 @@ export default function FormItem({
           value={value}
           onChange={(e) => onChange(name, e.target.value.trim())}
           placeholder={!placeholder ? `Input ${name}` : placeholder}
-          className={`w-full border p-1.5 rounded-lg focus:outline-none ${
+          className={`w-full border p-1.5 rounded-lg focus:outline-none focus:border-blue-300 ${
             error ? 'border-red-500' : 'border-gray-300'
           }`}
         />

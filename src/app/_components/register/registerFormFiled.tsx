@@ -14,7 +14,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
   return (
     <>
       <FormItem
-        horizontal={true}
+        // horizontal={true}
         label="Username"
         name="name"
         value={form.name}
@@ -22,7 +22,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         error={errors.name}
       />
       <FormItem
-        horizontal={true}
+        // horizontal={true}
         label="Email"
         name="email"
         value={form.email}

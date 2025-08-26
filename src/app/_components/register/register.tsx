@@ -88,7 +88,7 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="space-y-1 sm:space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-0.5 sm:space-y-2">
           <RegisterFormFiled
             form={form}
             errors={errors}

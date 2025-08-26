@@ -1,4 +1,4 @@
-import { FormField } from '@/app/register/validateFiled';
+import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 
 interface FormItemProps {

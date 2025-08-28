@@ -12,14 +12,16 @@
     "prettier-fix": "prettier --write --ignore-unknown ."
   },
   "dependencies": {
+    "@floating-ui/react": "^0.27.16",
     "@tailwindcss/postcss": "^4.1.11",
     "@tanstack/react-query": "^5.84.1",
     "@tanstack/react-query-devtools": "^5.85.5",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.540.0",
+    "lucide-react": "^0.541.0",
     "next": "15.4.5",
     "postcss": "^8.5.6",
     "react": "19.1.0",
+    "react-day-picker": "^9.9.0",
     "react-dom": "19.1.0",
     "sonner": "^2.0.7",
     "tailwindcss": "^4.1.11",
@@ -40,6 +42,7 @@
     "eslint-plugin-prettier": "^5.5.3",
     "lefthook": "^1.12.2",
     "prettier": "^3.6.2",
+    "tw-animate-css": "^1.3.7",
     "typescript": "^5"
   }
 }

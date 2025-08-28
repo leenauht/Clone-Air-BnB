@@ -20,8 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex flex-col min-h-screen gap-20 overflow-y-auto">
         <QueryProvider>
-          <Header />
           {children}
+          <Header />
           <Toaster
             position="top-right"
             toastOptions={{

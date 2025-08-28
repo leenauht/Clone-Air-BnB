@@ -11,9 +11,9 @@ interface ButtonProps {
 }
 
 const typeClasses: Record<TypeVariant, string> = {
-  primary: 'bg-blue-600 text-white hover:bg-blue-700',
-  secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
-  danger: 'bg-red-600 text-white hover:bg-red-700',
+  primary: 'bg-blue-600 text-white hover:opacity-70',
+  secondary: 'bg-gray-600 text-white hover:opacity-70',
+  danger: 'bg-red-600 text-white hover:opacity-70',
 };
 
 export default function Button({
@@ -25,7 +25,7 @@ export default function Button({
   onClick,
 }: ButtonProps) {
   const baseStyle =
-    'px-4 py-2 rounded-lg font-medium transition-colors duration-300 shadow cursor-pointer';
+    'px-4 py-2 rounded-lg font-medium transition duration-300 shadow cursor-pointer';
   return (
     <button
       type={type}

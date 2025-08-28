@@ -6,8 +6,8 @@ import Button from '@/components/button/button';
 import { API_URL } from '@/components/constants/constants';
 import DivItem from '@/components/divItem/divItem';
 import Modal from '@/components/modal/modal';
-import { toastSuccess } from '@/helper/toastHelper';
-import { apiFetch } from '@/services/api';
+import { toastError, toastSuccess } from '@/helper/toastHelper';
+import { ApiError, apiFetch } from '@/services/api';
 import { User } from '@/types/user';
 
 import { ICONS } from '@components/icons/icon';
@@ -63,12 +63,25 @@ export default function Register({ open, onClose }: RegisterProps) {
         toastSuccess('Đăng ký thành công 🎉');
         resetForm();
       }
-    } catch (error) {
-      console.error('Signup failed:', error);
+    } catch (error: unknown) {
+      if (isApiError(error)) {
+        toastError(`❌ ${error.content}`);
+      } else {
+        toastError('❌ Unknown error');
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  function isApiError(error: unknown): error is ApiError {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'statusCode' in error &&
+      'message' in error
+    );
+  }
 
   const resetForm = () => {
     setForm({ ...INITIAL_FORM });
@@ -88,16 +101,18 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="space-y-0.5 sm:space-y-2">
-          <RegisterFormFiled
-            form={form}
-            errors={errors}
-            onChange={handleChange}
-          />
+        <form onSubmit={handleSubmit} className="px-5 py-6">
+          <div className="sm:max-h-[70vh] overflow-y-auto space-y-0.5 sm:space-y-2">
+            <RegisterFormFiled
+              form={form}
+              errors={errors}
+              onChange={handleChange}
+            />
+          </div>
           <Button
             disabled={loading}
             type="submit"
-            className="w-full mt-4 flex justify-center"
+            className="w-full mt-8 flex justify-center"
           >
             {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
           </Button>

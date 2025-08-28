@@ -4,43 +4,35 @@ import { useOutsideClick } from '@/hooks/useClickOutSide';
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 
-interface DropdownOption {
-  label: string;
-  value: string;
-  prefix?: React.ReactNode;
-  subfix?: React.ReactNode;
-}
-
-interface DropdownProps {
-  label?: string;
-  trigger?: React.ReactNode;
-  options: DropdownOption[];
-  value?: string;
-  onChange: (value: string) => void;
-  className?: string;
-  isChevronDown?: boolean;
-}
+import { DropdownOption, DropdownProps } from './typeDropdown';
 
 export function DropdownMenu({
   open,
   options,
   value,
+  className,
   onChange,
   setOpen,
 }: {
   open: boolean;
   options: DropdownOption[];
   value?: string;
+  className?: string;
   onChange: (value: string) => void;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const liClassName = clsx(
-    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-50',
+    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-100',
   );
 
   if (!open) return null;
   return (
-    <ul className="absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden min-w-full max-w-sm">
+    <ul
+      className={clsx(
+        'absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden border border-gray-300 z-1',
+        className ? className : 'w-max max-w-60 sm:max-w-md lg:max-w-xl',
+      )}
+    >
       {options.map(({ value: val, prefix, label, subfix }, idx) => (
         <li
           key={val}
@@ -55,7 +47,9 @@ export function DropdownMenu({
           }}
         >
           <span>{prefix}</span>
-          <span className="flex-1 break-words line-clamp-3">{label}</span>
+          <span className="flex-1 break-words line-clamp-2" title={label}>
+            {label}
+          </span>
           <span>{subfix}</span>
         </li>
       ))}
@@ -70,19 +64,20 @@ export default function Dropdown({
   value,
   onChange,
   className,
+  clsDropdownMenu,
   isChevronDown,
 }: DropdownProps) {
   const [open, setOpen] = useState(false);
   const selected = options.find((opt) => opt.value === value) || null;
-  const dropdownCustom = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useOutsideClick(dropdownCustom, () => {
+  useOutsideClick(dropdownRef, () => {
     if (open) setOpen(false);
   });
 
   return (
     <div
-      ref={dropdownCustom}
+      ref={dropdownRef}
       className={clsx('relative inline-block text-left', className)}
     >
       <div
@@ -114,6 +109,7 @@ export default function Dropdown({
         value={value}
         onChange={onChange}
         setOpen={setOpen}
+        className={clsDropdownMenu}
       />
     </div>
   );

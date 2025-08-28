@@ -16,8 +16,7 @@ const OPTIONS_DROPDOWN = [
     prefix: <Login width={20} height={20} />,
   },
   {
-    label:
-      'Sign up Phòng sang trọng với ban công tại D.1 - 200m đến Bitexco Phòng sang trọng với ban công tại D.1 - 200m đến Bitexco',
+    label: 'Sign up',
     value: 'sign up',
     prefix: <SignCircle width={20} height={20} />,
   },
@@ -40,6 +39,7 @@ export default function HeaderAvatarMenu() {
   return (
     <>
       <Dropdown
+        value=""
         className="border hover:border-blue-500 rounded-full py-1 px-5"
         trigger={
           <>

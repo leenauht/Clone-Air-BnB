@@ -37,7 +37,6 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         onChange={onChange}
         error={errors.password}
       />
-
       <FormItem
         horizontal={true}
         type="number"
@@ -51,9 +50,10 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         horizontal={true}
         label="Gender"
         name="gender"
+        value={form.gender}
+        onChange={onChange}
         error={errors.gender}
       />
-
       <FormDatePicker
         horizontal={true}
         label="Birthday"

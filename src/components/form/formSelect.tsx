@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 
@@ -8,6 +6,8 @@ import Dropdown from '../dropdown/dropdown';
 interface FormSelectProps {
   label: string;
   name: FormField;
+  value: string;
+  onChange: (name: FormField, value: string) => void;
   error?: string;
   horizontal?: boolean;
 }
@@ -15,16 +15,15 @@ interface FormSelectProps {
 export default function FormSelect({
   label,
   name,
+  value,
+  onChange,
   error,
   horizontal,
 }: FormSelectProps) {
-  const [gender, setGender] = useState('');
-  console.log('gender', gender);
-
   return (
     <div
       className={clsx(
-        'space-y-1',
+        'space-y-1 pr-2.5',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >
@@ -39,18 +38,19 @@ export default function FormSelect({
           {label}
         </label>
       </div>
-      <div>
+      <div className="w-full">
         <Dropdown
-          value={gender}
+          value={value}
           className={clsx(
             'w-full p-1.5 border border-gray-300 rounded-lg hover:border-blue-300',
-            gender && 'bg-[#e8f0fe]',
+            value && 'bg-[#e8f0fe]',
           )}
+          clsDropdownMenu="w-full"
           options={[
             { label: 'Male', value: 'true' },
             { label: 'Female', value: 'false' },
           ]}
-          onChange={(val) => setGender(val)}
+          onChange={(val) => onChange(name, val)}
         />
         <p className="min-h-[20px] text-red-500 text-sm mt-0.5">
           {error ?? ''}

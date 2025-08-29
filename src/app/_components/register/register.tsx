@@ -101,21 +101,23 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="px-5 py-6">
-          <div className="max-h-[90vh] sm:max-h-[70vh] overflow-y-auto space-y-0.5 sm:space-y-2">
+        <form onSubmit={handleSubmit} className="">
+          <div className="max-h-[90vh] sm:max-h-[50vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-b border-gray-200">
             <RegisterFormFiled
               form={form}
               errors={errors}
               onChange={handleChange}
             />
           </div>
-          <Button
-            disabled={loading}
-            type="submit"
-            className="w-full mt-8 flex justify-center"
-          >
-            {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
-          </Button>
+          <div className="py-5 px-8">
+            <Button
+              disabled={loading}
+              type="submit"
+              className="w-full flex justify-center !rounded-full"
+            >
+              {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
+            </Button>
+          </div>
         </form>
       </Modal>
     </>

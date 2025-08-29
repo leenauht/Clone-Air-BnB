@@ -83,7 +83,7 @@ export default function CustomDatePicker({
       {open && (
         <div
           ref={ref}
-          className="mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg"
+          className="mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-shadow4"
         >
           <DayPicker
             mode={mode}

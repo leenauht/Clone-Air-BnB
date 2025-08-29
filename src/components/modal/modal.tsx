@@ -54,10 +54,10 @@ export default function Modal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full h-full sm:h-auto sm:w-2/3 md:w-3/5 lg:w-2/5 xl:w-1/3 shadow-shadow3 bg-white sm:rounded-xl overflow-hidden"
+        className="w-full sm:h-auto sm:w-2/3 md:w-3/5 lg:w-2/5 xl:w-1/3 shadow-shadow3 bg-white sm:rounded-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex justify-end items-center px-4 py-2 border-gray-300 border-b">
+        <div className="flex justify-end items-center px-4 py-2 border-gray-200 border-b">
           {title && (
             <CustomText
               heading="p"

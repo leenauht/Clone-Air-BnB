@@ -25,33 +25,35 @@ export function DropdownMenu({
 
   if (!open) return null;
   return (
-    <ul
-      className={clsx(
-        'absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden border border-gray-300 z-1',
-        className ? className : 'w-max max-w-60 sm:max-w-md lg:max-w-xl',
-      )}
-    >
-      {options.map(({ value: val, prefix, label, subfix }, idx) => (
-        <li
-          key={val}
-          className={clsx(
-            liClassName,
-            value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
-            idx !== options.length - 1 && 'border-b border-gray-300',
-          )}
-          onClick={() => {
-            onChange(val);
-            setOpen(false);
-          }}
-        >
-          <span>{prefix}</span>
-          <span className="flex-1 break-words line-clamp-2" title={label}>
-            {label}
-          </span>
-          <span>{subfix}</span>
-        </li>
-      ))}
-    </ul>
+    <div className="absolute right-0 z-1 w-full mt-2.5">
+      <ul
+        className={clsx(
+          'mb-2.5 shadow-shadow3 rounded-lg bg-white overflow-hidden border border-gray-300',
+          className ? className : 'w-max max-w-60 sm:max-w-md lg:max-w-xl',
+        )}
+      >
+        {options.map(({ value: val, prefix, label, subfix }, idx) => (
+          <li
+            key={val}
+            className={clsx(
+              liClassName,
+              value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
+              idx !== options.length - 1 && 'border-b border-gray-300',
+            )}
+            onClick={() => {
+              onChange(val);
+              setOpen(false);
+            }}
+          >
+            <span>{prefix}</span>
+            <span className="flex-1 break-words line-clamp-2" title={label}>
+              {label}
+            </span>
+            <span>{subfix}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

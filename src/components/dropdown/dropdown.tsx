@@ -1,6 +1,4 @@
-import { useRef, useState } from 'react';
-
-import { useOutsideClick } from '@/hooks/useClickOutSide';
+import { usePopup } from '@/hooks/usePopup';
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 
@@ -58,6 +56,7 @@ export function DropdownMenu({
 }
 
 export default function Dropdown({
+  id,
   label,
   trigger,
   options,
@@ -67,22 +66,22 @@ export default function Dropdown({
   clsDropdownMenu,
   isChevronDown,
 }: DropdownProps) {
-  const [open, setOpen] = useState(false);
   const selected = options.find((opt) => opt.value === value) || null;
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useOutsideClick(dropdownRef, () => {
-    if (open) setOpen(false);
-  });
+  const { open, togglePopup, ref, setOpen } = usePopup<HTMLDivElement>(id);
 
   return (
     <div
-      ref={dropdownRef}
-      className={clsx('relative inline-block text-left', className)}
+      tabIndex={0}
+      ref={ref}
+      id={id}
+      className={clsx(
+        'relative inline-block text-left focus:outline-none focus:border-blue-300',
+        className,
+      )}
     >
       <div
+        onClick={togglePopup}
         className="flex items-center justify-between gap-2 cursor-pointer hover:border-blue-500"
-        onClick={() => setOpen(!open)}
       >
         {trigger ? (
           trigger

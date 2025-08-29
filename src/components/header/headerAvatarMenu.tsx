@@ -39,7 +39,7 @@ export default function HeaderAvatarMenu() {
   return (
     <>
       <Dropdown
-        value=""
+        id="headerAvatarMenu"
         className="border hover:border-blue-500 rounded-full py-1 px-5"
         trigger={
           <>

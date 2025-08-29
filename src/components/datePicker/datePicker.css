@@ -1,3 +1,31 @@
+.rdp {
+  width: 100% !important; /* calendar wrapper */
+}
+
+.rdp-months {
+  width: 100% !important; /* khối chứa các tháng */
+  justify-content: center; /* căn giữa */
+}
+
+.rdp-month {
+  flex: 1; /* cho tháng tự co giãn */
+  width: 100% !important;
+}
+
+.rdp-month_grid {
+  margin: 0px !important;
+  width: 100% !important;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.rdp-day_button {
+  height: 32px;
+  width: 32px;
+  margin: auto;
+}
+
+/* css action */
 .rdp-month_caption {
   padding: 0 20px;
   border-bottom: 1px solid #6b7280;

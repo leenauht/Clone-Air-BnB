@@ -1,6 +1,4 @@
-import { useRef, useState } from 'react';
-
-import { useOutsideClick } from '@/hooks/useClickOutSide';
+import { usePopup } from '@/hooks/usePopup';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
@@ -12,6 +10,7 @@ import './datePicker.css';
 import { CustomDatePickerProps, DateRange } from './typeDatePicker';
 
 export default function CustomDatePicker({
+  id,
   mode = 'single',
   value,
   onChange,
@@ -20,10 +19,7 @@ export default function CustomDatePicker({
   onReset,
   error,
 }: CustomDatePickerProps) {
-  const [open, setOpen] = useState(false);
-  const datepickerRef = useRef<HTMLDivElement>(null);
-
-  useOutsideClick(datepickerRef, () => setOpen(false));
+  const { open, togglePopup, ref, closePopup } = usePopup<HTMLDivElement>(id);
 
   const handleSelect = (val: Date | DateRange | undefined) => {
     if (mode === 'range') {
@@ -35,14 +31,14 @@ export default function CustomDatePicker({
         rangeVal?.to &&
         rangeVal.from.getTime() !== rangeVal.to.getTime()
       ) {
-        setOpen(false);
+        closePopup();
       }
     }
 
     if (mode === 'single') {
       const dateVal = val as Date | undefined;
       (onChange as (value: Date | undefined) => void)?.(dateVal);
-      setOpen(false);
+      closePopup();
     }
   };
 
@@ -66,14 +62,16 @@ export default function CustomDatePicker({
   };
 
   return (
-    <div ref={datepickerRef}>
+    <div className="w-full">
       {label && <div className="mb-1 text-sm font-medium">{label}</div>}
 
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={togglePopup}
         className={clsx(
-          'w-full hover:border-blue-300 rounded-lg border border-gray-300 px-3 py-1.5 flex items-center justify-between cursor-pointer',
+          'w-full hover:border-blue-300 rounded-lg border px-3 py-1.5 transition duration-300',
+          'flex items-center justify-between cursor-pointer focus:outline-none focus:border-blue-300',
+          error ? 'border-red-500' : 'border-gray-300',
           value && 'bg-[#e8f0fe]',
         )}
       >
@@ -83,7 +81,10 @@ export default function CustomDatePicker({
       <p className="min-h-[20px] text-red-500 text-sm mt-0.5">{error ?? ''}</p>
 
       {open && (
-        <div className="mt-2 rounded-lg border border-gray-300 bg-white shadow-lg">
+        <div
+          ref={ref}
+          className="mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg"
+        >
           <DayPicker
             mode={mode}
             selected={value as undefined}
@@ -99,7 +100,7 @@ export default function CustomDatePicker({
               Reset
             </Button>
             <Button
-              onClick={() => setOpen(false)}
+              onClick={() => closePopup()}
               className="!px-3 !py-1 text-sm"
               variant="danger"
             >

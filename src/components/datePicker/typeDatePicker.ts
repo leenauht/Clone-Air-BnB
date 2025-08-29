@@ -2,6 +2,7 @@ export type DateRange = { from?: Date; to?: Date };
 
 export type CustomDatePickerProps =
   | {
+      id: string;
       mode?: 'single';
       value?: Date;
       onChange?: (value: Date | undefined) => void;
@@ -11,6 +12,7 @@ export type CustomDatePickerProps =
       error?: string;
     }
   | {
+      id: string;
       mode: 'range';
       value?: DateRange;
       onChange?: (value: DateRange | undefined) => void;

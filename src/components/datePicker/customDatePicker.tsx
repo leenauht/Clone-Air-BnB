@@ -27,9 +27,8 @@ export function RenderLabel(props: {
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
-  const { id, mode, value, onChange, label, placeholder, onReset, error } =
-    props;
-  const { open, togglePopup, ref, closePopup } = usePopup<HTMLDivElement>(id);
+  const { mode, value, onChange, label, placeholder, onReset, error } = props;
+  const { open, togglePopup, ref } = usePopup<HTMLDivElement>();
 
   const handleSelect = (val: Date | DateRange | undefined) => {
     if (!val) return;
@@ -43,7 +42,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
         (val as DateRange).to &&
         (val as DateRange).from?.getTime() !==
           (val as DateRange).to?.getTime());
-    if (shouldClose) closePopup();
+    if (shouldClose) togglePopup();
   };
 
   return (
@@ -95,7 +94,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
               Reset
             </Button>
             <Button
-              onClick={() => closePopup()}
+              onClick={() => togglePopup()}
               className="!px-3 !py-1 text-sm"
               variant="danger"
             >

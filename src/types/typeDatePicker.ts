@@ -2,7 +2,6 @@ import { DateRange } from 'react-day-picker';
 
 export type CustomDatePickerProps =
   | {
-      id: string;
       mode: 'single';
       value?: Date;
       onChange?: (value: Date | undefined) => void;
@@ -12,7 +11,6 @@ export type CustomDatePickerProps =
       error?: string;
     }
   | {
-      id: string;
       mode: 'range';
       value?: DateRange;
       onChange?: (value: DateRange | undefined) => void;

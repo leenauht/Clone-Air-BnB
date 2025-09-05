@@ -10,14 +10,12 @@ export function DropdownMenu({
   value,
   className,
   onChange,
-  setOpen,
 }: {
   open: boolean;
   options: DropdownOption[];
   value?: string;
   className?: string;
   onChange: (value: string) => void;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const liClassName = clsx(
     'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-100',
@@ -40,10 +38,7 @@ export function DropdownMenu({
               value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
               idx !== options.length - 1 && 'border-b border-gray-300',
             )}
-            onClick={() => {
-              onChange(val);
-              setOpen(false);
-            }}
+            onClick={() => onChange(val)}
           >
             <span>{prefix}</span>
             <span className="flex-1 break-words line-clamp-2" title={label}>
@@ -58,7 +53,6 @@ export function DropdownMenu({
 }
 
 export default function Dropdown({
-  id,
   label,
   trigger,
   options,
@@ -69,13 +63,12 @@ export default function Dropdown({
   isChevronDown,
 }: DropdownProps) {
   const selected = options.find((opt) => opt.value === value) || null;
-  const { open, togglePopup, ref, setOpen } = usePopup<HTMLDivElement>(id);
+  const { open, togglePopup, ref } = usePopup<HTMLDivElement>();
 
   return (
     <div
       tabIndex={0}
       ref={ref}
-      id={id}
       className={clsx(
         'relative inline-block text-left focus:outline-none focus:border-blue-300',
         className,
@@ -108,8 +101,10 @@ export default function Dropdown({
         open={open}
         options={options}
         value={value}
-        onChange={onChange}
-        setOpen={setOpen}
+        onChange={(val) => {
+          onChange(val);
+          togglePopup();
+        }}
         className={clsDropdownMenu}
       />
     </div>

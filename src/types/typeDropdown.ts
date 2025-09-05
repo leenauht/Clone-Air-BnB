@@ -6,7 +6,6 @@ export interface DropdownOption {
 }
 
 export interface DropdownProps {
-  id: string;
   label?: string;
   trigger?: React.ReactNode;
   options: DropdownOption[];

@@ -18,7 +18,7 @@ export function DropdownMenu({
   onChange: (value: string) => void;
 }) {
   const liClassName = clsx(
-    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-100',
+    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-100 hover:text-blue-500',
   );
 
   if (!open) return null;
@@ -30,7 +30,7 @@ export function DropdownMenu({
           className ? className : 'w-max max-w-60 sm:max-w-md lg:max-w-xl',
         )}
       >
-        {options.map(({ value: val, prefix, label, subfix }, idx) => (
+        {options.map(({ value: val, prefix, label, subfix, color }, idx) => (
           <li
             key={val}
             className={clsx(
@@ -41,7 +41,7 @@ export function DropdownMenu({
             onClick={() => onChange(val)}
           >
             <span>{prefix}</span>
-            <span className="flex-1 break-words line-clamp-2" title={label}>
+            <span className="flex-1 break-words line-clamp-2" style={{ color }}>
               {label}
             </span>
             <span>{subfix}</span>
@@ -81,7 +81,7 @@ export default function Dropdown({
         {trigger ? (
           trigger
         ) : (
-          <span className={clsx(selected ? 'text-gray-900' : 'text-gray-400')}>
+          <span className={clsx(selected ? 'text-gray-900' : 'text-gray-500')}>
             {selected ? selected.label : label || 'Select Option'}
           </span>
         )}

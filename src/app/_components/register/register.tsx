@@ -29,9 +29,10 @@ const INITIAL_FORM: FormData = {
 interface RegisterProps {
   open: boolean;
   onClose: () => void;
+  signIn: () => void;
 }
 
-export default function Register({ open, onClose }: RegisterProps) {
+export default function Register({ open, onClose, signIn }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
@@ -101,19 +102,24 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit}>
           <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-b border-gray-200">
             <RegisterFormFiled
               form={form}
               errors={errors}
               onChange={handleChange}
             />
+            <p className="text-right">
+              <Button variant="link" onClick={signIn} className="text-sm">
+                Sign in now.
+              </Button>
+            </p>
           </div>
           <div className="py-5 px-8">
             <Button
               disabled={loading}
               type="submit"
-              className="w-full flex justify-center !rounded-full"
+              className="w-full flex justify-center !rounded-full py-2 px-4"
             >
               {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
             </Button>

@@ -1,4 +1,4 @@
-type TypeVariant = 'primary' | 'secondary' | 'danger';
+type TypeVariant = 'primary' | 'secondary' | 'danger' | 'light' | 'link';
 type TypeButton = 'button' | 'submit' | 'reset';
 
 interface ButtonProps {
@@ -11,9 +11,11 @@ interface ButtonProps {
 }
 
 const typeClasses: Record<TypeVariant, string> = {
-  primary: 'bg-blue-600 text-white hover:opacity-70',
-  secondary: 'bg-gray-600 text-white hover:opacity-70',
+  primary: 'bg-blue-600 text-white hover:opacity-80',
+  secondary: 'bg-gray-600 text-white hover:opacity-80',
   danger: 'bg-red-600 text-white hover:opacity-70',
+  light: 'bg-white text-black hover:opacity-70',
+  link: 'bg-transparent text-blue-600 underline hover:text-blue-800 shadow-none',
 };
 
 export default function Button({
@@ -25,7 +27,7 @@ export default function Button({
   onClick,
 }: ButtonProps) {
   const baseStyle =
-    'px-4 py-2 rounded-lg font-medium transition duration-300 shadow cursor-pointer';
+    'rounded-lg font-medium transition duration-300 cursor-pointer';
   return (
     <button
       type={type}

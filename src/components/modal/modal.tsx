@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
 import { useCreatePortal } from '@/hooks/useCreatePortal';
+import { X } from 'lucide-react';
 
-import { ICONS } from '@components/icons/icon';
-
+import Button from '../button/button';
 import CustomText from '../text/customText';
 import './style.css';
 
@@ -64,12 +64,13 @@ export default function Modal({
               {title}
             </CustomText>
           )}
-          <button
+          <Button
+            variant="light"
             onClick={handleRemoveClass}
-            className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+            className="p-1 !rounded-full hover:bg-gray-300 hover:opacity-100"
           >
-            <ICONS.Close width={16} height={16} />
-          </button>
+            <X className="w-5 h-5" />
+          </Button>
         </div>
         {/* Body */}
         {children}

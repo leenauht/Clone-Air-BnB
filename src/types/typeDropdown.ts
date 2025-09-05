@@ -3,6 +3,7 @@ export interface DropdownOption {
   value: string;
   prefix?: React.ReactNode;
   subfix?: React.ReactNode;
+  color?: string;
 }
 
 export interface DropdownProps {

@@ -40,7 +40,6 @@ export default function FormSelect({
       </div>
       <div className="w-full">
         <Dropdown
-          id={name}
           value={value}
           className={clsx(
             'w-full p-1.5 border rounded-lg hover:border-blue-300 transition duration-300',

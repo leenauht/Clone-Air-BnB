@@ -44,7 +44,6 @@ export default function FormDatePicker({
 
       <div className="w-full">
         <CustomDatePicker
-          id={name}
           error={error}
           mode="single"
           placeholder="Select date"

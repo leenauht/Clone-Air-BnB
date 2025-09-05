@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 
-import { createPortal } from 'react-dom';
+import { useCreatePortal } from '@/hooks/useCreatePortal';
 
 import { ICONS } from '@components/icons/icon';
 
 import CustomText from '../text/customText';
+import './style.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -19,6 +20,8 @@ export default function Modal({
   isOpen,
   onClose,
 }: ModalProps) {
+  const { renderPortal } = useCreatePortal();
+
   // useEffect(() => {
   //   const handleEsc = (e: KeyboardEvent) => {
   //     if (e.key === 'Escape') onClose();
@@ -28,28 +31,22 @@ export default function Modal({
   // }, [onClose]);
 
   // open modal hide scroll, add some right padding to pervent layout shift
+  const handleRemoveClass = () => {
+    onClose();
+    document.body.classList.remove('modal-open');
+  };
+
   useEffect(() => {
     if (isOpen) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.classList.add('modal-open');
     }
-
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  return createPortal(
+  return renderPortal(
     <div
-      onClick={onClose}
+      onClick={handleRemoveClass}
       className="fixed inset-0 flex items-center justify-center bg-opacity3"
     >
       <div
@@ -68,7 +65,7 @@ export default function Modal({
             </CustomText>
           )}
           <button
-            onClick={onClose}
+            onClick={handleRemoveClass}
             className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
           >
             <ICONS.Close width={16} height={16} />
@@ -78,6 +75,5 @@ export default function Modal({
         {children}
       </div>
     </div>,
-    document.body,
   );
 }

@@ -24,7 +24,7 @@ export default function FormItem({
   return (
     <div
       className={clsx(
-        'md:space-y-0.5 pr-2.5',
+        'md:space-y-0.5',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >

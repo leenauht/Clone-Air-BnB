@@ -2,7 +2,7 @@ import { usePopup } from '@/hooks/usePopup';
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 
-import { DropdownOption, DropdownProps } from './typeDropdown';
+import { DropdownOption, DropdownProps } from '../../types/typeDropdown';
 
 export function DropdownMenu({
   open,

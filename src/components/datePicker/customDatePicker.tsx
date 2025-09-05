@@ -2,67 +2,52 @@ import { usePopup } from '@/hooks/usePopup';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
-import { DayPicker } from 'react-day-picker';
+import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
+import { CustomDatePickerProps } from '../../types/typeDatePicker';
 import Button from '../button/button';
 import './datePicker.css';
-import { CustomDatePickerProps, DateRange } from './typeDatePicker';
 
-export default function CustomDatePicker({
-  id,
-  mode = 'single',
-  value,
-  onChange,
-  label,
-  placeholder,
-  onReset,
-  error,
-}: CustomDatePickerProps) {
+export function RenderLabel(props: {
+  value: Date | DateRange | undefined;
+  placeholder?: string;
+  mode: 'single' | 'range';
+}) {
+  const { value, placeholder, mode } = props;
+  if (!value) return placeholder;
+
+  if (mode === 'single') return format(value as Date, 'dd/MM/yyyy');
+
+  const { from, to } = value as DateRange;
+  if (!from) return placeholder;
+  return to && from.getTime() !== to.getTime()
+    ? `${format(from, 'dd/MM/yyyy')} - ${format(to, 'dd/MM/yyyy')}`
+    : format(from, 'dd/MM/yyyy');
+}
+
+export default function CustomDatePicker(props: CustomDatePickerProps) {
+  const { id, mode, value, onChange, label, placeholder, onReset, error } =
+    props;
   const { open, togglePopup, ref, closePopup } = usePopup<HTMLDivElement>(id);
 
   const handleSelect = (val: Date | DateRange | undefined) => {
-    if (mode === 'range') {
-      const rangeVal = val as DateRange | undefined;
-      (onChange as (value: DateRange | undefined) => void)?.(rangeVal);
+    if (!val) return;
 
-      if (
-        rangeVal?.from &&
-        rangeVal?.to &&
-        rangeVal.from.getTime() !== rangeVal.to.getTime()
-      ) {
-        closePopup();
-      }
-    }
+    (onChange as (value: typeof val) => void)?.(val);
 
-    if (mode === 'single') {
-      const dateVal = val as Date | undefined;
-      (onChange as (value: Date | undefined) => void)?.(dateVal);
-      closePopup();
-    }
-  };
-
-  const renderLabel = () => {
-    if (mode === 'single') {
-      if (value) return format(value as Date, 'dd/MM/yyyy');
-    }
-
-    if (mode === 'range' && value) {
-      const { from, to } = value as DateRange;
-      if (from && to && from.getTime() !== to.getTime()) {
-        return `${format(from, 'dd/MM/yyyy')} - ${format(to, 'dd/MM/yyyy')}`;
-      }
-      if (from) {
-        return format(from, 'dd/MM/yyyy');
-      }
-      return placeholder;
-    }
-
-    return placeholder;
+    const shouldClose =
+      mode === 'single' ||
+      (mode === 'range' &&
+        (val as DateRange).from &&
+        (val as DateRange).to &&
+        (val as DateRange).from?.getTime() !==
+          (val as DateRange).to?.getTime());
+    if (shouldClose) closePopup();
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       {label && <div className="mb-1 text-sm font-medium">{label}</div>}
 
       <button
@@ -75,7 +60,9 @@ export default function CustomDatePicker({
           value && 'bg-[#e8f0fe]',
         )}
       >
-        <div>{renderLabel()}</div>
+        <p>
+          <RenderLabel value={value} placeholder={placeholder} mode={mode} />
+        </p>
         <Calendar className="w-6 h-6 text-gray-500" />
       </button>
       <p className="min-h-[20px] text-red-500 text-sm mt-0.5">{error ?? ''}</p>
@@ -83,14 +70,22 @@ export default function CustomDatePicker({
       {open && (
         <div
           ref={ref}
-          className="mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-shadow4"
+          className="absolute bottom-16 rounded-lg border border-gray-300 bg-white shadow-shadow4"
         >
-          <DayPicker
-            mode={mode}
-            selected={value as undefined}
-            onSelect={handleSelect}
-            required={mode === 'range'}
-          />
+          {mode === 'single' ? (
+            <DayPicker
+              mode="single"
+              selected={value as Date | undefined}
+              onSelect={(val) => handleSelect(val)}
+            />
+          ) : (
+            <DayPicker
+              mode="range"
+              selected={value as DateRange | undefined}
+              onSelect={(val) => handleSelect(val)}
+            />
+          )}
+
           <div className="flex justify-end gap-2 p-3 border-t-[1px] border-gray-300">
             <Button
               disabled={!value}

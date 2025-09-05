@@ -23,7 +23,7 @@ export default function FormSelect({
   return (
     <div
       className={clsx(
-        'space-y-1 pr-2.5',
+        'space-y-1',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >

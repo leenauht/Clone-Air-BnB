@@ -1,0 +1,7 @@
+body.modal-open {
+  overflow: hidden;
+}
+
+html {
+  scrollbar-gutter: stable;
+}

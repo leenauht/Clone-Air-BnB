@@ -26,7 +26,7 @@ export default function FormDatePicker({
   return (
     <div
       className={clsx(
-        'space-y-1 pr-2.5 relative',
+        'space-y-1 relative',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >

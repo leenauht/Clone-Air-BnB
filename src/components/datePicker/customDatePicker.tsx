@@ -16,9 +16,7 @@ export function RenderLabel(props: {
 }) {
   const { value, placeholder, mode } = props;
   let text: string;
-  if (!value) {
-    text = placeholder ?? '';
-  }
+  if (!value) return <p>{placeholder ?? ''}</p>;
 
   if (mode === 'single') {
     text = format(value as Date, 'dd/MM/yyyy');

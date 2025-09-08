@@ -3,14 +3,13 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
-import { API_URL } from '@/components/constants/constants';
 import DivItem from '@/components/divItem/divItem';
 import Modal from '@/components/modal/modal';
-import { toastSuccess } from '@/helper/toastHelper';
-import { apiFetch } from '@/services/api';
-import { User } from '@/types/user';
+import { toastError, toastSuccess } from '@/helper/toastHelper';
+import { DataRegister } from '@/services/apiRegister';
 
 import { ICONS } from '@components/icons/icon';
+import { useMutation } from '@tanstack/react-query';
 
 import RegisterFormFiled from './registerFormFiled';
 import { FormField } from './validateFiled';
@@ -34,7 +33,8 @@ interface RegisterProps {
 export default function Register({ open, onClose }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
-  const [loading, setLoading] = useState(false);
+  const mutation = useMutation(DataRegister());
+  const { mutate, isPending } = mutation;
 
   // --- Handle form field change ---
   const handleChange = (name: FormField, value: string) => {
@@ -53,28 +53,23 @@ export default function Register({ open, onClose }: RegisterProps) {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    try {
-      setLoading(true);
-      const result = await apiFetch<User>(`${API_URL}/auth/signup`, {
-        method: 'POST',
-        body: JSON.stringify(form),
-      });
-      if (result) {
-        toastSuccess('Đăng ký thành công 🎉');
-        resetForm();
-      }
-    } catch (error) {
-      console.error('Signup failed:', error);
-    } finally {
-      setLoading(false);
-    }
+    mutate(form, {
+      onSuccess: (data) => {
+        if (data) {
+          toastSuccess('Đăng ký thành công 🎉');
+          resetForm();
+        }
+      },
+      onError: (error) => {
+        toastError(`❌ ${error.content || error.message}`);
+      },
+    });
   };
 
   const resetForm = () => {
     setForm({ ...INITIAL_FORM });
     setErrors({});
     onClose();
-    setLoading(false);
   };
 
   return (
@@ -88,19 +83,27 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="space-y-0.5 sm:space-y-2">
-          <RegisterFormFiled
-            form={form}
-            errors={errors}
-            onChange={handleChange}
-          />
-          <Button
-            disabled={loading}
-            type="submit"
-            className="w-full mt-4 flex justify-center"
-          >
-            {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
-          </Button>
+        <form onSubmit={handleSubmit} className="">
+          <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-b border-gray-200">
+            <RegisterFormFiled
+              form={form}
+              errors={errors}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="py-5 px-8">
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="w-full flex justify-center !rounded-full"
+            >
+              {isPending ? (
+                <ICONS.Loading width={24} height={24} />
+              ) : (
+                'Continue'
+              )}
+            </Button>
+          </div>
         </form>
       </Modal>
     </>

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useBobyScrollLock } from '@/hooks/useBodyScrollLock';
+import { useCreatePortal } from '@/hooks/useCreatePortal';
 
 import { ICONS } from '@components/icons/icon';
 
 import CustomText from '../text/customText';
+import './style.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -17,27 +21,37 @@ export default function Modal({
   isOpen,
   onClose,
 }: ModalProps) {
-  // useEffect(() => {
-  //   const handleEsc = (e: KeyboardEvent) => {
-  //     if (e.key === 'Escape') onClose();
-  //   };
-  //   document.addEventListener('keydown', handleEsc);
-  //   return () => document.removeEventListener('keydown', handleEsc);
-  // }, [onClose]);
+  const { renderPortal } = useCreatePortal();
+  const removeClass = useBobyScrollLock(isOpen);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
+
+  // open modal hide scroll, add some right padding to pervent layout shift
+
+  const handleClose = () => {
+    onClose();
+    removeClass();
+  };
 
   if (!isOpen) return null;
 
-  return (
+  return renderPortal(
     <div
-      onClick={onClose}
-      className="fixed inset-0 flex items-center justify-center bg-opacity1"
+      onClick={handleClose}
+      className="fixed inset-0 flex items-center justify-center bg-opacity3"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full h-full sm:h-auto sm:w-2/3 md:w-3/5 lg:w-2/5 xl:w-1/3 px-5 pb-6 shadow-shadow3 bg-white sm:rounded-xl overflow-hidden"
+        className="w-full sm:h-auto sm:w-2/3 md:w-3/5 lg:w-2/5 xl:w-1/3 shadow-shadow3 bg-white sm:rounded-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex justify-end items-center mb-4">
+        <div className="flex justify-end items-center px-4 py-2 border-gray-200 border-b">
           {title && (
             <CustomText
               heading="p"
@@ -48,7 +62,7 @@ export default function Modal({
             </CustomText>
           )}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
           >
             <ICONS.Close width={16} height={16} />
@@ -57,6 +71,6 @@ export default function Modal({
         {/* Body */}
         {children}
       </div>
-    </div>
+    </div>,
   );
 }

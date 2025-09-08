@@ -1,0 +1,45 @@
+.rdp-day_button {
+  height: 32px;
+  width: 32px;
+  margin: auto;
+}
+
+.rdp-month_caption {
+  padding: 0 20px;
+  border-bottom: 1px solid #6b7280;
+}
+
+.rdp-chevron {
+  fill: #374151;
+}
+
+.rdp-chevron:hover {
+  fill: blue;
+  transition-duration: 300ms;
+}
+
+.rdp-day:hover .rdp-day_button {
+  text-transform: uppercase;
+  color: white;
+  background: #2563eb;
+}
+
+.rdp-day .rdp-day_button {
+  border: none;
+}
+
+.rdp-selected {
+  color: blue;
+}
+
+.rdp-range_start .rdp-day_button {
+  background-color: #2563eb;
+}
+
+.rdp-range_end .rdp-day_button {
+  background-color: #2563eb;
+}
+
+.rdp-month_grid {
+  margin: 10px;
+}

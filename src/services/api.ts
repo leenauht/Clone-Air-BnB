@@ -1,11 +1,16 @@
 import { API_TOKEN } from '@/components/constants/constants';
 
+export interface ApiError {
+  statusCode: number;
+  message: string;
+  content?: string;
+  dateTime?: string;
+}
 export async function apiFetch<T>(
   url: string,
   options: RequestInit = {},
 ): Promise<T> {
   const res = await fetch(url, {
-    method: 'GET', // default
     headers: {
       'Content-Type': 'application/json',
       tokenCybersoft: API_TOKEN.TOKEN_CYBERSOFT,
@@ -14,10 +19,17 @@ export async function apiFetch<T>(
     ...options,
   });
 
+  const data = await res.json().catch(() => null); // case: no body
+
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(errorText || 'Failed to fetch');
+    const error: ApiError = {
+      statusCode: res.status,
+      message: data?.message || res.statusText,
+      content: data?.content,
+      dateTime: data?.dateTime,
+    };
+    throw error;
   }
 
-  return res.json() as Promise<T>;
+  return data as T;
 }

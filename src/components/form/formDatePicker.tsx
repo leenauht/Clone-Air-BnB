@@ -1,9 +1,8 @@
-import { useState } from 'react';
-
 import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
+import { format } from 'date-fns';
 
-// import { Calendar } from 'lucide-react';
+import CustomDatePicker from '../datePicker/customDatePicker';
 
 interface FormDatePickerProps {
   label: string;
@@ -17,17 +16,17 @@ interface FormDatePickerProps {
 export default function FormDatePicker({
   label,
   name,
+  error,
   value,
   onChange,
-  error,
   horizontal,
 }: FormDatePickerProps) {
-  const [dateValue, setDateValue] = useState(value ?? '');
+  const dateValue = value ? new Date(value) : undefined;
 
   return (
     <div
       className={clsx(
-        'space-y-1',
+        'space-y-1 relative',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >
@@ -43,27 +42,18 @@ export default function FormDatePicker({
         </label>
       </div>
 
-      {/* <div>
-        <input type="text" placeholder="abcd" />
-        <Calendar />
-      </div> */}
-
       <div className="w-full">
-        <input
-          id={name}
-          name={name}
-          type="date"
+        <CustomDatePicker
+          error={error}
+          mode="single"
+          placeholder="Select date"
           value={dateValue}
-          className="p-1.5 cursor-pointer border rounded-lg"
-          lang="en"
-          onChange={(e) => {
-            setDateValue(e.target.value);
-            onChange(name, e.target.value);
+          onChange={(val) => {
+            // val: Date | undefined
+            onChange(name, val ? format(val, 'yyyy-MM-dd') : '');
           }}
+          onReset={() => onChange(name, '')}
         />
-        <p className="min-h-[20px] text-red-500 text-sm mt-0.5">
-          {error ?? ''}
-        </p>
       </div>
     </div>
   );

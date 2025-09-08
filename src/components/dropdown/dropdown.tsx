@@ -1,65 +1,54 @@
-import { useRef, useState } from 'react';
-
-import { useOutsideClick } from '@/hooks/useClickOutSide';
+import { usePopup } from '@/hooks/usePopup';
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 
-interface DropdownOption {
-  label: string;
-  value: string;
-  prefix?: React.ReactNode;
-  subfix?: React.ReactNode;
-}
-
-interface DropdownProps {
-  label?: string;
-  trigger?: React.ReactNode;
-  options: DropdownOption[];
-  value?: string;
-  onChange: (value: string) => void;
-  className?: string;
-  isChevronDown?: boolean;
-}
+import { DropdownOption, DropdownProps } from '../../types/typeDropdown';
 
 export function DropdownMenu({
   open,
   options,
   value,
+  className,
   onChange,
-  setOpen,
 }: {
   open: boolean;
   options: DropdownOption[];
   value?: string;
+  className?: string;
   onChange: (value: string) => void;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const liClassName = clsx(
-    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-50',
+    'flex items-center gap-1.5 py-2 px-3 cursor-pointer hover:bg-blue-100',
   );
 
   if (!open) return null;
   return (
-    <ul className="absolute right-0 mt-2 shadow-shadow3 rounded-lg bg-white overflow-hidden min-w-full max-w-sm">
-      {options.map(({ value: val, prefix, label, subfix }, idx) => (
-        <li
-          key={val}
-          className={clsx(
-            liClassName,
-            value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
-            idx !== options.length - 1 && 'border-b border-gray-300',
-          )}
-          onClick={() => {
-            onChange(val);
-            setOpen(false);
-          }}
-        >
-          <span>{prefix}</span>
-          <span className="flex-1 break-words line-clamp-3">{label}</span>
-          <span>{subfix}</span>
-        </li>
-      ))}
-    </ul>
+    <div className="absolute right-0 z-1 w-full mt-2.5">
+      <ul
+        className={clsx(
+          'mb-2.5 shadow-shadow3 rounded-lg bg-white overflow-hidden border border-gray-300',
+          className ? className : 'w-max max-w-60 sm:max-w-md lg:max-w-xl',
+        )}
+      >
+        {options.map(({ value: val, prefix, label, subfix }, idx) => (
+          <li
+            key={val}
+            className={clsx(
+              liClassName,
+              value === val ? 'text-blue-600 font-medium' : 'text-gray-700',
+              idx !== options.length - 1 && 'border-b border-gray-300',
+            )}
+            onClick={() => onChange(val)}
+          >
+            <span>{prefix}</span>
+            <span className="flex-1 break-words line-clamp-2" title={label}>
+              {label}
+            </span>
+            <span>{subfix}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -70,24 +59,24 @@ export default function Dropdown({
   value,
   onChange,
   className,
+  clsDropdownMenu,
   isChevronDown,
 }: DropdownProps) {
-  const [open, setOpen] = useState(false);
   const selected = options.find((opt) => opt.value === value) || null;
-  const dropdownCustom = useRef<HTMLDivElement>(null);
-
-  useOutsideClick(dropdownCustom, () => {
-    if (open) setOpen(false);
-  });
+  const { open, togglePopup, ref } = usePopup<HTMLDivElement>();
 
   return (
     <div
-      ref={dropdownCustom}
-      className={clsx('relative inline-block text-left', className)}
+      tabIndex={0}
+      ref={ref}
+      className={clsx(
+        'relative inline-block text-left focus:outline-none focus:border-blue-300',
+        className,
+      )}
     >
       <div
+        onClick={togglePopup}
         className="flex items-center justify-between gap-2 cursor-pointer hover:border-blue-500"
-        onClick={() => setOpen(!open)}
       >
         {trigger ? (
           trigger
@@ -112,8 +101,11 @@ export default function Dropdown({
         open={open}
         options={options}
         value={value}
-        onChange={onChange}
-        setOpen={setOpen}
+        onChange={(val) => {
+          onChange(val);
+          togglePopup();
+        }}
+        className={clsDropdownMenu}
       />
     </div>
   );

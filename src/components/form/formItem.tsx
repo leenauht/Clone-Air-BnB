@@ -47,9 +47,10 @@ export default function FormItem({
           value={value}
           onChange={(e) => onChange(name, e.target.value.trim())}
           placeholder={!placeholder ? `Input ${name}` : placeholder}
-          className={`w-full border p-1.5 rounded-lg focus:outline-none focus:border-blue-300 ${
-            error ? 'border-red-500' : 'border-gray-300'
-          }`}
+          className={clsx(
+            'w-full border p-1.5 rounded-lg hover:border-blue-300 focus:outline-none focus:border-blue-300 transition duration-300',
+            error ? 'border-red-500' : 'border-gray-300',
+          )}
         />
         <p className="min-h-[20px] text-red-500 text-sm mt-0.5">
           {error ?? ''}

@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { ICONS } from '@components/icons/icon';
@@ -7,7 +9,7 @@ import NavItems from './headerItems';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 shadow-shadow3 bg-white z-10">
+    <header className="fixed top-0 left-0 h-20 w-full shadow-shadow3 bg-white">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
         <Link
           href="/"

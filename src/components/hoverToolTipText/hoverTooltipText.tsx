@@ -20,7 +20,7 @@ export default function HoverTooltipText({ text }: { text: string }) {
       {/* Tooltip */}
       {show && (
         <div
-          className="fixed z-10 bg-gray-300 text-sm px-2 py-1 rounded shadow-lg pointer-events-none max-w-xs"
+          className="fixed bg-gray-300 text-sm px-2 py-1 rounded shadow-lg pointer-events-none max-w-xs"
           style={{
             top: pos.y,
             left: pos.x,

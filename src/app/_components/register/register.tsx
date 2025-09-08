@@ -3,14 +3,13 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
-import { API_URL } from '@/components/constants/constants';
 import DivItem from '@/components/divItem/divItem';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
-import { ApiError, apiFetch } from '@/services/api';
-import { User } from '@/types/user';
+import { DataRegister } from '@/services/apiRegister';
 
 import { ICONS } from '@components/icons/icon';
+import { useMutation } from '@tanstack/react-query';
 
 import RegisterFormFiled from './registerFormFiled';
 import { FormField } from './validateFiled';
@@ -34,7 +33,8 @@ interface RegisterProps {
 export default function Register({ open, onClose }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
-  const [loading, setLoading] = useState(false);
+  const mutation = useMutation(DataRegister());
+  const { mutate, isPending } = mutation;
 
   // --- Handle form field change ---
   const handleChange = (name: FormField, value: string) => {
@@ -53,41 +53,23 @@ export default function Register({ open, onClose }: RegisterProps) {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    try {
-      setLoading(true);
-      const result = await apiFetch<User>(`${API_URL}/auth/signup`, {
-        method: 'POST',
-        body: JSON.stringify(form),
-      });
-      if (result) {
-        toastSuccess('Đăng ký thành công 🎉');
-        resetForm();
-      }
-    } catch (error: unknown) {
-      if (isApiError(error)) {
-        toastError(`❌ ${error.content}`);
-      } else {
-        toastError('❌ Unknown error');
-      }
-    } finally {
-      setLoading(false);
-    }
+    mutate(form, {
+      onSuccess: (data) => {
+        if (data) {
+          toastSuccess('Đăng ký thành công 🎉');
+          resetForm();
+        }
+      },
+      onError: (error) => {
+        toastError(`❌ ${error.content || error.message}`);
+      },
+    });
   };
-
-  function isApiError(error: unknown): error is ApiError {
-    return (
-      typeof error === 'object' &&
-      error !== null &&
-      'statusCode' in error &&
-      'message' in error
-    );
-  }
 
   const resetForm = () => {
     setForm({ ...INITIAL_FORM });
     setErrors({});
     onClose();
-    setLoading(false);
   };
 
   return (
@@ -111,11 +93,15 @@ export default function Register({ open, onClose }: RegisterProps) {
           </div>
           <div className="py-5 px-8">
             <Button
-              disabled={loading}
+              disabled={isPending}
               type="submit"
               className="w-full flex justify-center !rounded-full"
             >
-              {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
+              {isPending ? (
+                <ICONS.Loading width={24} height={24} />
+              ) : (
+                'Continue'
+              )}
             </Button>
           </div>
         </form>

@@ -15,15 +15,25 @@ export function RenderLabel(props: {
   mode: 'single' | 'range';
 }) {
   const { value, placeholder, mode } = props;
-  if (!value) return placeholder;
+  let text: string;
+  if (!value) {
+    text = placeholder ?? '';
+  }
 
-  if (mode === 'single') return format(value as Date, 'dd/MM/yyyy');
-
-  const { from, to } = value as DateRange;
-  if (!from) return placeholder;
-  return to && from.getTime() !== to.getTime()
-    ? `${format(from, 'dd/MM/yyyy')} - ${format(to, 'dd/MM/yyyy')}`
-    : format(from, 'dd/MM/yyyy');
+  if (mode === 'single') {
+    text = format(value as Date, 'dd/MM/yyyy');
+  } else {
+    const { from, to } = value as DateRange;
+    if (!from) {
+      text = placeholder ?? '';
+    } else {
+      text =
+        to && from.getTime() !== to.getTime()
+          ? `${format(from, 'dd/MM/yyyy')} - ${format(to, 'dd/MM/yyyy')}`
+          : format(from, 'dd/MM/yyyy');
+    }
+  }
+  return <p>{text}</p>;
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
@@ -59,9 +69,8 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
           value && 'bg-[#e8f0fe]',
         )}
       >
-        <p>
-          <RenderLabel value={value} placeholder={placeholder} mode={mode} />
-        </p>
+        <RenderLabel value={value} placeholder={placeholder} mode={mode} />
+
         <Calendar className="w-6 h-6 text-gray-500" />
       </button>
       <p className="min-h-[20px] text-red-500 text-sm mt-0.5">{error ?? ''}</p>

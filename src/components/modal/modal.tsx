@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { useBobyScrollLock } from '@/hooks/useBodyScrollLock';
 import { useCreatePortal } from '@/hooks/useCreatePortal';
 
 import { ICONS } from '@components/icons/icon';
@@ -21,32 +22,28 @@ export default function Modal({
   onClose,
 }: ModalProps) {
   const { renderPortal } = useCreatePortal();
-
-  // useEffect(() => {
-  //   const handleEsc = (e: KeyboardEvent) => {
-  //     if (e.key === 'Escape') onClose();
-  //   };
-  //   document.addEventListener('keydown', handleEsc);
-  //   return () => document.removeEventListener('keydown', handleEsc);
-  // }, [onClose]);
-
-  // open modal hide scroll, add some right padding to pervent layout shift
-  const handleRemoveClass = () => {
-    onClose();
-    document.body.classList.remove('modal-open');
-  };
+  const removeClass = useBobyScrollLock(isOpen);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('modal-open');
-    }
-  }, [isOpen]);
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
+
+  // open modal hide scroll, add some right padding to pervent layout shift
+
+  const handleClose = () => {
+    onClose();
+    removeClass();
+  };
 
   if (!isOpen) return null;
 
   return renderPortal(
     <div
-      onClick={handleRemoveClass}
+      onClick={handleClose}
       className="fixed inset-0 flex items-center justify-center bg-opacity3"
     >
       <div
@@ -65,7 +62,7 @@ export default function Modal({
             </CustomText>
           )}
           <button
-            onClick={handleRemoveClass}
+            onClick={handleClose}
             className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
           >
             <ICONS.Close width={16} height={16} />

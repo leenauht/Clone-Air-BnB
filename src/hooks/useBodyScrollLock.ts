@@ -1,15 +1,12 @@
 import { useCallback, useEffect } from 'react';
 
 export function useBobyScrollLock(isOpen: boolean) {
-  // const addClass = () => document.body.classList.add('modal-open');
-  //   const removeClass = () => document.body.classList.remove('modal-open');
-
   const addClass = useCallback(() => {
     document.body.classList.add('modal-open');
   }, []);
 
   const removeClass = useCallback(() => {
-    document.body.classList.add('modal-open');
+    document.body.classList.remove('modal-open');
   }, []);
 
   useEffect(() => {

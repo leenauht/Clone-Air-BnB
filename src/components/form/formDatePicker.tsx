@@ -1,32 +1,31 @@
-import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 
 import CustomDatePicker from '../datePicker/customDatePicker';
 
-interface FormDatePickerProps {
+interface FormDatePickerProps<T extends string> {
   label: string;
-  name: FormField;
+  name: T;
   value: string;
-  onChange: (name: FormField, value: string) => void;
+  onChange: (name: T, value: string) => void;
   error?: string;
   horizontal?: boolean;
 }
 
-export default function FormDatePicker({
+export default function FormDatePicker<T extends string>({
   label,
   name,
   error,
   value,
   onChange,
   horizontal,
-}: FormDatePickerProps) {
+}: FormDatePickerProps<T>) {
   const dateValue = value ? new Date(value) : undefined;
 
   return (
     <div
       className={clsx(
-        'space-y-1 relative',
+        'md:space-y-0.5 m-0 relative',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >

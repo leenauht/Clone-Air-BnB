@@ -1,29 +1,28 @@
-import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 
 import Dropdown from '../dropdown/dropdown';
 
-interface FormSelectProps {
+interface FormSelectProps<T extends string> {
   label: string;
-  name: FormField;
+  name: T;
   value: string;
-  onChange: (name: FormField, value: string) => void;
+  onChange: (name: T, value: string) => void;
   error?: string;
   horizontal?: boolean;
 }
 
-export default function FormSelect({
+export default function FormSelect<T extends string>({
   label,
   name,
   value,
   onChange,
   error,
   horizontal,
-}: FormSelectProps) {
+}: FormSelectProps<T>) {
   return (
     <div
       className={clsx(
-        'space-y-1',
+        'md:space-y-0.5',
         horizontal && 'flex flex-col sm:flex-row sm:gap-1',
       )}
     >

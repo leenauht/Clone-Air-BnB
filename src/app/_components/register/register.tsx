@@ -12,8 +12,8 @@ import { ICONS } from '@components/icons/icon';
 import { useMutation } from '@tanstack/react-query';
 
 import RegisterFormFiled from './registerFormFiled';
-import { FormField } from './validateFiled';
-import { FormData, FormErrors, validateForm } from './validateForm';
+import { FormFieldSignUp } from './validateFiled';
+import { FormData, FormErrors, validateFormSignUp } from './validateForm';
 
 const INITIAL_FORM: FormData = {
   name: '',
@@ -28,27 +28,28 @@ const INITIAL_FORM: FormData = {
 interface RegisterProps {
   open: boolean;
   onClose: () => void;
+  signIn: () => void;
 }
 
-export default function Register({ open, onClose }: RegisterProps) {
+export default function Register({ open, onClose, signIn }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
   const mutation = useMutation(DataRegister());
   const { mutate, isPending } = mutation;
 
   // --- Handle form field change ---
-  const handleChange = (name: FormField, value: string) => {
+  const handleChange = (name: FormFieldSignUp, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({
       ...prev,
-      [name]: validateForm({ ...form, [name]: value })[name],
+      [name]: validateFormSignUp({ ...form, [name]: value })[name],
     }));
   };
 
   // --- Handle submit ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors = validateForm(form);
+    const newErrors = validateFormSignUp(form);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
@@ -58,6 +59,7 @@ export default function Register({ open, onClose }: RegisterProps) {
         if (data) {
           toastSuccess('Đăng ký thành công 🎉');
           resetForm();
+          signIn();
         }
       },
       onError: (error) => {
@@ -83,19 +85,24 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit}>
           <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-b border-gray-200">
             <RegisterFormFiled
               form={form}
               errors={errors}
               onChange={handleChange}
             />
+            <p className="text-right">
+              <Button variant="link" onClick={signIn} className="text-sm">
+                Sign in now.
+              </Button>
+            </p>
           </div>
           <div className="py-5 px-8">
             <Button
               disabled={isPending}
               type="submit"
-              className="w-full flex justify-center !rounded-full"
+              className="w-full flex justify-center !rounded-full py-2 px-4"
             >
               {isPending ? (
                 <ICONS.Loading width={24} height={24} />

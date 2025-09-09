@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@import './../components/form/style.css';
+
 @theme {
   --font-sans:
     ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -39,45 +41,10 @@ pre {
   font-family: var(--font-mono);
 }
 
-.label-required::before {
-  display: block;
-  margin-inline-end: 4px;
-  color: #ff4d4f;
-  font-size: 16px;
-  font-family: var(--font-sans);
-  content: '*';
-}
-
-/* default */
-.label-colon::after {
-  content: '';
-}
-
-/* from (640px) and up ":" */
-@media (min-width: 640px) {
-  .label-colon::after {
-    content: ':';
-    margin-left: 4px;
-  }
-}
-
 input[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
 input[type='date'] {
   cursor: pointer;
-}
-
-.select-gender {
-  border: 1px solid #d1d5db;
-  padding: 6px 8px;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  background-color: white;
-}
-
-.select-gender:focus {
-  outline: none;
-  border-color: #3b82f6;
 }

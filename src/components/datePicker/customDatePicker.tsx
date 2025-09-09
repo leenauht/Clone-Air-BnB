@@ -61,22 +61,22 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
         type="button"
         onClick={togglePopup}
         className={clsx(
-          'w-full hover:border-blue-300 rounded-lg border px-3 py-1.5 transition duration-300',
-          'flex items-center justify-between cursor-pointer focus:outline-none focus:border-blue-300',
+          'w-full text-gray-500 rounded-lg border px-3 py-1.5 transition duration-300 cursor-pointer ',
+          'flex items-center justify-between hover:border-blue-300 focus:outline-none focus:border-blue-300',
           error ? 'border-red-500' : 'border-gray-300',
-          value && 'bg-[#e8f0fe]',
+          value && 'bg-[#e8f0fe] !text-black',
         )}
       >
         <RenderLabel value={value} placeholder={placeholder} mode={mode} />
 
-        <Calendar className="w-6 h-6 text-gray-500" />
+        <Calendar className="w-6 h-6 text-gray-500 hover:text-blue-500 transition duration-300" />
       </button>
       <p className="min-h-[20px] text-red-500 text-sm mt-0.5">{error ?? ''}</p>
 
       {open && (
         <div
           ref={ref}
-          className="absolute bottom-16 rounded-lg border border-gray-300 bg-white shadow-shadow4"
+          className="absolute bottom-16 w-full rounded-lg border border-gray-300 bg-white shadow-shadow4"
         >
           {mode === 'single' ? (
             <DayPicker

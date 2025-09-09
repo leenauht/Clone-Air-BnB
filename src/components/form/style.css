@@ -1,0 +1,17 @@
+.label-required::before {
+  @apply block mr-1 text-red-500 text-base font-sans;
+  content: '*';
+}
+
+/* default */
+.label-colon::after {
+  content: '';
+}
+
+/* from (640px) and up ":" */
+@media (min-width: 640px) {
+  .label-colon::after {
+    content: ':';
+    @apply ml-1;
+  }
+}

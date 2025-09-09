@@ -1,12 +1,12 @@
-import { FormField, validateFiled } from './validateFiled';
+import { FormFieldSignUp, validateFiledSignUp } from './validateFiled';
 
-export type FormData = Record<FormField, string>;
+export type FormData = Record<FormFieldSignUp, string>;
 export type FormErrors = Partial<FormData>;
 
-export const validateForm = (form: FormData): FormErrors => {
+export const validateFormSignUp = (form: FormData): FormErrors => {
   const errors: FormErrors = {};
-  (Object.keys(form) as FormField[]).forEach((key) => {
-    const error = validateFiled(key, form[key]);
+  (Object.keys(form) as FormFieldSignUp[]).forEach((key) => {
+    const error = validateFiledSignUp(key, form[key]);
     if (error) errors[key] = error;
   });
   return errors;

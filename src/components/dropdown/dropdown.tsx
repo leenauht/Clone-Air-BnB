@@ -30,7 +30,7 @@ export function DropdownMenu({
           className ? className : 'w-max max-w-60 sm:max-w-md lg:max-w-xl',
         )}
       >
-        {options.map(({ value: val, prefix, label, subfix }, idx) => (
+        {options.map(({ value: val, prefix, label, subfix, color }, idx) => (
           <li
             key={val}
             className={clsx(
@@ -41,7 +41,7 @@ export function DropdownMenu({
             onClick={() => onChange(val)}
           >
             <span>{prefix}</span>
-            <span className="flex-1 break-words line-clamp-2" title={label}>
+            <span className="flex-1 break-words line-clamp-2" style={{ color }}>
               {label}
             </span>
             <span>{subfix}</span>
@@ -54,7 +54,7 @@ export function DropdownMenu({
 
 export default function Dropdown({
   label,
-  trigger,
+  activator,
   options,
   value,
   onChange,
@@ -70,16 +70,16 @@ export default function Dropdown({
       tabIndex={0}
       ref={ref}
       className={clsx(
-        'relative inline-block text-left focus:outline-none focus:border-blue-300',
+        'relative inline-block text-left focus:outline-none cursor-pointer focus:border-blue-300',
         className,
       )}
     >
       <div
         onClick={togglePopup}
-        className="flex items-center justify-between gap-2 cursor-pointer hover:border-blue-500"
+        className="flex items-center justify-between gap-2 hover:border-blue-500"
       >
-        {trigger ? (
-          trigger
+        {activator ? (
+          activator
         ) : (
           <span className={clsx(selected ? 'text-gray-900' : 'text-gray-400')}>
             {selected ? selected.label : label || 'Select Option'}

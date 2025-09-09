@@ -1,17 +1,17 @@
-import { FormField } from '@/app/_components/register/validateFiled';
+// import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 
-interface FormItemProps {
+interface FormItemProps<T extends string> {
   label: string;
-  name: FormField;
+  name: T;
   type?: string;
   value: string;
-  onChange: (name: FormField, value: string) => void;
+  onChange: (name: T, value: string) => void;
   error?: string;
   placeholder?: string;
   horizontal?: boolean;
 }
-export default function FormItem({
+export default function FormItem<T extends string>({
   label,
   name,
   type,
@@ -20,7 +20,7 @@ export default function FormItem({
   error,
   placeholder,
   horizontal,
-}: FormItemProps) {
+}: FormItemProps<T>) {
   return (
     <div
       className={clsx(

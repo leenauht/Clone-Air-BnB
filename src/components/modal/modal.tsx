@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useBobyScrollLock } from '@/hooks/useBodyScrollLock';
 import { useCreatePortal } from '@/hooks/useCreatePortal';
-
-import { ICONS } from '@components/icons/icon';
+import { X } from 'lucide-react';
 
 import CustomText from '../text/customText';
 import './style.css';
@@ -65,7 +64,7 @@ export default function Modal({
             onClick={handleClose}
             className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
           >
-            <ICONS.Close width={16} height={16} />
+            <X className="w-5 h-5" />
           </button>
         </div>
         {/* Body */}

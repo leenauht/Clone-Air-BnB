@@ -1,12 +1,13 @@
 import FormDatePicker from '@/components/form/formDatePicker';
 import FormItem from '@/components/form/formItem';
 import FormSelect from '@/components/form/formSelect';
-import { FormSignUp } from '@/types/validateField';
+
+import { FormFieldSignUp } from './validateFiled';
 
 type Props = {
-  form: Record<FormSignUp, string>;
-  errors: Partial<Record<FormSignUp, string>>;
-  onChange: (name: FormSignUp, value: string) => void;
+  form: Record<FormFieldSignUp, string>;
+  errors: Partial<Record<FormFieldSignUp, string>>;
+  onChange: (name: FormFieldSignUp, value: string) => void;
 };
 
 export default function RegisterFormFiled({ form, errors, onChange }: Props) {

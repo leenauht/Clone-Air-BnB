@@ -1,9 +1,5 @@
 .label-required::before {
-  display: block;
-  margin-inline-end: 4px;
-  color: #ff4d4f;
-  font-size: 16px;
-  font-family: var(--font-sans);
+  @apply block mr-1 text-red-500 text-base font-sans;
   content: '*';
 }
 
@@ -16,6 +12,6 @@
 @media (min-width: 640px) {
   .label-colon::after {
     content: ':';
-    margin-left: 4px;
+    @apply ml-1;
   }
 }

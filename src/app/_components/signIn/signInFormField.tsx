@@ -2,8 +2,6 @@ import FormItem from '@/components/form/formItem';
 
 import { FormFieldSignIn } from './validateFieldSignIn';
 
-// import { FormFieldSignIn } from './validateFiledSignIn';
-
 type Props = {
   form: Record<FormFieldSignIn, string>;
   errors: Partial<Record<FormFieldSignIn, string>>;

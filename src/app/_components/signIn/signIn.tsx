@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
-import { API_URL } from '@/components/constants/constants';
 import { ICONS } from '@/components/icons/icon';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
-import { ApiError, apiFetch } from '@/services/api';
+import { DataSignIn } from '@/services/apiSignIn';
+
+import { useMutation } from '@tanstack/react-query';
 
 import SignInFormFiled from './signInFormField';
 import { FormFieldSignIn } from './validateFieldSignIn';
@@ -28,7 +29,8 @@ interface SignInProps {
 export default function SignIn({ open, onClose, signUp }: SignInProps) {
   const [form, setForm] = useState<FormSignInData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormSignInErrors>({});
-  const [loading, setLoading] = useState(false);
+  const mutation = useMutation(DataSignIn());
+  const { mutate, isPending } = mutation;
 
   const handleChange = (name: FormFieldSignIn, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -44,42 +46,25 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
-    try {
-      setLoading(true);
-      const result = await apiFetch(`${API_URL}/auth/signin`, {
-        method: 'POST',
-        body: JSON.stringify(form),
-      });
 
-      if (result) {
-        toastSuccess('Đăng nhập thành công 🎉');
-        resetForm();
-      }
-    } catch (error: unknown) {
-      if (isApiError(error)) {
-        toastError(`❌ ${error.content}`);
-      } else {
-        toastError('❌ Unknown error');
-      }
-    } finally {
-      setLoading(false);
-    }
+    mutate(form, {
+      onSuccess: (data) => {
+        if (data) {
+          toastSuccess('Đăng nhập thành công 🎉');
+          resetForm();
+          onClose();
+        }
+      },
+      onError: (error) => {
+        toastError(`❌ ${error.content || error.message}`);
+      },
+    });
   };
-
-  function isApiError(error: unknown): error is ApiError {
-    return (
-      typeof error === 'object' &&
-      error !== null &&
-      'statusCode' in error &&
-      'message' in error
-    );
-  }
 
   const resetForm = () => {
     setForm({ ...INITIAL_FORM });
     setErrors({});
     onClose();
-    setLoading(false);
   };
 
   return (
@@ -99,11 +84,11 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
         </div>
         <div className="py-5 px-8">
           <Button
-            disabled={loading}
+            disabled={isPending}
             type="submit"
             className="w-full flex justify-center !rounded-full py-2 px-4"
           >
-            {loading ? <ICONS.Loading width={24} height={24} /> : 'Sign in'}
+            {isPending ? <ICONS.Loading width={24} height={24} /> : 'Sign in'}
           </Button>
         </div>
       </form>

@@ -1,4 +1,4 @@
-export type FormField =
+export type FormFieldSignUp =
   | 'name'
   | 'email'
   | 'password'
@@ -7,8 +7,11 @@ export type FormField =
   | 'birthday'
   | 'role';
 
-export const validateFiled = (name: FormField, value: string): string => {
-  const requiredMsgs: Record<FormField, string> = {
+export const validateFiledSignUp = (
+  name: FormFieldSignUp,
+  value: string,
+): string => {
+  const requiredMsgs: Record<FormFieldSignUp, string> = {
     name: 'Username is required',
     email: 'Email is required',
     password: 'Password is required',

@@ -3,13 +3,14 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
+import { API_URL } from '@/components/constants/constants';
 import DivItem from '@/components/divItem/divItem';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
-import { DataRegister } from '@/services/apiRegister';
+import { ApiError, apiFetch } from '@/services/api';
+import { User } from '@/types/user';
 
 import { ICONS } from '@components/icons/icon';
-import { useMutation } from '@tanstack/react-query';
 
 import RegisterFormFiled from './registerFormFiled';
 import { FormField } from './validateFiled';
@@ -28,13 +29,13 @@ const INITIAL_FORM: FormData = {
 interface RegisterProps {
   open: boolean;
   onClose: () => void;
+  signIn: () => void;
 }
 
-export default function Register({ open, onClose }: RegisterProps) {
+export default function Register({ open, onClose, signIn }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
-  const mutation = useMutation(DataRegister());
-  const { mutate, isPending } = mutation;
+  const [loading, setLoading] = useState(false);
 
   // --- Handle form field change ---
   const handleChange = (name: FormField, value: string) => {
@@ -53,23 +54,42 @@ export default function Register({ open, onClose }: RegisterProps) {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    mutate(form, {
-      onSuccess: (data) => {
-        if (data) {
-          toastSuccess('Đăng ký thành công 🎉');
-          resetForm();
-        }
-      },
-      onError: (error) => {
-        toastError(`❌ ${error.content || error.message}`);
-      },
-    });
+    try {
+      setLoading(true);
+      const result = await apiFetch<User>(`${API_URL}/auth/signup`, {
+        method: 'POST',
+        body: JSON.stringify(form),
+      });
+      if (result) {
+        toastSuccess('Đăng ký thành công 🎉');
+        resetForm();
+        signIn();
+      }
+    } catch (error: unknown) {
+      if (isApiError(error)) {
+        toastError(`❌ ${error.content}`);
+      } else {
+        toastError('❌ Unknown error');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+
+  function isApiError(error: unknown): error is ApiError {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'statusCode' in error &&
+      'message' in error
+    );
+  }
 
   const resetForm = () => {
     setForm({ ...INITIAL_FORM });
     setErrors({});
     onClose();
+    setLoading(false);
   };
 
   return (
@@ -83,25 +103,26 @@ export default function Register({ open, onClose }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit}>
           <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-b border-gray-200">
             <RegisterFormFiled
               form={form}
               errors={errors}
               onChange={handleChange}
             />
+            <p className="text-right">
+              <Button variant="link" onClick={signIn} className="text-sm">
+                Sign in now.
+              </Button>
+            </p>
           </div>
           <div className="py-5 px-8">
             <Button
-              disabled={isPending}
+              disabled={loading}
               type="submit"
-              className="w-full flex justify-center !rounded-full"
+              className="w-full flex justify-center !rounded-full py-2 px-4"
             >
-              {isPending ? (
-                <ICONS.Loading width={24} height={24} />
-              ) : (
-                'Continue'
-              )}
+              {loading ? <ICONS.Loading width={24} height={24} /> : 'Continue'}
             </Button>
           </div>
         </form>

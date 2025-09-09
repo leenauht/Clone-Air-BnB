@@ -1,20 +1,19 @@
 import FormDatePicker from '@/components/form/formDatePicker';
 import FormItem from '@/components/form/formItem';
 import FormSelect from '@/components/form/formSelect';
-
-import { FormField } from './validateFiled';
+import { FormSignUp } from '@/types/validateField';
 
 type Props = {
-  form: Record<FormField, string>;
-  errors: Partial<Record<FormField, string>>;
-  onChange: (name: FormField, value: string) => void;
+  form: Record<FormSignUp, string>;
+  errors: Partial<Record<FormSignUp, string>>;
+  onChange: (name: FormSignUp, value: string) => void;
 };
 
 export default function RegisterFormFiled({ form, errors, onChange }: Props) {
   return (
     <>
       <FormItem
-        // horizontal={true}
+        // horizontal
         label="Username"
         name="name"
         value={form.name}
@@ -22,7 +21,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         error={errors.name}
       />
       <FormItem
-        // horizontal={true}
+        // horizontal
         label="Email"
         name="email"
         value={form.email}
@@ -30,7 +29,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         error={errors.email}
       />
       <FormItem
-        horizontal={true}
+        horizontal
         label="Password"
         name="password"
         value={form.password}
@@ -38,7 +37,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         error={errors.password}
       />
       <FormItem
-        horizontal={true}
+        horizontal
         type="number"
         label="Phone"
         name="phone"
@@ -47,7 +46,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         error={errors.phone}
       />
       <FormSelect
-        horizontal={true}
+        horizontal
         label="Gender"
         name="gender"
         value={form.gender}
@@ -55,7 +54,7 @@ export default function RegisterFormFiled({ form, errors, onChange }: Props) {
         error={errors.gender}
       />
       <FormDatePicker
-        horizontal={true}
+        horizontal
         label="Birthday"
         name="birthday"
         value={form.birthday}

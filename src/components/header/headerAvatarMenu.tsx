@@ -1,14 +1,14 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import Register from '@/app/_components/register/register';
+import SignIn from '@/app/_components/signIn/signIn';
 import { ICONS } from '@/components/icons/icon';
-import { useOutsideClick } from '@/hooks/useClickOutSide';
 
 import Dropdown from '../dropdown/dropdown';
 
-const { Account, Login, Menu, Setting, SignCircle } = ICONS;
+const { Account, Login, Menu, Setting, SignCircle, Logout } = ICONS;
 const OPTIONS_DROPDOWN = [
   {
     label: 'Sign in',
@@ -25,22 +25,32 @@ const OPTIONS_DROPDOWN = [
     value: 'settings',
     prefix: <Setting width={20} height={20} />,
   },
+  {
+    label: 'Logout',
+    value: 'logout',
+    prefix: <Logout width={20} height={20} color="red" />,
+    color: 'red',
+  },
 ];
 
 export default function HeaderAvatarMenu() {
-  const [open, setOpen] = useState(false);
-  const dropDownMenu = useRef<HTMLDivElement>(null);
+  const [openSignIn, setOpenSignIn] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
 
-  useOutsideClick(dropDownMenu, () => {
-    if (open) setOpen(false);
-  });
+  function signInNow() {
+    setOpenRegister(false);
+    setOpenSignIn(true);
+  }
+  function signUpNow() {
+    setOpenSignIn(false);
+    setOpenRegister(true);
+  }
 
   return (
     <>
       <Dropdown
         className="border hover:border-blue-500 rounded-full py-1 px-5"
-        trigger={
+        activator={
           <>
             <Menu />
             <Account width={40} height={40} color="gray" />
@@ -50,10 +60,22 @@ export default function HeaderAvatarMenu() {
         options={OPTIONS_DROPDOWN}
         onChange={(val) => {
           if (val === 'sign up') setOpenRegister(true);
+          if (val === 'sign in') setOpenSignIn(true);
         }}
       />
+      {openSignIn && (
+        <SignIn
+          open={openSignIn}
+          onClose={() => setOpenSignIn(false)}
+          signUp={signUpNow}
+        />
+      )}
       {openRegister && (
-        <Register open={openRegister} onClose={() => setOpenRegister(false)} />
+        <Register
+          open={openRegister}
+          onClose={() => setOpenRegister(false)}
+          signIn={signInNow}
+        />
       )}
     </>
   );

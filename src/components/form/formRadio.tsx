@@ -1,4 +1,3 @@
-import { FormField } from '@/app/_components/register/validateFiled';
 import clsx from 'clsx';
 
 interface RadioOption {
@@ -6,17 +5,17 @@ interface RadioOption {
   value: string;
 }
 
-interface FormRadioProps {
+interface FormRadioProps<T extends string> {
   label: string;
-  name: FormField;
+  name: T;
   value: string;
   options: RadioOption[];
-  onChange: (name: FormField, value: string) => void;
+  onChange: (name: T, value: string) => void;
   error?: string;
   horizontal?: boolean;
 }
 
-export default function FormRadio({
+export default function FormRadio<T extends string>({
   label,
   name,
   value,
@@ -24,7 +23,7 @@ export default function FormRadio({
   onChange,
   error,
   horizontal,
-}: FormRadioProps) {
+}: FormRadioProps<T>) {
   return (
     <div
       className={clsx(

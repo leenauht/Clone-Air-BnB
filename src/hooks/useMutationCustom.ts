@@ -1,6 +1,6 @@
 import { ApiError, apiFetch } from '@/services/api';
 
-import { mutationOptions } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 type CustomMutationOptions = {
   key: string | string[];
@@ -13,7 +13,7 @@ export function useMutationCustom<TData, TVariables>({
   url,
   method,
 }: CustomMutationOptions) {
-  return mutationOptions<TData, ApiError, TVariables>({
+  return useMutation<TData, ApiError, TVariables>({
     mutationKey: Array.isArray(key) ? key : [key],
     mutationFn: (variables: TVariables) =>
       apiFetch<TData>(url, {

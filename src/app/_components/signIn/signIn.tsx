@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
+import { API_URL } from '@/components/constants/constants';
 import { ICONS } from '@/components/icons/icon';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
-import { DataSignIn } from '@/services/apiSignIn';
-
-import { useMutation } from '@tanstack/react-query';
+import { useMutationCustom } from '@/hooks/useMutationCustom';
+import { useAuthStore } from '@/store/authStore';
+import { TypeLoginData } from '@/types/user';
 
 import SignInFormFiled from './signInFormField';
 import { FormFieldSignIn } from './validateFieldSignIn';
@@ -29,8 +30,15 @@ interface SignInProps {
 export default function SignIn({ open, onClose, signUp }: SignInProps) {
   const [form, setForm] = useState<FormSignInData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormSignInErrors>({});
-  const mutation = useMutation(DataSignIn());
-  const { mutate, isPending } = mutation;
+  const login = useAuthStore((state) => state.login);
+  const { mutate, isPending } = useMutationCustom<
+    TypeLoginData,
+    FormSignInData
+  >({
+    key: 'signin',
+    url: `${API_URL}/auth/signin`,
+    method: 'POST',
+  });
 
   const handleChange = (name: FormFieldSignIn, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -50,6 +58,8 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
     mutate(form, {
       onSuccess: (data) => {
         if (data) {
+          const { user, token } = data.content;
+          login(user, token);
           toastSuccess('Đăng nhập thành công 🎉');
           resetForm();
           onClose();

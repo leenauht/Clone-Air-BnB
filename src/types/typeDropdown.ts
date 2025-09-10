@@ -4,12 +4,13 @@ export interface DropdownOption {
   prefix?: React.ReactNode;
   subfix?: React.ReactNode;
   color?: string;
+  action?: () => void;
 }
 
 export interface DropdownProps {
   label?: string;
   activator?: React.ReactNode;
-  options: DropdownOption[];
+  options: readonly DropdownOption[];
   value?: string;
   onChange: (value: string) => void;
   className?: string;

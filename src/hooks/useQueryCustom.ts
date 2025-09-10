@@ -1,6 +1,6 @@
 import { apiFetch } from '@/services/api';
 
-import { queryOptions } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 type CustomQueryOptions = {
   key: string;
@@ -8,7 +8,7 @@ type CustomQueryOptions = {
 };
 
 export function useQueryCustomOptions<T>({ key, url }: CustomQueryOptions) {
-  return queryOptions<T>({
+  return useQuery<T>({
     queryKey: [key],
     queryFn: () => apiFetch<T>(url),
   });

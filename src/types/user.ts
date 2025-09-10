@@ -12,4 +12,9 @@ export type User = {
   role: string;
 };
 
-export type TypeUserData = CustomReponseType<User>;
+type ContentDataLogin = {
+  token: string;
+  user: User;
+};
+
+export type TypeLoginData = CustomReponseType<ContentDataLogin>;

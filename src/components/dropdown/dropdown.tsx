@@ -12,7 +12,7 @@ export function DropdownMenu({
   onChange,
 }: {
   open: boolean;
-  options: DropdownOption[];
+  options: readonly DropdownOption[];
   value?: string;
   className?: string;
   onChange: (value: string) => void;

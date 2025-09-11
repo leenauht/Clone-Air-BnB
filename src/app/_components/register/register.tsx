@@ -6,10 +6,10 @@ import Button from '@/components/button/button';
 import DivItem from '@/components/divItem/divItem';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
-import { DataRegister } from '@/services/apiRegister';
+import { useMutationCustom } from '@/hooks/useMutationCustom';
+import { User } from '@/types/user';
 
 import { ICONS } from '@components/icons/icon';
-import { useMutation } from '@tanstack/react-query';
 
 import RegisterFormFiled from './registerFormFiled';
 import { FormFieldSignUp } from './validateFiled';
@@ -34,8 +34,10 @@ interface RegisterProps {
 export default function Register({ open, onClose, signIn }: RegisterProps) {
   const [form, setForm] = useState<FormData>({ ...INITIAL_FORM });
   const [errors, setErrors] = useState<FormErrors>({});
-  const mutation = useMutation(DataRegister());
-  const { mutate, isPending } = mutation;
+
+  const { mutate, isPending } = useMutationCustom<User, FormData>({
+    key: 'signup',
+  });
 
   // --- Handle form field change ---
   const handleChange = (name: FormFieldSignUp, value: string) => {

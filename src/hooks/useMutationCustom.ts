@@ -1,20 +1,20 @@
+import { API_URL } from '@/components/constants/constants';
 import { ApiError, apiFetch } from '@/services/api';
 
-import { mutationOptions } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+
+type ApiUrlKey = keyof typeof API_URL;
 
 type CustomMutationOptions = {
-  key: string | string[];
-  url: string;
-  method?: 'POST' | 'PUT' | 'DELETE';
+  key: ApiUrlKey;
 };
 
 export function useMutationCustom<TData, TVariables>({
   key,
-  url,
-  method,
 }: CustomMutationOptions) {
-  return mutationOptions<TData, ApiError, TVariables>({
-    mutationKey: Array.isArray(key) ? key : [key],
+  const { url, method } = API_URL[key];
+  return useMutation<TData, ApiError, TVariables>({
+    mutationKey: [key],
     mutationFn: (variables: TVariables) =>
       apiFetch<TData>(url, {
         method,

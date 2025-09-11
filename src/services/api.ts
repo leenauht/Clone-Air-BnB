@@ -1,5 +1,7 @@
 import { API_TOKEN } from '@/components/constants/constants';
 
+// import { getToken } from '@/helper/getToken';
+
 export interface ApiError {
   statusCode: number;
   message: string;
@@ -10,6 +12,10 @@ export async function apiFetch<T>(
   url: string,
   options: RequestInit = {},
 ): Promise<T> {
+  // chỉ call được api từ API_TOKEN.TOKEN_CYBERSOFT
+  // const userToken = getToken();
+  // const token = userToken ?? API_TOKEN.TOKEN_CYBERSOFT;
+
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

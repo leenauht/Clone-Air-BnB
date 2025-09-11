@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 export type LikeStore = {
   likes: Record<number, true>;
@@ -8,22 +8,25 @@ export type LikeStore = {
 };
 
 export const useLikeSore = create<LikeStore>()(
-  persist(
-    (set, get) => ({
-      likes: {},
-      toggleLike: (id) => {
-        const current = { ...get().likes };
-        if (current[id]) {
-          delete current[id];
-        } else {
-          current[id] = true;
-        }
-        set({ likes: current });
+  devtools(
+    persist(
+      (set, get) => ({
+        likes: {},
+        toggleLike: (id) => {
+          const current = { ...get().likes };
+          if (current[id]) {
+            delete current[id];
+          } else {
+            current[id] = true;
+          }
+          set({ likes: current }, false, { type: 'LikeStore/toggleLike', id });
+        },
+        isLiked: (id) => Boolean(get().likes[id]),
+      }),
+      {
+        name: 'room-like',
       },
-      isLiked: (id) => Boolean(get().likes[id]),
-    }),
-    {
-      name: 'room-like',
-    },
+    ),
+    { name: 'LikeStore' },
   ),
 );

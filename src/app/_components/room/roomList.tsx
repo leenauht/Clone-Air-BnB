@@ -1,7 +1,6 @@
 'use client';
 
-import { API_URL } from '@/components/constants/constants';
-import { useQueryCustomOptions } from '@/hooks/useQueryCustom';
+import { useQueryCustom } from '@/hooks/useQueryCustom';
 import { DEFAULT_LOCATION_DATA, TypeLocationData } from '@/types/location';
 import { DEFAULT_ROOM_DATA, TypeRoomData } from '@/types/room';
 
@@ -9,13 +8,11 @@ import RoomListContent from './roomListContent';
 import RoomListContentSkeleton from './roomSkeleton';
 
 export default function RoomList() {
-  const { data: roomData, isLoading } = useQueryCustomOptions<TypeRoomData>({
-    key: 'room',
-    url: `${API_URL}/phong-thue`,
+  const { data: roomData, isLoading } = useQueryCustom<TypeRoomData>({
+    key: 'phong-thue',
   });
-  const { data: locationData } = useQueryCustomOptions<TypeLocationData>({
-    key: 'location',
-    url: `${API_URL}/vi-tri`,
+  const { data: locationData } = useQueryCustom<TypeLocationData>({
+    key: 'vi-tri',
   });
 
   return (

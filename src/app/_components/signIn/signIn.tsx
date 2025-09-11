@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
-import { API_URL } from '@/components/constants/constants';
 import { ICONS } from '@/components/icons/icon';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
@@ -36,8 +35,6 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
     FormSignInData
   >({
     key: 'signin',
-    url: `${API_URL}/auth/signin`,
-    method: 'POST',
   });
 
   const handleChange = (name: FormFieldSignIn, value: string) => {

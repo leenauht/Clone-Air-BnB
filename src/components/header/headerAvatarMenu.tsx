@@ -75,7 +75,7 @@ export default function HeaderAvatarMenu() {
         className="border hover:border-blue-500 rounded-full py-1 px-5"
         activator={
           <>
-            <Menu />
+            <Menu width={20} height={20} />
             <Account width={40} height={40} color="gray" />
           </>
         }

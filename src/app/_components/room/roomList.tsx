@@ -1,8 +1,12 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useQueryCustom } from '@/hooks/useQueryCustom';
-import { DEFAULT_LOCATION_DATA, TypeLocationData } from '@/types/location';
-import { DEFAULT_ROOM_DATA, TypeRoomData } from '@/types/room';
+import { useLocationStore } from '@/store/locationStore';
+import { useRoomStore } from '@/store/roomStore';
+import { TypeLocationData } from '@/types/location';
+import { TypeRoomData } from '@/types/room';
 
 import RoomListContent from './roomListContent';
 import RoomListContentSkeleton from './roomSkeleton';
@@ -15,18 +19,23 @@ export default function RoomList() {
     key: 'vi-tri',
   });
 
+  const setRoomData = useRoomStore((state) => state.setRoomData);
+  const setLocationData = useLocationStore((state) => state.setLocationData);
+
+  // chỉ lưu vào store khi có data
+  useEffect(() => {
+    if (roomData) setRoomData(roomData);
+  }, [roomData, setRoomData]);
+
+  useEffect(() => {
+    if (locationData) setLocationData(locationData);
+  }, [locationData, setLocationData]);
+
   return (
-    <div className="w-full mx-auto px-4 pt-40 sm:px-6 max-w-7xl">
+    <section className="w-full mx-auto px-4 pt-40 sm:px-6 max-w-7xl">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-5 md:gap-4 xl:gap-5">
-        {isLoading ? (
-          <RoomListContentSkeleton />
-        ) : (
-          <RoomListContent
-            locationData={locationData ?? DEFAULT_LOCATION_DATA}
-            roomData={roomData ?? DEFAULT_ROOM_DATA}
-          />
-        )}
+        {isLoading ? <RoomListContentSkeleton /> : <RoomListContent />}
       </div>
-    </div>
+    </section>
   );
 }

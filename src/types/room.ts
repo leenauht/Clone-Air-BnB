@@ -24,6 +24,8 @@ export type RoomItem = {
 
 export type TypeRoomData = CustomReponseType<RoomItem[]>;
 
+export type TypeRoomDetail = CustomReponseType<RoomItem>;
+
 export const DEFAULT_ROOM_DATA: TypeRoomData = {
   statusCode: 200,
   dateTime: '',

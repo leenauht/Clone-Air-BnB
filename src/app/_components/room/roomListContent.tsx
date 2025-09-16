@@ -1,38 +1,41 @@
-import { useMemo } from 'react';
-
 import Card from '@/components/card/card';
 import { ROUTES } from '@/components/constants/constants';
 import CustomText from '@/components/text/customText';
 import PriceWithUnit from '@/components/text/priceWithUnit';
-import { TypeLocationData } from '@/types/location';
-import { TypeRoomData } from '@/types/room';
+import { useLocationStore } from '@/store/locationStore';
+import { useRoomStore } from '@/store/roomStore';
 import Link from 'next/link';
 
 import { IconImgCard } from './iconImgCard';
 
-interface RenderListContent {
-  roomData?: TypeRoomData;
-  locationData?: TypeLocationData;
-}
+export default function RoomListContent() {
+  const listRoomData = useRoomStore((state) => state.listRoomData);
+  const listLocationData = useLocationStore((state) => state.listLocationData);
 
-export default function RoomListContent({
-  locationData,
-  roomData,
-}: RenderListContent) {
-  const roomContent = roomData?.content;
-  const locationContent = locationData?.content;
-
-  const findLocation = useMemo(() => {
-    return (id: number) =>
-      locationContent?.find((loation) => loation.id === id);
-  }, [locationContent]);
+  // check trường hợp khi f5 thì store ban đầu sẽ không có data
+  const roomContent = Array.isArray(listRoomData?.content)
+    ? listRoomData.content
+    : [];
+  const locationContent = Array.isArray(listLocationData?.content)
+    ? listLocationData.content
+    : [];
 
   return roomContent?.map((room) => {
-    const loc = findLocation(room.maViTri);
+    const loc = locationContent.find(
+      (location) => location.id === room.maViTri,
+    );
+    if (!loc) return null;
+
     const address = `${loc?.tenViTri} - ${loc?.tinhThanh} - ${loc?.quocGia}`;
     return (
       <Link
-        href={ROUTES.ROOM_DETAIL}
+        href={{
+          pathname: ROUTES.ROOM_DETAIL,
+          query: {
+            roomId: room.id,
+            locationId: loc?.id,
+          },
+        }}
         key={room.id}
         className={`${loc === undefined ? 'hidden' : ''}`}
       >

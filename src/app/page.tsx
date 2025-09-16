@@ -1,6 +1,6 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
-import RoomList from './_components/room/roomList';
+import RoomList from './_components/listRoom/roomList';
 import { getQueryClient } from './get-query-client';
 
 export default function Home() {

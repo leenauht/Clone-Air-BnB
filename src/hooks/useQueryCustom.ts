@@ -8,9 +8,10 @@ type ApiUrlKey = keyof typeof API_URL;
 type CustomQueryOptions = {
   key: ApiUrlKey;
   id?: string | number;
+  enabled?: boolean;
 };
 
-export function useQueryCustom<T>({ key, id }: CustomQueryOptions) {
+export function useQueryCustom<T>({ key, id, enabled }: CustomQueryOptions) {
   const { url } = API_URL[key];
 
   // nếu có id thêm vào cuối url
@@ -19,5 +20,6 @@ export function useQueryCustom<T>({ key, id }: CustomQueryOptions) {
   return useQuery<T>({
     queryKey: id ? [key, id] : [key],
     queryFn: () => apiFetch<T>(finalUrl),
+    enabled: enabled && !!id,
   });
 }

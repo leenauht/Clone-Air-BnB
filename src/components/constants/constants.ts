@@ -1,6 +1,6 @@
 export const ROUTES = {
   HOME: '/',
-  ROOM_DETAIL: '/roomDetail',
+  ROOM_DETAIL: '/room',
 };
 export const API_URL_DEFAULT = process.env.NEXT_PUBLIC_API_URL;
 

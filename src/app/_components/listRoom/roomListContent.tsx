@@ -29,13 +29,7 @@ export default function RoomListContent() {
     const address = `${loc.tenViTri} - ${loc.tinhThanh} - ${loc.quocGia}`;
     return (
       <Link
-        href={{
-          pathname: ROUTES.ROOM_DETAIL,
-          query: {
-            roomId: room.id,
-            locationId: loc.id,
-          },
-        }}
+        href={`${ROUTES.ROOM_DETAIL}/${room.id}`}
         key={room.id}
         className={`${loc === undefined ? 'hidden' : ''}`}
       >

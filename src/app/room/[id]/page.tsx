@@ -4,41 +4,33 @@ import React from 'react';
 
 import { ICONS } from '@/components/icons/icon';
 import CustomText from '@/components/text/customText';
-import { normalLizeId } from '@/helper/normalLizeId';
 import { useQueryCustom } from '@/hooks/useQueryCustom';
 import { TypeLocationDetail } from '@/types/location';
 import { TypeRoomDetail } from '@/types/room';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 
-// import BookingRoom from './bookingRoom/bookingRoom';
-import RoomContentSkeleton from './roomInfo/roomContentSkeleton';
-import RoomInfo from './roomInfo/roomInfo';
+import BookingRoom from '../bookingRoom/bookingRoom';
+import RoomContentSkeleton from '../roomInfo/roomContentSkeleton';
+import RoomInfo from '../roomInfo/roomInfo';
 
-// Lấy param khi ở ngoài sever
-// interface RoomDetailProps {
-//   searchParams: { [key: string]: string | string[] | undefined };
-// }
-// { searchParams }: RoomDetailProps
-// const roomId = normalLizeId(searchParams.roomId));
-// const locationId = normalLizeId(searchParams.locationId);
-
-export default function RoomDetail() {
-  // Lấy param khi dùng client component
-  const searchParams = useSearchParams();
-  const roomId = normalLizeId(searchParams.get('roomId'));
-  const locationId = normalLizeId(searchParams.get('locationId'));
+export default function RoomDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = React.use(params);
 
   const { data: roomData, isLoading: isRoomLoading } =
     useQueryCustom<TypeRoomDetail>({
       key: 'phong-thue',
-      id: roomId,
+      id: id,
     });
 
   const { data: locationData, isLoading: isLocationLoading } =
     useQueryCustom<TypeLocationDetail>({
       key: 'vi-tri',
-      id: locationId,
+      id: roomData?.content.maViTri,
+      enabled: !!roomData?.content.maViTri,
     });
 
   const isLoading = isRoomLoading || isLocationLoading;
@@ -73,7 +65,7 @@ export default function RoomDetail() {
       </div>
       <div className="lg:flex lg:gap-5 xl:gap-10">
         <RoomInfo roomData={roomData} locationData={locationData} />
-        {/* <BookingRoom /> */}
+        <BookingRoom />
       </div>
     </section>
   );

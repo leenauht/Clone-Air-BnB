@@ -26,14 +26,14 @@ export default function RoomListContent() {
     );
     if (!loc) return null;
 
-    const address = `${loc?.tenViTri} - ${loc?.tinhThanh} - ${loc?.quocGia}`;
+    const address = `${loc.tenViTri} - ${loc.tinhThanh} - ${loc.quocGia}`;
     return (
       <Link
         href={{
           pathname: ROUTES.ROOM_DETAIL,
           query: {
             roomId: room.id,
-            locationId: loc?.id,
+            locationId: loc.id,
           },
         }}
         key={room.id}

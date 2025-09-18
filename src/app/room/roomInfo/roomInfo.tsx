@@ -2,20 +2,20 @@ import React from 'react';
 
 import ShowMoreText from '@/components/showMoreText/showMoreText';
 import CustomText from '@/components/text/customText';
-import { TypeLocationDetail } from '@/types/location';
-import { TypeRoomDetail } from '@/types/room';
+import { LocationItem } from '@/types/location';
+import { RoomItem } from '@/types/room';
 import { Star } from 'lucide-react';
 
 import { Amenities } from './amenities';
 
 type TypeData = {
-  roomData: TypeRoomDetail;
-  locationData: TypeLocationDetail;
+  roomData: RoomItem;
+  locationData: LocationItem;
 };
 
 export default function RoomInfo({ roomData, locationData }: TypeData) {
-  const loc = locationData.content;
-  const room = roomData.content;
+  const loc = locationData;
+  const room = roomData;
 
   return (
     <div className="w-full lg:w-3/5 space-y-4 md:space-y-5">

@@ -1,21 +1,21 @@
-import { DEFAULT_ROOM_DATA, TypeRoomData } from '@/types/room';
+import { RoomItem } from '@/types/room';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 type RoomStore = {
-  listRoomData: TypeRoomData | null;
-  setRoomData: (data: TypeRoomData) => void;
+  listRoomData: RoomItem[] | [];
+  setRoomData: (data: RoomItem[]) => void;
   clearRoomData: () => void;
 };
 
 export const useRoomStore = create<RoomStore>()(
   devtools(
     (set) => ({
-      listRoomData: DEFAULT_ROOM_DATA,
+      listRoomData: [],
       setRoomData: (data) =>
         set({ listRoomData: data }, false, { type: 'Room/Data' }),
-      clearRoomData: () => set({ listRoomData: DEFAULT_ROOM_DATA }),
+      clearRoomData: () => set({ listRoomData: [] }),
     }),
-    // { name: 'RoomStore' },
+    { name: 'RoomStore' },
   ),
 );

@@ -5,8 +5,8 @@ import React from 'react';
 import { ICONS } from '@/components/icons/icon';
 import CustomText from '@/components/text/customText';
 import { useQueryCustom } from '@/hooks/useQueryCustom';
-import { TypeLocationDetail } from '@/types/location';
-import { TypeRoomDetail } from '@/types/room';
+import { LocationItem } from '@/types/location';
+import { RoomItem } from '@/types/room';
 import Image from 'next/image';
 
 // import BookingRoom from '../bookingRoom/bookingRoom';
@@ -20,21 +20,24 @@ export default function RoomDetail({
 }) {
   const { id } = React.use(params);
 
-  const { data: roomData, isLoading: isRoomLoading } =
-    useQueryCustom<TypeRoomDetail>({
+  const { data: roomData, isLoading: isRoomLoading } = useQueryCustom<RoomItem>(
+    {
       key: 'phong-thue',
       id: id,
-    });
+    },
+  );
 
   const { data: locationData, isLoading: isLocationLoading } =
-    useQueryCustom<TypeLocationDetail>({
+    useQueryCustom<LocationItem>({
       key: 'vi-tri',
-      id: roomData?.content.maViTri,
-      enabled: !!roomData?.content.maViTri,
+      id: roomData?.maViTri,
+      options: {
+        enabled: !!roomData?.maViTri,
+      },
     });
 
   const isLoading = isRoomLoading || isLocationLoading;
-  const isEmpty = !roomData?.content || !locationData?.content;
+  const isEmpty = !roomData || !locationData;
 
   if (isLoading) return <RoomContentSkeleton />;
 
@@ -47,7 +50,7 @@ export default function RoomDetail({
     );
   }
 
-  const room = roomData.content;
+  const room = roomData;
 
   return (
     <section className="w-full mx-auto px-4 pt-40 sm:px-6 max-w-7xl space-y-4 md:space-y-5">

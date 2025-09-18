@@ -12,16 +12,8 @@ export default function RoomListContent() {
   const listRoomData = useRoomStore((state) => state.listRoomData);
   const listLocationData = useLocationStore((state) => state.listLocationData);
 
-  // check trường hợp khi f5 thì store ban đầu sẽ không có data
-  const roomContent = Array.isArray(listRoomData?.content)
-    ? listRoomData.content
-    : [];
-  const locationContent = Array.isArray(listLocationData?.content)
-    ? listLocationData.content
-    : [];
-
-  return roomContent?.map((room) => {
-    const loc = locationContent.find(
+  return listRoomData.map((room) => {
+    const loc = listLocationData.find(
       (location) => location.id === room.maViTri,
     );
     if (!loc) return null;

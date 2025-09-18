@@ -9,21 +9,23 @@ import { Star } from 'lucide-react';
 import { Amenities } from './amenities';
 
 type TypeData = {
-  roomData: RoomItem;
-  locationData: LocationItem;
+  room: RoomItem;
+  loc?: LocationItem;
 };
 
-export default function RoomInfo({ roomData, locationData }: TypeData) {
-  const loc = locationData;
-  const room = roomData;
-
+export default function RoomInfo({ room, loc }: TypeData) {
   return (
     <div className="w-full lg:w-3/5 space-y-4 md:space-y-5">
       <header>
-        <CustomText heading="h3" className="text-xl md:text-2xl">
-          Nhà nghỉ tại <span>{loc.tenViTri}</span> -{' '}
-          <span>{loc.tinhThanh}</span> - <span>{loc.quocGia}</span>
-        </CustomText>
+        {loc ? (
+          <CustomText heading="h3" className="text-xl md:text-2xl">
+            Nhà nghỉ tại <span>{loc.tenViTri}</span> -{' '}
+            <span>{loc.tinhThanh}</span> - <span>{loc.quocGia}</span>
+          </CustomText>
+        ) : (
+          ''
+        )}
+
         <CustomText heading="h6">
           <span>{room.khach}</span> khách - <span>{room.phongNgu}</span> phòng
           ngủ - <span>{room.giuong}</span> giường - <span>{room.phongTam}</span>{' '}

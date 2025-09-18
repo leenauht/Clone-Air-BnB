@@ -15,11 +15,12 @@ export default function RoomList() {
 
   const { isLoading } = useQueryCustom<RoomItem[]>({
     key: 'phong-thue',
-    setStoreFn: setRoomData,
+    onSuccess: setRoomData,
   });
+
   useQueryCustom<LocationItem[]>({
     key: 'vi-tri',
-    setStoreFn: setLocationData,
+    onSuccess: setLocationData,
   });
 
   return (

@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { API_URL } from '@/components/constants/constants';
 import { apiFetch } from '@/services/api';
 
@@ -10,14 +8,14 @@ type ApiUrlKey = keyof typeof API_URL;
 type CustomQueryOptions<T> = {
   key: ApiUrlKey;
   id?: string | number;
-  setStoreFn?: (data: T) => void;
+  onSuccess?: (data: T) => void;
   options?: Omit<UseQueryOptions<T, Error>, 'queryKey' | 'queryFn'>;
 };
 
 export function useQueryCustom<T>({
   key,
   id,
-  setStoreFn,
+  onSuccess,
   options,
 }: CustomQueryOptions<T>) {
   const { url } = API_URL[key];
@@ -30,17 +28,15 @@ export function useQueryCustom<T>({
     queryFn: async () => {
       // lấy content trong data api trả về
       const res = await apiFetch<{ content: T }>(finalUrl);
+
+      if (res.content && onSuccess) {
+        onSuccess(res.content);
+      }
+
       return res.content;
     },
     ...options,
   });
-
-  // TanStack v5+ không hỗ trợ onSuccess nữa
-  useEffect(() => {
-    if (query.isSuccess && query.data && setStoreFn) {
-      setStoreFn(query.data);
-    }
-  }, [query.isSuccess, query.data, setStoreFn]);
 
   return query;
 }

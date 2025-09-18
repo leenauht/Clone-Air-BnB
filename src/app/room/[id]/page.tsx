@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { ICONS } from '@/components/icons/icon';
 import CustomText from '@/components/text/customText';
 import { useQueryCustom } from '@/hooks/useQueryCustom';
 import { LocationItem } from '@/types/location';
@@ -37,29 +36,20 @@ export default function RoomDetail({
     });
 
   const isLoading = isRoomLoading || isLocationLoading;
-  const isEmpty = !roomData || !locationData;
 
   if (isLoading) return <RoomContentSkeleton />;
 
-  if (isEmpty) {
-    return (
-      <div className="w-full h-screen flex flex-col justify-center items-center">
-        <ICONS.Empty />
-        <p>No Data</p>
-      </div>
-    );
-  }
-
-  const room = roomData;
+  // custom page error
+  if (!roomData) return null;
 
   return (
     <section className="w-full mx-auto px-4 pt-40 sm:px-6 max-w-7xl space-y-4 md:space-y-5">
       <CustomText heading="h3" className="text-xl md:text-2xl">
-        {room.tenPhong}
+        {roomData?.tenPhong}
       </CustomText>
       <div className="relative w-full aspect-[3/1] overflow-hidden rounded-xl">
         <Image
-          src={room.hinhAnh}
+          src={roomData.hinhAnh}
           alt="room"
           priority
           fill={true}
@@ -67,7 +57,7 @@ export default function RoomDetail({
         />
       </div>
       <div className="lg:flex lg:gap-5 xl:gap-10">
-        <RoomInfo roomData={roomData} locationData={locationData} />
+        <RoomInfo room={roomData} loc={locationData} />
         {/* <BookingRoom /> */}
       </div>
     </section>

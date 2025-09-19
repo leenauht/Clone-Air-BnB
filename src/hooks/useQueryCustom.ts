@@ -27,13 +27,18 @@ export function useQueryCustom<T>({
     queryKey: id ? [key, id] : [key],
     queryFn: async () => {
       // lấy content trong data api trả về
-      const res = await apiFetch<{ content: T }>(finalUrl);
+      try {
+        const res = await apiFetch<{ content: T }>(finalUrl);
 
-      if (res.content && onSuccess) {
-        onSuccess(res.content);
+        if (res.content && onSuccess) {
+          onSuccess(res.content);
+        }
+
+        return res.content;
+      } catch (err) {
+        console.error('API call failed:', err);
+        throw err;
       }
-
-      return res.content;
     },
     ...options,
   });

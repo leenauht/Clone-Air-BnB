@@ -13,7 +13,7 @@ interface CustomTextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const typeClasses: Record<TextType, string> = {
-  default: 'text-gray-900',
+  default: 'text-black',
   secondary: 'text-gray-500',
   success: 'text-green-600',
   warning: 'text-yellow-600',

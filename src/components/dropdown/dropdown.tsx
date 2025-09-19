@@ -63,12 +63,15 @@ export default function Dropdown({
   isChevronDown,
 }: DropdownProps) {
   const selected = options.find((opt) => opt.value === value) || null;
-  const { open, togglePopup, ref } = usePopup<HTMLDivElement>();
+  const { open, togglePopup, popupRef, triggerRef } = usePopup<
+    HTMLDivElement,
+    HTMLDivElement
+  >();
 
   return (
     <div
       tabIndex={0}
-      ref={ref}
+      ref={triggerRef}
       className={clsx(
         'relative inline-block text-left focus:outline-none cursor-pointer focus:border-blue-300',
         className,
@@ -97,16 +100,20 @@ export default function Dropdown({
       </div>
 
       {/* Dropdown */}
-      <DropdownMenu
-        open={open}
-        options={options}
-        value={value}
-        onChange={(val) => {
-          onChange(val);
-          togglePopup();
-        }}
-        className={clsDropdownMenu}
-      />
+      {open && (
+        <div ref={popupRef}>
+          <DropdownMenu
+            open={open}
+            options={options}
+            value={value}
+            onChange={(val) => {
+              onChange(val);
+              togglePopup();
+            }}
+            className={clsDropdownMenu}
+          />
+        </div>
+      )}
     </div>
   );
 }

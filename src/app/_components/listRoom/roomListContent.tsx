@@ -1,6 +1,6 @@
 import Card from '@/components/card/card';
 import { ROUTES } from '@/components/constants/constants';
-import CustomText from '@/components/text/customText';
+import CustomTextBlock from '@/components/divItem/customTextBlock';
 import PriceWithUnit from '@/components/text/priceWithUnit';
 import { useLocationStore } from '@/store/locationStore';
 import { useRoomStore } from '@/store/roomStore';
@@ -40,22 +40,13 @@ export default function RoomListContent() {
             }
           >
             <div className="p-4">
-              <CustomText
-                heading="p"
-                bold
+              <CustomTextBlock
                 title={address}
-                className="line-clamp-2 min-h-[3rem]"
-              >
-                {address}
-              </CustomText>
-
-              <CustomText
-                heading="p"
-                title={room.tenPhong}
-                className="line-clamp-2 min-h-[3rem]"
-              >
-                {room.tenPhong}
-              </CustomText>
+                text={room.tenPhong}
+                heading="h6"
+                titleClass="line-clamp-2 min-h-[3rem]"
+                textClass="line-clamp-2 min-h-[3rem]"
+              />
               <PriceWithUnit
                 amount={room.giaTien}
                 unit="đêm"

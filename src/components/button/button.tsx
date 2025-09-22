@@ -1,10 +1,4 @@
-type TypeVariant =
-  | 'primary'
-  | 'secondary'
-  | 'danger'
-  | 'light'
-  | 'link'
-  | 'default';
+type TypeVariant = 'primary' | 'secondary' | 'danger' | 'light' | 'link';
 type TypeButton = 'button' | 'submit' | 'reset';
 
 interface ButtonProps {
@@ -22,7 +16,6 @@ const typeClasses: Record<TypeVariant, string> = {
   danger: 'bg-red-600 text-white hover:opacity-70',
   light: 'bg-white text-black hover:opacity-70',
   link: 'bg-transparent text-blue-600 underline hover:text-blue-800 shadow-none',
-  default: '',
 };
 
 export default function Button({

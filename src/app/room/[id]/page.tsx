@@ -8,7 +8,7 @@ import { LocationItem } from '@/types/location';
 import { RoomItem } from '@/types/room';
 import Image from 'next/image';
 
-// import BookingRoom from '../bookingRoom/bookingRoom';
+import BookingRoom from '../bookingRoom/bookingRoom';
 import RoomContentSkeleton from '../roomInfo/roomContentSkeleton';
 import RoomInfo from '../roomInfo/roomInfo';
 
@@ -43,7 +43,7 @@ export default function RoomDetail({
   if (!roomData) return null;
 
   return (
-    <section className="w-full mx-auto px-4 pt-40 sm:px-6 max-w-7xl space-y-4 md:space-y-5">
+    <section className="w-full mx-auto px-4 pt-40 pb-10 sm:px-6 max-w-7xl space-y-4 md:space-y-5">
       <CustomText heading="h3" className="text-xl md:text-2xl">
         {roomData?.tenPhong}
       </CustomText>
@@ -56,9 +56,9 @@ export default function RoomDetail({
           className="object-cover"
         />
       </div>
-      <div className="lg:flex lg:gap-5 xl:gap-10">
+      <div className="space-y-5 lg:space-y-0 lg:flex lg:gap-5 xl:gap-10">
         <RoomInfo room={roomData} loc={locationData} />
-        {/* <BookingRoom /> */}
+        <BookingRoom room={roomData} />
       </div>
     </section>
   );

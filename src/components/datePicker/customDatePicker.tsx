@@ -36,7 +36,10 @@ export function RenderLabel(props: {
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
   const { mode, value, onChange, label, placeholder, onReset, error } = props;
-  const { open, togglePopup, ref } = usePopup<HTMLDivElement>();
+  const { open, togglePopup, triggerRef, popupRef } = usePopup<
+    HTMLButtonElement,
+    HTMLDivElement
+  >();
 
   const handleSelect = (val: Date | DateRange | undefined) => {
     if (!val) return;
@@ -57,8 +60,8 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
     <div className="w-full relative">
       {label && <div className="mb-1 text-sm font-medium">{label}</div>}
 
-      <Button
-        variant="default"
+      <button
+        ref={triggerRef}
         type="button"
         onClick={togglePopup}
         className={clsx(
@@ -71,12 +74,12 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
         <RenderLabel value={value} placeholder={placeholder} mode={mode} />
 
         <Calendar className="w-6 h-6 text-gray-500 hover:text-blue-500 transition duration-300" />
-      </Button>
+      </button>
       <p className="min-h-[20px] text-red-500 text-sm mt-0.5">{error ?? ''}</p>
 
       {open && (
         <div
-          ref={ref}
+          ref={popupRef}
           className="absolute bottom-16 w-full rounded-lg border border-gray-300 bg-white shadow-shadow4"
         >
           {mode === 'single' ? (

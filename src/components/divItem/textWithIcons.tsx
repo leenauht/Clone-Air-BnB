@@ -1,4 +1,4 @@
-interface DivItemProps {
+interface TextWithIconsProps {
   prefix?: React.ReactNode;
   text: string;
   subfix?: React.ReactNode;
@@ -6,13 +6,13 @@ interface DivItemProps {
   onClick?: () => void;
 }
 
-export default function DivItem({
+export default function TextWithIcons({
   prefix,
   text,
   subfix,
   className,
   onClick,
-}: DivItemProps) {
+}: TextWithIconsProps) {
   return (
     <div
       onClick={onClick}

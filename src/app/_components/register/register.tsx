@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import Button from '@/components/button/button';
-import DivItem from '@/components/divItem/divItem';
+import TextWithIcons from '@/components/divItem/textWithIcons';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
 import { useMutationCustom } from '@/hooks/useMutationCustom';
@@ -79,7 +79,7 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
   return (
     <>
       {!open ? (
-        <DivItem
+        <TextWithIcons
           prefix={<ICONS.SignCircle width={20} height={20} />}
           text="Sign up"
           className="text-sm"

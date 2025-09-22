@@ -4,7 +4,6 @@ import { useBobyScrollLock } from '@/hooks/useBodyScrollLock';
 import { useCreatePortal } from '@/hooks/useCreatePortal';
 import { X } from 'lucide-react';
 
-import Button from '../button/button';
 import CustomText from '../text/customText';
 import './style.css';
 
@@ -61,13 +60,12 @@ export default function Modal({
               {title}
             </CustomText>
           )}
-          <Button
-            variant="default"
+          <button
             onClick={handleClose}
             className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
           >
             <X className="w-5 h-5" />
-          </Button>
+          </button>
         </div>
         {/* Body */}
         {children}

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CustomTextBlock from '@/components/divItem/customTextBlock';
 import ShowMoreText from '@/components/showMoreText/showMoreText';
 import CustomText from '@/components/text/customText';
 import { LocationItem } from '@/types/location';
@@ -14,24 +15,18 @@ type TypeData = {
 };
 
 export default function RoomInfo({ room, loc }: TypeData) {
+  const title = `Nhà nghỉ tại ${loc?.tenViTri} - ${loc?.tinhThanh} - ${loc?.quocGia}`;
+  const text = `${room.khach} khách - ${room.phongNgu} phòng ngủ - ${room.giuong} giường - ${room.phongTam} phòng tắm`;
+
   return (
     <div className="w-full lg:w-3/5 space-y-4 md:space-y-5">
-      <header>
-        {loc ? (
-          <CustomText heading="h3" className="text-xl md:text-2xl">
-            Nhà nghỉ tại <span>{loc.tenViTri}</span> -{' '}
-            <span>{loc.tinhThanh}</span> - <span>{loc.quocGia}</span>
-          </CustomText>
-        ) : (
-          ''
-        )}
-
-        <CustomText heading="h6">
-          <span>{room.khach}</span> khách - <span>{room.phongNgu}</span> phòng
-          ngủ - <span>{room.giuong}</span> giường - <span>{room.phongTam}</span>{' '}
-          phòng tắm
-        </CustomText>
-      </header>
+      <CustomTextBlock
+        title={title}
+        text={text}
+        heading="h4"
+        titleClass="md:text-2xl"
+        textClass="font-medium"
+      />
 
       <div className="flex items-center gap-1">
         <Star size={20} color="red" />

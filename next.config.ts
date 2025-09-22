@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '**', // Cho phép tất cả domain (ít bảo mật hơn)
       },
+      {
+        protocol: 'https',
+        hostname: 'airbnbnew.cybersoft.edu.vn',
+      },
     ],
   },
 };

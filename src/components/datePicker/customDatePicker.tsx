@@ -1,11 +1,11 @@
 import { usePopup } from '@/hooks/usePopup';
+import { CustomDatePickerProps } from '@/types/typeCustomDatePicker';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
-import { CustomDatePickerProps } from '../../types/typeDatePicker';
 import Button from '../button/button';
 import './datePicker.css';
 
@@ -57,7 +57,8 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
     <div className="w-full relative">
       {label && <div className="mb-1 text-sm font-medium">{label}</div>}
 
-      <button
+      <Button
+        variant="default"
         type="button"
         onClick={togglePopup}
         className={clsx(
@@ -70,7 +71,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
         <RenderLabel value={value} placeholder={placeholder} mode={mode} />
 
         <Calendar className="w-6 h-6 text-gray-500 hover:text-blue-500 transition duration-300" />
-      </button>
+      </Button>
       <p className="min-h-[20px] text-red-500 text-sm mt-0.5">{error ?? ''}</p>
 
       {open && (
@@ -92,7 +93,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
             />
           )}
 
-          <div className="flex justify-end gap-2 p-3 border-t-[1px] border-gray-300">
+          <footer className="flex justify-end gap-2 p-3 border-t-[1px] border-gray-300">
             <Button
               disabled={!value}
               onClick={onReset}
@@ -107,7 +108,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
             >
               Close
             </Button>
-          </div>
+          </footer>
         </div>
       )}
     </div>

@@ -1,5 +1,3 @@
-import { TypeLocationData } from '@/types/location';
-
 export const MockupLocationData = {
   statusCode: 200,
   content: [
@@ -180,4 +178,4 @@ export const MockupLocationData = {
         'https://airbnbnew.cybersoft.edu.vn/avatar/04-08-2025-09-16-56-astro.png',
     },
   ],
-} as TypeLocationData;
+};

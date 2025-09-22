@@ -1,3 +1,9 @@
+.rdp-months {
+  max-width: none;
+  display: block;
+  width: 100%;
+}
+
 .rdp-day_button {
   height: 32px;
   width: 32px;
@@ -41,5 +47,5 @@
 }
 
 .rdp-month_grid {
-  margin: 10px;
+  width: 100%;
 }

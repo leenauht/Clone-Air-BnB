@@ -1,7 +1,10 @@
+import React, { useEffect } from 'react';
+
+import { toastInfo } from '@/helper/toastHelper';
 import { usePopup } from '@/hooks/usePopup';
 import { DateFormToPickerProps } from '@/types/typeDateFormToPicker';
 import clsx from 'clsx';
-import { format } from 'date-fns';
+import { differenceInDays, format } from 'date-fns';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
@@ -9,6 +12,9 @@ import Button from '../button/button';
 import CustomTextBlock from '../divItem/customTextBlock';
 import './datePicker.css';
 
+export interface DatePickerRef {
+  openPopup: () => void;
+}
 interface DateLabel {
   label: string;
   placeholder: string;
@@ -49,6 +55,7 @@ function getDateText(
 
 export function RenderLabel({ value, textForm, textTo, isActive }: Props) {
   const { from, to } = value ?? {};
+
   const { textF, textT } = getDateText(from, to, textForm, textTo);
 
   return (
@@ -82,11 +89,16 @@ export function RenderLabel({ value, textForm, textTo, isActive }: Props) {
 
 export function RenderHeader({ value, textForm, textTo }: Props) {
   const { from, to } = value ?? {};
+
   const { textF, textT } = getDateText(from, to, textForm, textTo);
   return (
     <div className="px-4 py-2">
       <p className="font-medium text-sm text-gray-700 sm:text-base">
-        <span>{textForm.label}</span>
+        {from && to && differenceInDays(to, from) > 0 ? (
+          <span>{`${differenceInDays(to, from)} đêm`}</span>
+        ) : (
+          <span>{textForm.label}</span>
+        )}
         <span className="px-1">|</span>
         {!from ? (
           <span>{textTo.label}</span>
@@ -101,7 +113,10 @@ export function RenderHeader({ value, textForm, textTo }: Props) {
   );
 }
 
-export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
+const CustomFormToDatePicker = React.forwardRef<
+  DatePickerRef,
+  DateFormToPickerProps
+>((props, ref) => {
   const {
     value,
     onChange,
@@ -110,18 +125,39 @@ export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
     textTo,
     textForm,
     className,
+    noti,
     header = true,
   } = props;
-  const { open, togglePopup, triggerRef, popupRef } = usePopup<
+
+  const [month, setMonth] = React.useState<Date>(new Date());
+
+  const { open, togglePopup, closePopup, triggerRef, popupRef } = usePopup<
     HTMLButtonElement,
     HTMLDivElement
-  >();
+  >((isOpen) => {
+    if (!isOpen && value?.from && value?.from === value?.to) {
+      toastInfo(noti);
+    }
+  });
+
+  React.useImperativeHandle(ref, () => ({
+    openPopup: () => togglePopup(),
+  }));
 
   const handleSelect = (val: DateRange | undefined) => {
     if (!val) return;
-
     (onChange as (value: typeof val) => void)?.(val);
   };
+
+  useEffect(() => {
+    if (open) {
+      if (value?.from) {
+        setMonth(value.from);
+      } else {
+        setMonth(new Date());
+      }
+    }
+  }, [open, value]);
 
   return (
     <div className={clsx('w-full relative', className)}>
@@ -130,7 +166,7 @@ export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
       <button
         ref={triggerRef}
         type="button"
-        onClick={() => togglePopup()}
+        onClick={togglePopup}
         className="w-full cursor-pointer"
       >
         <RenderLabel
@@ -150,7 +186,7 @@ export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
           {header ? (
             <RenderHeader
               value={value}
-              textForm={{ label: 'Số ngày', placeholder: '' }}
+              textForm={{ label: 'Số đêm', placeholder: '' }}
               textTo={{ label: 'Chọn ngày', placeholder: '' }}
             />
           ) : (
@@ -158,9 +194,20 @@ export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
           )}
 
           <DayPicker
+            month={month}
+            onMonthChange={setMonth}
+            showOutsideDays
+            fixedWeeks
             mode="range"
+            disabled={{ before: new Date() }}
             selected={value as DateRange | undefined}
             onSelect={(val) => handleSelect(val)}
+            onDayClick={(day, modifiers) => {
+              if (modifiers.outside && !modifiers.disabled) {
+                // clicking on a day from another month switches to that month
+                setMonth(day);
+              }
+            }}
           />
           <footer className="flex justify-end gap-2 p-3 border-t-[1px] border-gray-300">
             <Button
@@ -171,10 +218,7 @@ export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
             >
               Reset
             </Button>
-            <Button
-              onClick={() => togglePopup()}
-              className="!px-3 !py-1 text-sm"
-            >
+            <Button onClick={closePopup} className="!px-3 !py-1 text-sm">
               Confirm
             </Button>
           </footer>
@@ -182,4 +226,7 @@ export default function CustomFormToDatePicker(props: DateFormToPickerProps) {
       )}
     </div>
   );
-}
+});
+
+CustomFormToDatePicker.displayName = 'CustomFormToDatePicker';
+export default CustomFormToDatePicker;

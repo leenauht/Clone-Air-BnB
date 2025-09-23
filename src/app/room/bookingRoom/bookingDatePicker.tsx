@@ -1,21 +1,45 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import CustomFormToDatePicker from '@/components/datePicker/customFormToDatePicker';
+import CustomFormToDatePicker, {
+  DatePickerRef,
+} from '@/components/datePicker/customFormToDatePicker';
+import { differenceInDays } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 
-export default function BookingDatePicker() {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+interface BookingDatePickerProps {
+  value: DateRange | undefined;
+  onChange?: (range: DateRange | undefined) => void;
+  onDaysChange: (days: number) => void;
+  onReset: () => void;
+}
+
+const BookingDatePicker = React.forwardRef<
+  DatePickerRef,
+  BookingDatePickerProps
+>(({ onDaysChange, value, onChange, onReset }, ref) => {
+  const handleOnChange = (range: DateRange | undefined) => {
+    onChange?.(range);
+    if (range?.from && range.to) {
+      onDaysChange(differenceInDays(range.to, range.from));
+    } else {
+      onDaysChange(0);
+    }
+  };
 
   return (
     <CustomFormToDatePicker
+      ref={ref}
+      value={value}
+      onChange={handleOnChange}
+      onReset={onReset}
       className="border border-transparent rounded-xl hover:border hover:border-blue-500"
       textForm={{ label: 'Nhận phòng', placeholder: 'Thêm ngày' }}
       textTo={{ label: 'Trả phòng', placeholder: 'Thêm ngày' }}
-      value={dateRange}
-      onChange={setDateRange}
-      onReset={() => setDateRange(undefined)}
+      noti="Vui lòng thêm ngày trả phòng!"
     />
   );
-}
+});
+BookingDatePicker.displayName = 'BookingDatePicker';
+export default BookingDatePicker;

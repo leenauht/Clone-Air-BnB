@@ -57,13 +57,13 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
         if (data) {
           const { user, token } = data.content;
           login(user, token);
-          toastSuccess('Đăng nhập thành công 🎉');
+          toastSuccess('Đăng nhập thành công');
           resetForm();
           onClose();
         }
       },
       onError: (error) => {
-        toastError(`❌ ${error.content || error.message}`);
+        toastError(error.content || error.message);
       },
     });
   };

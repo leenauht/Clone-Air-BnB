@@ -2,17 +2,30 @@ import { useRef, useState } from 'react';
 
 import { useOutsideClick } from './useClickOutSide';
 
-export function usePopup<T extends HTMLElement, K extends HTMLElement>() {
+export function usePopup<T extends HTMLElement, K extends HTMLElement>(
+  onClose?: (isOpen: boolean) => void,
+) {
   const [open, setOpen] = useState(false);
 
   const triggerRef = useRef<T>(null);
   const popupRef = useRef<K>(null);
 
-  const closePopup = () => setOpen(false);
+  const closePopup = () => {
+    onClose?.(false);
+    setOpen(false);
+  };
 
-  const togglePopup = () => setOpen((prev) => !prev);
+  const togglePopup = () => {
+    if (open) {
+      closePopup();
+    } else {
+      setOpen(true);
+    }
+  };
 
-  useOutsideClick([popupRef, triggerRef], () => closePopup());
+  useOutsideClick([popupRef, triggerRef], () => {
+    if (open) closePopup();
+  });
 
-  return { open, togglePopup, triggerRef, popupRef };
+  return { open, closePopup, togglePopup, triggerRef, popupRef };
 }

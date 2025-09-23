@@ -51,6 +51,10 @@
   background-color: #2563eb;
 }
 
+.rdp-outside .rdp-day_button {
+  color: #d1d5db;
+}
+
 .rdp-month_grid {
   width: 100%;
 }

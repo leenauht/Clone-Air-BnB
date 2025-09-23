@@ -62,7 +62,7 @@ export default function HeaderAvatarMenu() {
       color: 'red',
       action: () => {
         logout();
-        toastSuccess('Đăng xuất thành công 🎉');
+        toastSuccess('Đăng xuất thành công');
       },
     },
   ] as const;

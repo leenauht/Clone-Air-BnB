@@ -14,6 +14,8 @@ import './datePicker.css';
 
 export interface DatePickerRef {
   openPopup: () => void;
+  clsPopup: () => void;
+  ref: React.RefObject<HTMLButtonElement | null>;
 }
 interface DateLabel {
   label: string;
@@ -64,7 +66,6 @@ export function RenderLabel({ value, textForm, textTo, isActive }: Props) {
         <CustomTextBlock
           title={textForm.label}
           text={textF}
-          heading="h6"
           textClass="text-sm text-gray-500 font-medium"
         />
         {isActive && !from && (
@@ -76,7 +77,6 @@ export function RenderLabel({ value, textForm, textTo, isActive }: Props) {
         <CustomTextBlock
           title={textTo.label}
           text={textT}
-          heading="h6"
           textClass="text-sm text-gray-500 font-medium"
         />
         {isActive && from && (
@@ -95,7 +95,7 @@ export function RenderHeader({ value, textForm, textTo }: Props) {
     <div className="px-4 py-2">
       <p className="font-medium text-sm text-gray-700 sm:text-base">
         {from && to && differenceInDays(to, from) > 0 ? (
-          <span>{`${differenceInDays(to, from)} đêm`}</span>
+          <span>{`${differenceInDays(to, from)} night`}</span>
         ) : (
           <span>{textForm.label}</span>
         )}
@@ -142,6 +142,8 @@ const CustomFormToDatePicker = React.forwardRef<
 
   React.useImperativeHandle(ref, () => ({
     openPopup: () => togglePopup(),
+    clsPopup: () => closePopup(),
+    ref: triggerRef,
   }));
 
   const handleSelect = (val: DateRange | undefined) => {
@@ -186,8 +188,8 @@ const CustomFormToDatePicker = React.forwardRef<
           {header ? (
             <RenderHeader
               value={value}
-              textForm={{ label: 'Số đêm', placeholder: '' }}
-              textTo={{ label: 'Chọn ngày', placeholder: '' }}
+              textForm={{ label: 'Number of nights', placeholder: '' }}
+              textTo={{ label: 'Select dates', placeholder: '' }}
             />
           ) : (
             ''

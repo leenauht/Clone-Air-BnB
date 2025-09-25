@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 
 import CustomFormToDatePicker, {
@@ -35,9 +33,9 @@ const BookingDatePicker = React.forwardRef<
       onChange={handleOnChange}
       onReset={onReset}
       className="border border-transparent rounded-xl hover:border hover:border-blue-500"
-      textForm={{ label: 'Nhận phòng', placeholder: 'Thêm ngày' }}
-      textTo={{ label: 'Trả phòng', placeholder: 'Thêm ngày' }}
-      noti="Vui lòng thêm ngày trả phòng!"
+      textForm={{ label: 'Check-in', placeholder: 'Add day' }}
+      textTo={{ label: 'Check out', placeholder: 'Add day' }}
+      noti="Please add a checkout date!"
     />
   );
 });

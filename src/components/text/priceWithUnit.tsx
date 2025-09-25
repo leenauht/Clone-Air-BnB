@@ -1,3 +1,5 @@
+import { formatNumberWithCommas } from '@/helper/numberFormat';
+
 type PriceWithUnitProps = {
   amount: number;
   classNameAmount?: string;
@@ -13,11 +15,10 @@ export default function PriceWithUnit({
   classNameUnit,
   separator = '/',
 }: PriceWithUnitProps) {
-  const formattedAmount = new Intl.NumberFormat('en-US').format(amount);
   return (
     <p>
       <span className={`${classNameAmount} font-bold`}>
-        ₫ {formattedAmount}
+        ₫ {formatNumberWithCommas(amount)}
       </span>
       <span> {separator} </span>
       <span className={classNameUnit}>{unit}</span>

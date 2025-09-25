@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import Register from '@/app/_components/register/register';

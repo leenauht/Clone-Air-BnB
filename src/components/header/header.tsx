@@ -1,8 +1,5 @@
-'use client';
-
+import Image from 'next/image';
 import Link from 'next/link';
-
-import { ICONS } from '@components/icons/icon';
 
 import HeaderAvatarMenu from './headerAvatarMenu';
 import NavItems from './headerItems';
@@ -15,7 +12,13 @@ export default function Header() {
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <ICONS.Logo color="red" width={102} height={32} text={true} />
+          <Image
+            src="https://www.trustifytechnology.com/wp-content/uploads/2023/06/mainlogo.png"
+            alt="Trustify technology"
+            width={150}
+            height={60}
+            style={{ height: 'auto' }}
+          />
         </Link>
         <NavItems />
         <HeaderAvatarMenu />

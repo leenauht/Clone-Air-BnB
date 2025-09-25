@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState } from 'react';
 
 import CustomTextBlock from '@/components/divItem/customTextBlock';
@@ -14,9 +12,8 @@ export default function GuestSelector() {
     >
       <div className="flex justify-between items-center p-2 sm:p-3 md:p-4 cursor-pointer">
         <CustomTextBlock
-          title="Khách"
-          text="1 khách"
-          heading="h6"
+          title="Guests"
+          text="1 guest"
           textClass="text-sm text-gray-500 font-medium"
         />
         <div className="text-left">

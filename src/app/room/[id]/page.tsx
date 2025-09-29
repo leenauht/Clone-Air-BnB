@@ -18,6 +18,8 @@ export default async function RoomDetail({
   const { id } = await params;
 
   const queryClient = getQueryClient();
+
+  // Fetch room, location data and return it as a Promise (use fetchQuery)
   const room = await queryClient.fetchQuery(
     queryOptionsCustom<RoomItem>({ key: 'phong-thue', id: id }),
   );
@@ -48,7 +50,7 @@ export default async function RoomDetail({
       </div>
       <div className="space-y-5 lg:space-y-0 lg:flex lg:gap-5 xl:gap-10">
         <RoomInfo room={room} loc={location} />
-        <BookingRoom room={room} />
+        <BookingRoom room={room} loc={location} />
       </div>
     </section>
   );

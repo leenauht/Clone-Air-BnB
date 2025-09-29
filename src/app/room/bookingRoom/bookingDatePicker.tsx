@@ -11,12 +11,13 @@ interface BookingDatePickerProps {
   onChange?: (range: DateRange | undefined) => void;
   onDaysChange: (days: number) => void;
   onReset: () => void;
+  ignoreRefs?: React.RefObject<HTMLElement | null>[];
 }
 
 const BookingDatePicker = React.forwardRef<
   DatePickerRef,
   BookingDatePickerProps
->(({ onDaysChange, value, onChange, onReset }, ref) => {
+>(({ onDaysChange, value, onChange, onReset, ignoreRefs }, ref) => {
   const handleOnChange = (range: DateRange | undefined) => {
     onChange?.(range);
     if (range?.from && range.to) {
@@ -32,6 +33,7 @@ const BookingDatePicker = React.forwardRef<
       value={value}
       onChange={handleOnChange}
       onReset={onReset}
+      ignoreRefs={ignoreRefs}
       className="border border-transparent rounded-xl hover:border hover:border-blue-500"
       textForm={{ label: 'Check-in', placeholder: 'Add day' }}
       textTo={{ label: 'Check out', placeholder: 'Add day' }}

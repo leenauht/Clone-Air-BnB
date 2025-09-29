@@ -1,5 +1,3 @@
-'use client';
-
 import { ICONS } from '@/components/icons/icon';
 import { useLikeSore } from '@/store/likeStore';
 

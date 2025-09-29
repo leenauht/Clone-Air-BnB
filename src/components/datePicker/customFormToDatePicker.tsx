@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { toastInfo } from '@/helper/toastHelper';
 import { usePopup } from '@/hooks/usePopup';
@@ -15,7 +15,6 @@ import './datePicker.css';
 export interface DatePickerRef {
   openPopup: () => void;
   clsPopup: () => void;
-  ref: React.RefObject<HTMLButtonElement | null>;
 }
 interface DateLabel {
   label: string;
@@ -127,9 +126,10 @@ const CustomFormToDatePicker = React.forwardRef<
     className,
     noti,
     header = true,
+    ignoreRefs = [],
   } = props;
 
-  const [month, setMonth] = React.useState<Date>(new Date());
+  const [month, setMonth] = useState<Date>(new Date());
 
   const { open, togglePopup, closePopup, triggerRef, popupRef } = usePopup<
     HTMLButtonElement,
@@ -138,12 +138,11 @@ const CustomFormToDatePicker = React.forwardRef<
     if (!isOpen && value?.from && value?.from === value?.to) {
       toastInfo(noti);
     }
-  });
+  }, ignoreRefs);
 
   React.useImperativeHandle(ref, () => ({
-    openPopup: () => togglePopup(),
-    clsPopup: () => closePopup(),
-    ref: triggerRef,
+    openPopup: togglePopup,
+    clsPopup: closePopup,
   }));
 
   const handleSelect = (val: DateRange | undefined) => {
@@ -152,13 +151,8 @@ const CustomFormToDatePicker = React.forwardRef<
   };
 
   useEffect(() => {
-    if (open) {
-      if (value?.from) {
-        setMonth(value.from);
-      } else {
-        setMonth(new Date());
-      }
-    }
+    if (!open) return;
+    setMonth(value?.from || new Date());
   }, [open, value]);
 
   return (

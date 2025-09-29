@@ -5,12 +5,13 @@ import React, { useRef, useState } from 'react';
 import { DatePickerRef } from '@/components/datePicker/customFormToDatePicker';
 import CustomTextBlock from '@/components/divItem/customTextBlock';
 import Modal from '@/components/modal/modal';
+import CustomText from '@/components/text/customText';
 import PriceWithUnit from '@/components/text/priceWithUnit';
-import { formatNumberWithCommas } from '@/helper/numberFormat';
+import { LocationItem } from '@/types/location';
 import { RoomItem } from '@/types/room';
 import clsx from 'clsx';
-// import { format } from 'date-fns';
-// import { useRouter } from 'next/navigation';
+import { Star } from 'lucide-react';
+import Image from 'next/image';
 import { DateRange } from 'react-day-picker';
 
 import BookingDatePicker from './bookingDatePicker';
@@ -20,7 +21,7 @@ interface BookingSumaryProps {
   days: number;
   price: number;
 }
-export const SERVICE_FEE = 1000000;
+const SERVICE_FEE = 1000000;
 
 export function BookingSumary({ days, price }: BookingSumaryProps) {
   return (
@@ -48,11 +49,17 @@ export function BookingSumary({ days, price }: BookingSumaryProps) {
   );
 }
 
-export default function BookingRoom({ room }: { room: RoomItem }) {
+export default function BookingRoom({
+  room,
+  loc,
+}: {
+  room: RoomItem;
+  loc: LocationItem;
+}) {
   const [days, setDays] = useState(0);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const datePickerRef = useRef<DatePickerRef>(null);
-  // const router = useRouter();
+  const bookingButtonRef = useRef<HTMLButtonElement>(null);
 
   const [open, setOpen] = useState(false);
 
@@ -62,11 +69,6 @@ export default function BookingRoom({ room }: { room: RoomItem }) {
     } else {
       datePickerRef.current?.clsPopup();
       setOpen(true);
-      // const startDate = format(new Date(`${dateRange?.from}`), 'yyyy-MM-dd');
-      // const endDate = format(new Date(`${dateRange?.to}`), 'yyyy-MM-dd');
-      // router.push(
-      //   `/booking-confirm?roomId=${room.id}&start=${startDate}&end=${endDate}`,
-      // );
     }
   };
 
@@ -80,7 +82,7 @@ export default function BookingRoom({ room }: { room: RoomItem }) {
   const subtotal = sum + SERVICE_FEE;
 
   return (
-    <div className="w-full sm:w-2/3 md:w-3/5 lg:flex-1 shadow-shadow3 rounded-xl h-fit">
+    <div className="max-w-sm sm:max-w-none sm:w-2/3 md:w-3/5 lg:flex-1 shadow-shadow3 rounded-xl h-fit">
       <div className="px-3 py-5 sm:p-5 space-y-4">
         <PriceWithUnit
           amount={days === 0 ? room.giaTien : room.giaTien * days}
@@ -91,6 +93,7 @@ export default function BookingRoom({ room }: { room: RoomItem }) {
         <div className="border border-gray-400 box-border rounded-xl group">
           <BookingDatePicker
             ref={datePickerRef}
+            ignoreRefs={[bookingButtonRef]}
             value={dateRange}
             onDaysChange={setDays}
             onChange={setDateRange}
@@ -101,7 +104,7 @@ export default function BookingRoom({ room }: { room: RoomItem }) {
         </div>
 
         <button
-          ref={datePickerRef.current?.ref}
+          ref={bookingButtonRef}
           onClick={handleBookingClick}
           className={clsx(
             'text-white font-medium md:text-lg cursor-pointer rounded-full w-full py-2 md:py-3 bg-gradient-to-r from-[#e61e4d] to-[#d70466]',
@@ -112,45 +115,87 @@ export default function BookingRoom({ room }: { room: RoomItem }) {
         </button>
         {days > 0 ? <BookingSumary days={days} price={room.giaTien} /> : ''}
       </div>
+
       <Modal isOpen={open} title="Booking" onClose={() => setOpen(false)}>
-        <div className="px-5 flex flex-col divide-y divide-gray-200 [&>*]:py-4">
-          <CustomTextBlock title="Your travel" text="Từ ngày" heading="h5" />
-          <CustomTextBlock title="Guest" text="1 khách" heading="h5" />
-          <div className="flex justify-between items-center">
-            <div>
-              <h5>Prices</h5>
-              <PriceWithUnit
-                amount={price}
-                unit="night"
-                classNameUnit="font-medium text-gray-500 text-sm"
-                classNameAmount="text-xl"
-              />
+        <div className="lg:flex lg:flex-row-reverse lg:gap-5 xl:gap-10">
+          <div className="flex-1 shadow-shadow3 p-5 rounded-2xl">
+            <div className="flex justify-center items-center gap-3 xl:gap-4 2xl:gap-5">
+              <div className="relative h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 xl:w-30 xl:h-30">
+                <Image
+                  src={loc.hinhAnh}
+                  alt="Logo"
+                  fill
+                  className="object-cover rounded-2xl"
+                />
+              </div>
+              <div className="flex-1">
+                <CustomText
+                  heading="h6"
+                  className="line-clamp-3 lg:text-lg"
+                  title={room.tenPhong}
+                >
+                  {room.tenPhong}
+                </CustomText>
+                <div className="flex gap-1 items-center">
+                  <Star size={18} className="text-gray-900 fill-gray-900" />
+                  <span className="text-sm font-medium lg:text-base">
+                    3.5 (75)
+                  </span>
+                </div>
+              </div>
             </div>
-            <PriceWithUnit
-              amount={sum}
-              unit="night"
-              classNameUnit="font-medium text-gray-500 text-sm"
-              classNameAmount="text-xl"
-            />
-          </div>
-          <CustomTextBlock
-            title="Airbnb sevices fee"
-            text={`₫ ${formatNumberWithCommas(SERVICE_FEE)}`}
-            heading="h5"
-            divClass="flex justify-between"
-            textClass="font-bold text-xl"
-          />
-          <CustomTextBlock
-            title="Subtotal"
-            text={`₫ ${formatNumberWithCommas(subtotal)}`}
-            heading="h5"
-            divClass="flex justify-between"
-            textClass="font-bold text-xl"
-          />
-          <div className="flex justify-center px-5 !py-8">
-            <button className="px-4 py-2 w-4/5 text-lg font-medium border border-gray-300 rounded-full cursor-pointer hover:border-blue-300 hover:bg-blue-500 hover:text-white transition duration-300">
-              Booking
-            </button>
+
+            <div className="grid grid-cols-1 divide-y divide-gray-200 [&>*]:p-3 items-center">
+              <CustomTextBlock
+                title="Free cancellation"
+                text="Cancel before Oct 30 for a full refund."
+                textClass="text-sm"
+              />
+              <CustomTextBlock
+                title="Your travel"
+                text="Từ ngày"
+                textClass="text-sm"
+              />
+              <CustomTextBlock
+                title="Guest"
+                text="1 guest"
+                textClass="text-sm"
+              />
+              <div className="flex justify-between">
+                <div>
+                  <h6>Price details</h6>
+                  <PriceWithUnit
+                    amount={price}
+                    unit={`${days} nights`}
+                    classNameUnit="font-medium text-gray-700 text-sm"
+                    classNameAmount="text-sm text-gray-700"
+                    reverse={false}
+                    separator="x"
+                  />
+                </div>
+                <PriceWithUnit
+                  amount={sum}
+                  classNameAmount="text-sm text-gray-700"
+                  separator=""
+                />
+              </div>
+              <div className="flex justify-between">
+                <h6>Airbnb sevices fee</h6>
+                <PriceWithUnit
+                  amount={SERVICE_FEE}
+                  classNameAmount="text-sm text-gray-700"
+                  separator=""
+                />
+              </div>
+              <div className="flex justify-between">
+                <h6>Subtotal</h6>
+                <PriceWithUnit
+                  amount={subtotal}
+                  classNameAmount="text-sm"
+                  separator=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </Modal>

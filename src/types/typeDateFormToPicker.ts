@@ -16,4 +16,5 @@ export type DateFormToPickerProps = {
   };
   onChange: (value: DateRange | undefined) => void;
   onReset?: () => void;
+  ignoreRefs?: React.RefObject<HTMLElement | null>[];
 };

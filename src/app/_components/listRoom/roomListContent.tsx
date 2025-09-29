@@ -1,13 +1,7 @@
-'use client';
-
-import { useEffect } from 'react';
-
 import Card from '@/components/card/card';
 import { ROUTES } from '@/components/constants/constants';
 import CustomTextBlock from '@/components/divItem/customTextBlock';
 import PriceWithUnit from '@/components/text/priceWithUnit';
-import { useLocationStore } from '@/store/locationStore';
-import { useRoomStore } from '@/store/roomStore';
 import { LocationItem } from '@/types/location';
 import { RoomItem } from '@/types/room';
 import Link from 'next/link';
@@ -15,29 +9,19 @@ import Link from 'next/link';
 import { IconImgCard } from './iconImgCard';
 
 interface DataList {
-  listRoom: RoomItem[];
-  listLocation: LocationItem[];
+  rooms: RoomItem[];
+  locations: LocationItem[];
 }
 
-export default function RoomListContent({ listRoom, listLocation }: DataList) {
-  const setRoomData = useRoomStore((state) => state.setRoomData);
-  const setLocationData = useLocationStore((state) => state.setLocationData);
-
-  useEffect(() => {
-    if (listRoom?.length) setRoomData(listRoom);
-    if (listLocation?.length) setLocationData(listLocation);
-  }, [listRoom, listLocation, setRoomData, setLocationData]);
-
-  if (!listRoom?.length || !listLocation?.length) {
+export default function RoomListContent({ rooms, locations }: DataList) {
+  if (!rooms?.length || !locations?.length) {
     return <p>No Data</p>;
   }
 
   return (
     <>
-      {listRoom.map((room) => {
-        const loc = listLocation.find(
-          (location) => location.id === room.maViTri,
-        );
+      {rooms.map((room) => {
+        const loc = locations.find((location) => location.id === room.maViTri);
         if (!loc) return null;
 
         const address = `${loc.tenViTri} - ${loc.tinhThanh} - ${loc.quocGia}`;

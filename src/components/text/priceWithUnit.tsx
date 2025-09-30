@@ -1,8 +1,12 @@
+import { formatNumberWithCommas } from '@/helper/numberFormat';
+
 type PriceWithUnitProps = {
-  amount: number;
+  amount: number | string;
   classNameAmount?: string;
-  unit: string;
+  unit?: string | number;
   classNameUnit?: string;
+  separator?: string;
+  reverse?: boolean;
 };
 
 export default function PriceWithUnit({
@@ -10,11 +14,28 @@ export default function PriceWithUnit({
   unit,
   classNameAmount,
   classNameUnit,
+  separator = '/',
+  reverse = true,
 }: PriceWithUnitProps) {
   return (
-    <p>
-      <span className={`${classNameAmount} font-bold`}>₫ {amount}</span> /{' '}
-      <span className={classNameUnit}>{unit}</span>
-    </p>
+    <>
+      {reverse ? (
+        <p className="flex gap-1 items-end">
+          <span className={`${classNameAmount} font-medium`}>
+            ₫{formatNumberWithCommas(amount)}
+          </span>
+          <span>{separator}</span>
+          <span className={classNameUnit}>{unit}</span>
+        </p>
+      ) : (
+        <p className="flex gap-1 items-end">
+          <span className={classNameUnit}>{unit}</span>
+          <span>{separator}</span>
+          <span className={`${classNameAmount} font-medium`}>
+            ₫{formatNumberWithCommas(amount)}
+          </span>
+        </p>
+      )}
+    </>
   );
 }

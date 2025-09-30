@@ -5,6 +5,7 @@ export type DateFormToPickerProps = {
   value?: DateRange;
   label?: string;
   className?: string;
+  noti: string;
   textForm: {
     label: string;
     placeholder: string;
@@ -13,6 +14,7 @@ export type DateFormToPickerProps = {
     label: string;
     placeholder: string;
   };
-  onChange?: (value: DateRange | undefined) => void;
+  onChange: (value: DateRange | undefined) => void;
   onReset?: () => void;
+  ignoreRefs?: React.RefObject<HTMLElement | null>[];
 };

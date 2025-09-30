@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import Register from '@/app/_components/register/register';
@@ -62,7 +64,7 @@ export default function HeaderAvatarMenu() {
       color: 'red',
       action: () => {
         logout();
-        toastSuccess('Đăng xuất thành công 🎉');
+        toastSuccess('Đăng xuất thành công');
       },
     },
   ] as const;

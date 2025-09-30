@@ -13,6 +13,8 @@
 .rdp-month_caption {
   padding: 0 20px;
   border-bottom: 1px solid #6b7280;
+  font-size: 16px;
+  height: 32px;
 }
 
 .rdp-caption_label {
@@ -22,6 +24,8 @@
 
 .rdp-chevron {
   fill: #374151;
+  height: 20px;
+  width: 20px;
 }
 
 .rdp-chevron:hover {
@@ -51,6 +55,33 @@
   background-color: #2563eb;
 }
 
+.rdp-outside .rdp-day_button {
+  color: #d1d5db;
+}
+
 .rdp-month_grid {
   width: 100%;
+}
+
+.rdp-day {
+  height: auto;
+}
+
+.rdp-nav {
+  height: 32px;
+}
+
+@media (min-width: 640px) {
+  .rdp-day {
+    height: 40px;
+  }
+
+  .rdp-month_caption {
+    font-size: 18px;
+    height: 40px;
+  }
+
+  .rdp-nav {
+    height: 40px;
+  }
 }

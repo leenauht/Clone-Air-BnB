@@ -59,13 +59,13 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
     mutate(form, {
       onSuccess: (data) => {
         if (data) {
-          toastSuccess('Đăng ký thành công 🎉');
+          toastSuccess('Đăng ký thành công');
           resetForm();
           signIn();
         }
       },
       onError: (error) => {
-        toastError(`❌ ${error.content || error.message}`);
+        toastError(error.content || error.message);
       },
     });
   };
@@ -88,7 +88,7 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
         <form onSubmit={handleSubmit}>
-          <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-b border-gray-200">
+          <div className="max-h-[90vh] md:h-auto lg:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-gray-200">
             <RegisterFormFiled
               form={form}
               errors={errors}

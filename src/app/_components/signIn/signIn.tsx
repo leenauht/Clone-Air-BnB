@@ -76,27 +76,29 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
 
   return (
     <Modal isOpen={open} onClose={onClose} title="Sign in">
-      <form onSubmit={handleSubmit}>
-        <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2">
-          <SignInFormFiled
-            form={form}
-            errors={errors}
-            onChange={handleChange}
-          />
-          <p className="text-right">
-            <Button variant="link" onClick={signUp} className="text-sm">
-              Bạn chưa có tài khoản? Đăng ký ngay.
+      <form onSubmit={handleSubmit} className="form-signIn-and-signUp">
+        <div className="p-5 overflow-y-auto max-h-[80vh] lg:max-h-[60vh]">
+          <div className="space-y-0.5 sm:space-y-2">
+            <SignInFormFiled
+              form={form}
+              errors={errors}
+              onChange={handleChange}
+            />
+            <p className="text-right">
+              <Button variant="link" onClick={signUp} className="text-sm">
+                Don&apos;t have an account? Sign up now.
+              </Button>
+            </p>
+          </div>
+          <div className="py-5 px-8">
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="w-full flex justify-center !rounded-full py-2 px-4"
+            >
+              {isPending ? <ICONS.Loading width={24} height={24} /> : 'Sign in'}
             </Button>
-          </p>
-        </div>
-        <div className="py-5 px-8">
-          <Button
-            disabled={isPending}
-            type="submit"
-            className="w-full flex justify-center !rounded-full py-2 px-4"
-          >
-            {isPending ? <ICONS.Loading width={24} height={24} /> : 'Sign in'}
-          </Button>
+          </div>
         </div>
       </form>
     </Modal>

@@ -87,31 +87,33 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
       ) : null}
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
-        <form onSubmit={handleSubmit}>
-          <div className="max-h-[90vh] md:h-auto lg:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2 border-gray-200">
-            <RegisterFormFiled
-              form={form}
-              errors={errors}
-              onChange={handleChange}
-            />
-            <p className="text-right">
-              <Button variant="link" onClick={signIn} className="text-sm">
-                Sign in now.
+        <form onSubmit={handleSubmit} className="form-signIn-and-signUp">
+          <div className="p-5 overflow-y-auto max-h-[80vh]">
+            <div className="space-y-0.5 sm:space-y-2">
+              <RegisterFormFiled
+                form={form}
+                errors={errors}
+                onChange={handleChange}
+              />
+              <p className="text-right">
+                <Button variant="link" onClick={signIn} className="text-sm">
+                  Sign in now.
+                </Button>
+              </p>
+            </div>
+            <div className="py-5 px-8">
+              <Button
+                disabled={isPending}
+                type="submit"
+                className="w-full flex justify-center !rounded-full py-2 px-4"
+              >
+                {isPending ? (
+                  <ICONS.Loading width={24} height={24} />
+                ) : (
+                  'Continue'
+                )}
               </Button>
-            </p>
-          </div>
-          <div className="py-5 px-8">
-            <Button
-              disabled={isPending}
-              type="submit"
-              className="w-full flex justify-center !rounded-full py-2 px-4"
-            >
-              {isPending ? (
-                <ICONS.Loading width={24} height={24} />
-              ) : (
-                'Continue'
-              )}
-            </Button>
+            </div>
           </div>
         </form>
       </Modal>

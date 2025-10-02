@@ -25,14 +25,9 @@ export default function RootLayout({
           <Toaster
             position="top-right"
             toastOptions={{
-              style: {
-                width: 'max-content',
-                minWidth: '150px',
-                minHeight: '60px',
-                padding: '16px',
-                borderRadius: '8px',
-                fontSize: '16px',
-              },
+              style: { width: 'fit-content' },
+              className:
+                'min-h-[60px] p-4 rounded-lg text-base break-words whitespace-normal max-w-[90vw] md:max-w-[420px]',
             }}
           />
         </QueryProvider>

@@ -80,7 +80,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
       {open && (
         <div
           ref={popupRef}
-          className="absolute bottom-16 w-full rounded-lg border border-gray-300 bg-white shadow-shadow4"
+          className="absolute bottom-16 right-0 max-w-[360px] sm:w-full sm:max-w-none rounded-lg border border-gray-300 bg-white shadow-shadow4"
         >
           {mode === 'single' ? (
             <DayPicker

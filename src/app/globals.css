@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 
 @import './../components/form/style.css';
+@import './room/bookingRoom/booking.css';
+@import '../components/modal/style.css';
+@import './_components/register/style.css';
 
 @theme {
   --font-sans:

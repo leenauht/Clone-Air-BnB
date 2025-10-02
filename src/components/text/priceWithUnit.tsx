@@ -24,13 +24,26 @@ export default function PriceWithUnit({
           <span className={`${classNameAmount} font-medium`}>
             ₫{formatNumberWithCommas(amount)}
           </span>
-          <span>{separator}</span>
-          <span className={classNameUnit}>{unit}</span>
+          {unit ? (
+            <>
+              <span>{separator}</span>
+              <span className={classNameUnit}>{unit}</span>
+            </>
+          ) : (
+            ''
+          )}
         </p>
       ) : (
         <p className="flex gap-1 items-end">
-          <span className={classNameUnit}>{unit}</span>
-          <span>{separator}</span>
+          {unit ? (
+            <>
+              <span className={classNameUnit}>{unit}</span>
+              <span>{separator}</span>
+            </>
+          ) : (
+            ''
+          )}
+
           <span className={`${classNameAmount} font-medium`}>
             ₫{formatNumberWithCommas(amount)}
           </span>

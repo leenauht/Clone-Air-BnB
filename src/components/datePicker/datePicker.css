@@ -5,16 +5,16 @@
 }
 
 .rdp-day_button {
-  height: 32px;
-  width: 32px;
+  height: 30px;
+  width: 30px;
   margin: auto;
 }
 
 .rdp-month_caption {
   padding: 0 20px;
-  border-bottom: 1px solid #6b7280;
+  border-bottom: 1px solid #d1d5db;
   font-size: 16px;
-  height: 32px;
+  height: 40px;
 }
 
 .rdp-caption_label {
@@ -64,24 +64,26 @@
 }
 
 .rdp-day {
-  height: auto;
+  height: 34px;
+  font-size: 14px;
 }
 
 .rdp-nav {
-  height: 32px;
+  height: 40px;
 }
 
 @media (min-width: 640px) {
   .rdp-day {
     height: 40px;
+    font-size: 16px;
   }
 
   .rdp-month_caption {
     font-size: 18px;
-    height: 40px;
   }
 
-  .rdp-nav {
-    height: 40px;
+  .rdp-day_button {
+    height: 32px;
+    width: 32px;
   }
 }

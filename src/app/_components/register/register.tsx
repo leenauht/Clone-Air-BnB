@@ -88,7 +88,7 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
 
       <Modal isOpen={open} onClose={resetForm} title="Sign up">
         <form onSubmit={handleSubmit} className="form-signIn-and-signUp">
-          <div className="p-5 overflow-y-auto max-h-[80vh]">
+          <div className="p-5">
             <div className="space-y-0.5 sm:space-y-2">
               <RegisterFormFiled
                 form={form}

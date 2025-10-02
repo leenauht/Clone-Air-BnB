@@ -46,7 +46,7 @@ export default function Modal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full h-screen lg:w-1/2 lg:h-auto lg:rounded-xl xl:w-1/3 shadow-shadow3 bg-white overflow-hidden"
+        className="w-full h-[100dvh] overflow-y-auto lg:w-1/2 lg:h-auto lg:rounded-xl xl:w-1/3 shadow-shadow3 bg-white overflow-hidden"
       >
         {/* Header */}
         <header className="header-title">

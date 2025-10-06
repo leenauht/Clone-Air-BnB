@@ -135,9 +135,9 @@ const CustomFormToDatePicker = React.forwardRef<
     HTMLButtonElement,
     HTMLDivElement
   >((isOpen) => {
-    if (!isOpen && value?.from && value?.from === value?.to) {
-      toastInfo(noti);
-    }
+    if (isOpen) return;
+    if (!value?.from && !value?.to) toastInfo(noti.from);
+    if (value?.from && value?.from === value?.to) toastInfo(noti.to);
   }, ignoreRefs);
 
   React.useImperativeHandle(ref, () => ({

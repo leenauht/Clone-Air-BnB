@@ -5,7 +5,10 @@ export type DateFormToPickerProps = {
   value?: DateRange;
   label?: string;
   className?: string;
-  noti: string;
+  noti: {
+    from: string;
+    to: string;
+  };
   textForm: {
     label: string;
     placeholder: string;

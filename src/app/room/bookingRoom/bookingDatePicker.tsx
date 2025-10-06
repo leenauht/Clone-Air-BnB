@@ -37,7 +37,10 @@ const BookingDatePicker = React.forwardRef<
       className="border border-transparent rounded-xl hover:border hover:border-blue-500"
       textForm={{ label: 'Check-in', placeholder: 'Add day' }}
       textTo={{ label: 'Check out', placeholder: 'Add day' }}
-      noti="Please add a checkout date!"
+      noti={{
+        from: 'Please add your check-in and checkout dates!',
+        to: 'Please add your checkout date!',
+      }}
     />
   );
 });

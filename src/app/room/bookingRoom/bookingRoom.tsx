@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 
+import { OPTIONS_GUESTS } from '@/components/constants/constants';
 import { DatePickerRef } from '@/components/datePicker/customFormToDatePicker';
 import CustomTextBlock from '@/components/divItem/customTextBlock';
 import Modal from '@/components/modal/modal';
@@ -64,6 +65,19 @@ export default function BookingRoom({
   const bookingButtonRef = useRef<HTMLButtonElement>(null);
 
   const [open, setOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+
+  const [guestQuantities, setGuestQuantities] = useState<
+    Record<string, number>
+  >(() =>
+    OPTIONS_GUESTS.reduce(
+      (acc, item) => {
+        acc[item.id] = item.min ?? 0;
+        return acc;
+      },
+      {} as Record<string, number>,
+    ),
+  );
 
   const handleBookingClick = () => {
     if (!dateRange?.from || !dateRange?.to || dateRange.from === dateRange.to) {
@@ -87,6 +101,11 @@ export default function BookingRoom({
   const from = dateRange?.from ? subDays(dateRange?.from, 1) : '';
   const prevDay = from ? format(from, 'MMM dd, yyyy', { locale: enUS }) : '';
 
+  const guestLabels: string[] = [`${guestQuantities.adults} adults`];
+  if (guestQuantities.children > 0) {
+    guestLabels.push(`${guestQuantities.children} children`);
+  }
+
   return (
     <div className="max-w-sm sm:max-w-none sm:w-2/3 md:w-3/5 lg:flex-1 shadow-shadow3 rounded-xl h-fit">
       <div className="px-3 py-5 sm:p-5 space-y-4">
@@ -105,8 +124,18 @@ export default function BookingRoom({
             onChange={setDateRange}
             onReset={handleResetDate}
           />
-          <div className="h-[0.5px] w-full bg-gray-400 group-hover:bg-transparent"></div>
-          <GuestSelector />
+          {!isHidden ? (
+            <div className="h-[0.5px] w-full bg-gray-400 group-hover:bg-transparent"></div>
+          ) : (
+            <div className="h-[0.5px] w-full"></div>
+          )}
+
+          <GuestSelector
+            guests={room.khach}
+            quantity={guestQuantities}
+            onQuantityChange={setGuestQuantities}
+            setIsHidden={setIsHidden}
+          />
         </div>
 
         <button
@@ -162,7 +191,7 @@ export default function BookingRoom({
               />
               <CustomTextBlock
                 title="Guest"
-                text="1 guest"
+                text={guestLabels.join(', ')}
                 textClass="text-sm"
               />
               <div className="flex justify-between">

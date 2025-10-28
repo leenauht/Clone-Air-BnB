@@ -1,7 +1,9 @@
 .btn-booking {
-  @apply text-white font-medium md:text-lg cursor-pointer rounded-full w-full 
-         py-2 md:py-3 bg-gradient-to-r from-[#e61e4d] to-[#d70466] 
-         transition-all duration-300;
+  @apply text-white font-medium cursor-pointer rounded-full w-full py-2;
+
+  @apply md:text-lg md:py-3;
+
+  @apply bg-gradient-to-r from-[#e61e4d] to-[#d70466] transition-all duration-300;
 }
 
 .btn-booking:hover {

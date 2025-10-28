@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { getQueryClient } from '@/app/get-query-client';
+// import { getQueryClient } from '@/app/get-query-client';
 import CustomText from '@/components/text/customText';
-import { queryOptionsCustom } from '@/hooks/queryOptionsCustom';
-import { LocationItem } from '@/types/location';
-import { RoomItem } from '@/types/room';
+// import { queryOptionsCustom } from '@/hooks/queryOptionsCustom';
+import { MockupLocationData } from '@/mockupData/location';
+import { MockupRoomData } from '@/mockupData/roomData';
+// import { LocationItem } from '@/types/location';
+// import { RoomItem } from '@/types/room';
 import Image from 'next/image';
 
 import BookingRoom from '../bookingRoom/bookingRoom';
@@ -17,22 +19,29 @@ export default async function RoomDetail({
 }) {
   const { id } = await params;
 
-  const queryClient = getQueryClient();
+  // add
+  const room = MockupRoomData.find((item) => Number(id) === item.id);
+  const location = MockupLocationData.find((item) => item.id === room?.maViTri);
+
+  // const queryClient = getQueryClient();
 
   // Fetch room, location data and return it as a Promise (use fetchQuery)
-  const room = await queryClient.fetchQuery(
-    queryOptionsCustom<RoomItem>({ key: 'phong-thue', id: id }),
-  );
-  const location = await queryClient.fetchQuery(
-    queryOptionsCustom<LocationItem>({
-      key: 'vi-tri',
-      id: room.maViTri,
-      options: { enabled: !!room.maViTri },
-    }),
-  );
+  // const room = await queryClient.fetchQuery(
+  //   queryOptionsCustom<RoomItem>({ key: 'phong-thue', id: id }),
+  // );
+  // const location = await queryClient.fetchQuery(
+  //   queryOptionsCustom<LocationItem>({
+  //     key: 'vi-tri',
+  //     id: room.maViTri,
+  //     options: { enabled: !!room.maViTri },
+  //   }),
+  // );
 
   // custom page error
   if (!room) return null;
+
+  // add
+  if (!location) return null;
 
   return (
     <section className="w-full mx-auto px-4 pt-40 pb-10 sm:px-6 max-w-7xl space-y-4 md:space-y-5">
@@ -52,6 +61,7 @@ export default async function RoomDetail({
         <RoomInfo room={room} loc={location} />
         <BookingRoom room={room} loc={location} />
       </div>
+      <div className="mt-40">Comment</div>
     </section>
   );
 }

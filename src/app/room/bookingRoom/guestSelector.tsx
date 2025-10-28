@@ -82,7 +82,7 @@ export default function GuestSelector({
                     onChange={handleQuantityChange}
                     min={min}
                     max={max ?? guests}
-                    sum={max === undefined ? totalMainGuests : undefined}
+                    sum={max ? undefined : totalMainGuests}
                   />
                 </div>
               );

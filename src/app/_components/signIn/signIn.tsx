@@ -76,7 +76,7 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
 
   return (
     <Modal isOpen={open} onClose={onClose} title="Sign in">
-      <form onSubmit={handleSubmit} className="form-signIn-and-signUp">
+      <form onSubmit={handleSubmit} className="auth-form">
         <div className="p-5">
           <div className="space-y-0.5 sm:space-y-2">
             <SignInFormFiled

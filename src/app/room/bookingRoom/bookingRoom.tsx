@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import { OPTIONS_GUESTS } from '@/components/constants/constants';
 import { DatePickerRef } from '@/components/datePicker/customFormToDatePicker';
@@ -67,17 +67,11 @@ export default function BookingRoom({
   const [open, setOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
 
-  const [guestQuantities, setGuestQuantities] = useState<
-    Record<string, number>
-  >(() =>
-    OPTIONS_GUESTS.reduce(
-      (acc, item) => {
-        acc[item.id] = item.min ?? 0;
-        return acc;
-      },
-      {} as Record<string, number>,
-    ),
-  );
+  const quantity = () =>
+    Object.fromEntries(OPTIONS_GUESTS.map((item) => [item.id, item.min ?? 0]));
+
+  const [guestQuantities, setGuestQuantities] =
+    useState<Record<string, number>>(quantity);
 
   const handleBookingClick = () => {
     if (!dateRange?.from || !dateRange?.to || dateRange.from === dateRange.to) {
@@ -98,13 +92,17 @@ export default function BookingRoom({
   const sum = price * days;
   const subtotal = sum + SERVICE_FEE;
 
-  const from = dateRange?.from ? subDays(dateRange?.from, 1) : '';
-  const prevDay = from ? format(from, 'MMM dd, yyyy', { locale: enUS }) : '';
+  // refund
+  const refundDate = useMemo(() => {
+    if (!dateRange?.from) return null;
+    return format(subDays(dateRange?.from, 1), 'MMM dd, yyyy', {
+      locale: enUS,
+    });
+  }, [dateRange]);
 
-  const guestLabels: string[] = [`${guestQuantities.adults} adults`];
-  if (guestQuantities.children > 0) {
-    guestLabels.push(`${guestQuantities.children} children`);
-  }
+  const { adults, children } = guestQuantities;
+
+  const guestLabels = `${adults} adults${children ? `, ${children} children` : ''}`;
 
   return (
     <div className="max-w-sm sm:max-w-none sm:w-2/3 md:w-3/5 lg:flex-1 shadow-shadow3 rounded-xl h-fit">
@@ -181,17 +179,17 @@ export default function BookingRoom({
             <div className="grid grid-cols-1 divide-y divide-gray-200 [&>*]:p-3 items-center">
               <CustomTextBlock
                 title="Free cancellation"
-                text={`Cancel before ${prevDay} for a full refund.`}
+                text={`Cancel before ${refundDate} for a full refund.`}
                 textClass="text-sm"
               />
               <CustomTextBlock
                 title="Your travel"
-                text={formatDateRange(dateRange)}
+                text={formatDateRange(dateRange, enUS)}
                 textClass="text-sm"
               />
               <CustomTextBlock
                 title="Guest"
-                text={guestLabels.join(', ')}
+                text={guestLabels}
                 textClass="text-sm"
               />
               <div className="flex justify-between">

@@ -23,8 +23,7 @@ export default function QuantitySelector({
 }: QuantitySelectorProps) {
   const { PlusCircle, MinusCircle } = ICONS;
 
-  const isSharedLimit = sum !== undefined;
-  const currentTotal = isSharedLimit ? sum : value;
+  const currentTotal = sum ?? value;
 
   const canIncrease = currentTotal < max;
   const canDecrease = value > min;

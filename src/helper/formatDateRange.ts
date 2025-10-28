@@ -1,24 +1,21 @@
-import { format } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { Locale, format, isSameMonth, isSameYear } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 
-export const formatDateRange = (range?: DateRange): string => {
+export const formatDateRange = (range?: DateRange, locale?: Locale): string => {
   if (!range?.from || !range.to) return '';
 
   const { from, to } = range;
 
-  const dayFrom = format(from, 'dd', { locale: enUS });
-  const dayTo = format(to, 'dd', { locale: enUS });
-  const monthFrom = format(from, 'MMM', { locale: enUS });
-  const monthTo = format(to, 'MMM', { locale: enUS });
-  const yearFrom = format(from, 'yyyy', { locale: enUS });
-  const yearTo = format(to, 'yyyy', { locale: enUS });
+  const sameYear = isSameYear(from, to);
+  const sameMonth = isSameMonth(from, to);
 
-  const sameYear = yearFrom === yearTo;
-  const sameMonth = monthFrom === monthTo;
-  return sameYear
-    ? sameMonth
-      ? `${monthFrom} ${dayFrom} - ${dayTo}, ${yearTo}`
-      : `${monthFrom} ${dayFrom} - ${monthTo} ${dayTo}, ${yearTo}`
-    : `${monthFrom} ${dayFrom}, ${yearFrom} - ${monthTo} ${dayTo}, ${yearTo}`;
+  if (sameYear && sameMonth) {
+    return `${format(from, 'MMM dd', { locale })} - ${format(to, 'dd, yyyy', { locale })}`;
+  }
+
+  if (sameYear) {
+    return `${format(from, 'MMM dd', { locale })} - ${format(to, 'MMM dd, yyyy', { locale })}`;
+  }
+
+  return `${format(from, 'MMM dd, yyyy', { locale })} - ${format(to, 'MMM dd, yyyy', { locale })}`;
 };

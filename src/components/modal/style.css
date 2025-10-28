@@ -7,5 +7,7 @@ html {
 }
 
 .header-title {
-  @apply flex justify-end items-center px-5 py-6 mx-auto border-b border-gray-200 sm:px-1 sm:max-w-4/5 md:max-w-3/5 md:border-b-0 lg:border-b lg:border-gray-200 lg:p-5 lg:max-w-full;
+  @apply flex justify-end items-center px-5 py-6 mx-auto border-b border-gray-200;
+
+  @apply sm:px-1 sm:max-w-4/5 md:max-w-3/5 md:border-b-0 lg:border-b lg:border-gray-200 lg:p-5 lg:max-w-full;
 }

@@ -40,8 +40,9 @@ export default function QuantitySelector({
     <div className="flex items-center gap-2">
       <button
         className={clsx(
-          'cursor-pointer text-gray-500',
-          !canDecrease && '!cursor-not-allowed !text-gray-200',
+          canDecrease
+            ? 'cursor-pointer text-gray-500'
+            : 'cursor-not-allowed text-gray-200',
         )}
         onClick={handleDecrease}
       >
@@ -50,8 +51,9 @@ export default function QuantitySelector({
       <span>{value}</span>
       <button
         className={clsx(
-          'cursor-pointer text-gray-500',
-          !canIncrease && '!cursor-not-allowed !text-gray-200',
+          canIncrease
+            ? 'cursor-pointer text-gray-500'
+            : 'cursor-not-allowed text-gray-200',
         )}
         onClick={handleIncrease}
       >

@@ -56,7 +56,7 @@ export default function GuestSelector({
         </div>
       </div>
 
-      {open ? (
+      {open && (
         <div
           ref={popupRef}
           className="absolute shadow-shadow3 bg-white rounded-xl h-fit w-full"
@@ -92,8 +92,6 @@ export default function GuestSelector({
             </div>
           </div>
         </div>
-      ) : (
-        ''
       )}
     </div>
   );

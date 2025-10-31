@@ -94,7 +94,7 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
               variant="primary"
               disabled={isPending}
               type="submit"
-              className="w-full flex justify-center rounded-full py-2 px-4"
+              className="w-full"
             >
               Sign in
             </Button>

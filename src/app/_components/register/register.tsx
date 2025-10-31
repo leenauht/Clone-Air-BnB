@@ -106,7 +106,7 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
                 variant="primary"
                 disabled={isPending}
                 type="submit"
-                className="w-full flex justify-center rounded-full py-2 px-4"
+                className="w-full"
               >
                 Continue
               </Button>

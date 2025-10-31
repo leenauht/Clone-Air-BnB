@@ -23,13 +23,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const typeClasses: Record<TypeVariant, string> = {
   default: '',
-  primary: 'bg-blue-600 text-white hover:opacity-80',
-  secondary: 'bg-gray-600 text-white hover:opacity-80',
-  danger: 'bg-red-600 text-white hover:opacity-70',
-  light: 'bg-white text-black hover:opacity-70',
+  primary: 'bg-blue-600 text-white hover:opacity-80 py-2 px-5',
+  secondary: 'bg-gray-600 text-white hover:opacity-80 py-2 px-5',
+  danger: 'bg-red-600 text-white hover:opacity-70 py-2 px-5',
+  light: 'bg-white text-black hover:opacity-70 py-2 px-5',
   link: 'bg-transparent text-blue-600 underline hover:text-blue-800 shadow-none',
   outline:
-    'border border-gray-300 py-1 px-4 cursor-pointer hover:text-blue-500 hover:border-blue-300',
+    'border border-gray-300 py-1 px-4 hover:text-blue-500 hover:border-blue-300',
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -47,25 +47,28 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyle =
-      'relative flex justify-center items-center rounded-lg font-medium transition duration-300 cursor-pointer';
+      'flex justify-center items-center font-medium transition duration-300 rounded-full';
     return (
       <button
         ref={ref}
         disabled={isLoading || disabled}
-        className={clsx(baseStyle, className, typeClasses[variant], {
-          'opacity-70 cursor-not-allowed': disabled || isLoading,
-        })}
+        className={clsx(
+          baseStyle,
+          typeClasses[variant],
+          className,
+          disabled || isLoading ? 'cursor-not-allowed' : 'cursor-pointer',
+        )}
         {...props}
       >
         {isLoading && (
-          <span className="absolute inset-0 flex justify-center items-center">
+          <span className="absolute flex justify-center items-center">
             <ICONS.Loading width={24} height={24} />
           </span>
         )}
 
         <span
           className={clsx('flex items-center justify-center gap-2', {
-            'opacity-0': isLoading,
+            'opacity-30': isLoading,
           })}
         >
           {startIcon && <span className="flex items-center">{startIcon}</span>}

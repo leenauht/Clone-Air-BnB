@@ -1,3 +1,4 @@
+import { Button } from '@/components/button/button';
 import { usePopup } from '@/hooks/usePopup';
 import { CustomDatePickerProps } from '@/types/typeCustomDatePicker';
 import clsx from 'clsx';
@@ -6,7 +7,6 @@ import { Calendar } from 'lucide-react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
-import Button from '../button/button';
 import './datePicker.css';
 
 export function RenderLabel(props: {

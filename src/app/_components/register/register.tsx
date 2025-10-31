@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import Button from '@/components/button/button';
+import { Button } from '@/components/button/button';
 import TextWithIcons from '@/components/divItem/textWithIcons';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
@@ -95,23 +95,20 @@ export default function Register({ open, onClose, signIn }: RegisterProps) {
                 errors={errors}
                 onChange={handleChange}
               />
-              <p className="text-right">
+              <div className="flex justify-end pb-4">
                 <Button variant="link" onClick={signIn} className="text-sm">
                   Sign in now.
                 </Button>
-              </p>
+              </div>
             </div>
             <div className="py-5 px-8">
               <Button
+                variant="primary"
                 disabled={isPending}
                 type="submit"
-                className="w-full flex justify-center !rounded-full py-2 px-4"
+                className="w-full flex justify-center rounded-full py-2 px-4"
               >
-                {isPending ? (
-                  <ICONS.Loading width={24} height={24} />
-                ) : (
-                  'Continue'
-                )}
+                Continue
               </Button>
             </div>
           </div>

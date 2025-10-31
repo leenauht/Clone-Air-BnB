@@ -9,13 +9,8 @@ export const formatDateRange = (range?: DateRange, locale?: Locale): string => {
   const sameYear = isSameYear(from, to);
   const sameMonth = isSameMonth(from, to);
 
-  if (sameYear && sameMonth) {
-    return `${format(from, 'MMM dd', { locale })} - ${format(to, 'dd, yyyy', { locale })}`;
-  }
+  const patternFrom = sameYear ? 'MMM dd' : 'MMM dd, yyyy';
+  const patternTo = sameYear && sameMonth ? 'dd, yyyy' : 'MMM dd, yyyy';
 
-  if (sameYear) {
-    return `${format(from, 'MMM dd', { locale })} - ${format(to, 'MMM dd, yyyy', { locale })}`;
-  }
-
-  return `${format(from, 'MMM dd, yyyy', { locale })} - ${format(to, 'MMM dd, yyyy', { locale })}`;
+  return `${format(from, patternFrom, { locale })} - ${format(to, patternTo, { locale })}`;
 };

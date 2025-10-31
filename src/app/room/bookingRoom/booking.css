@@ -1,15 +1,17 @@
 .btn-booking {
-  @apply text-white font-medium cursor-pointer rounded-full w-full py-2;
+  @apply text-white font-medium rounded-full w-full py-2;
 
   @apply md:text-lg md:py-3;
 
   @apply bg-gradient-to-r from-[#e61e4d] to-[#d70466] transition-all duration-300;
-}
 
-.btn-booking:hover {
-  @apply bg-[radial-gradient(_#e61e4d,_#d70466)];
+  &:hover {
+    @apply bg-[radial-gradient(_#e61e4d,_#d70466)];
+  }
 }
 
 .model-booking {
-  @apply mx-auto sm:max-w-4/5 md:max-w-3/5 lg:max-w-full md:shadow-shadow3 md:rounded-xl lg:flex lg:flex-row-reverse lg:shadow-none;
+  @apply mx-auto sm:max-w-4/5 md:max-w-3/5 lg:max-w-full;
+
+  @apply lg:flex lg:flex-row-reverse md:shadow-shadow3 md:rounded-xl lg:shadow-none;
 }

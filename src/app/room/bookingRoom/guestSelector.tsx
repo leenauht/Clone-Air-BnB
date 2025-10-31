@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import Button from '@/components/button/button';
+import { Button } from '@/components/button/button';
 import { OPTIONS_GUESTS } from '@/components/constants/constants';
 import CustomTextBlock from '@/components/divItem/customTextBlock';
 import QuantitySelector from '@/components/quantitySelector/quantitySelector';
@@ -12,14 +12,12 @@ interface GuestSelectorProps {
   guests: number;
   quantity: Record<string, number>;
   onQuantityChange: (value: Record<string, number>) => void;
-  setIsHidden?: (value: boolean) => void;
 }
 
 export default function GuestSelector({
   guests,
   quantity,
   onQuantityChange,
-  setIsHidden,
 }: GuestSelectorProps) {
   const { open, togglePopup, triggerRef, popupRef } = usePopup<
     HTMLDivElement,
@@ -36,15 +34,11 @@ export default function GuestSelector({
 
   const totalMainGuests = quantity.adults + quantity.children;
 
-  useEffect(() => {
-    if (setIsHidden) setIsHidden(open);
-  }, [open, setIsHidden]);
-
   return (
     <div
       className={clsx(
-        open ? 'border border-blue-500' : 'border border-transparent',
-        'relative rounded-xl hover:border hover:border-blue-500',
+        'border border-t-transparent rounded-bl-xl rounded-br-xl',
+        'relative hover:border hover:border-blue-500',
       )}
     >
       <div

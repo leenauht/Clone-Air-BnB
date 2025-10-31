@@ -2,6 +2,7 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 
+import { Button } from '@/components/button/button';
 import { OPTIONS_GUESTS } from '@/components/constants/constants';
 import { DatePickerRef } from '@/components/datePicker/customFormToDatePicker';
 import CustomTextBlock from '@/components/divItem/customTextBlock';
@@ -65,7 +66,6 @@ export default function BookingRoom({
   const bookingButtonRef = useRef<HTMLButtonElement>(null);
 
   const [open, setOpen] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
 
   const quantity = () =>
     Object.fromEntries(OPTIONS_GUESTS.map((item) => [item.id, item.min ?? 0]));
@@ -113,7 +113,7 @@ export default function BookingRoom({
           classNameAmount="text-2xl"
           classNameUnit="font-medium text-gray-700"
         />
-        <div className="border border-gray-400 box-border rounded-xl group">
+        <div>
           <BookingDatePicker
             ref={datePickerRef}
             ignoreRefs={[bookingButtonRef]}
@@ -122,27 +122,21 @@ export default function BookingRoom({
             onChange={setDateRange}
             onReset={handleResetDate}
           />
-          {!isHidden ? (
-            <div className="h-[0.5px] w-full bg-gray-400 group-hover:bg-transparent"></div>
-          ) : (
-            <div className="h-[0.5px] w-full"></div>
-          )}
 
           <GuestSelector
             guests={room.khach}
             quantity={guestQuantities}
             onQuantityChange={setGuestQuantities}
-            setIsHidden={setIsHidden}
           />
         </div>
 
-        <button
+        <Button
           ref={bookingButtonRef}
           onClick={handleBookingClick}
           className="btn-booking"
         >
           Booking
-        </button>
+        </Button>
         {days > 0 ? <BookingSumary days={days} price={room.giaTien} /> : ''}
       </div>
 

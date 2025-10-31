@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import Button from '@/components/button/button';
-import { ICONS } from '@/components/icons/icon';
+import { Button } from '@/components/button/button';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
 import { useMutationCustom } from '@/hooks/useMutationCustom';
@@ -84,19 +83,20 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
               errors={errors}
               onChange={handleChange}
             />
-            <p className="text-right">
+            <div className="flex justify-end pb-4">
               <Button variant="link" onClick={signUp} className="text-sm">
                 Don&apos;t have an account? Sign up now.
               </Button>
-            </p>
+            </div>
           </div>
           <div className="py-5 px-8">
             <Button
+              variant="primary"
               disabled={isPending}
               type="submit"
-              className="w-full flex justify-center !rounded-full py-2 px-4"
+              className="w-full flex justify-center rounded-full py-2 px-4"
             >
-              {isPending ? <ICONS.Loading width={24} height={24} /> : 'Sign in'}
+              Sign in
             </Button>
           </div>
         </div>

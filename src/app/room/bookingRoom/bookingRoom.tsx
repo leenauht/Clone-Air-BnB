@@ -1,15 +1,19 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
+import { Button } from '@/components/button/button';
+import { OPTIONS_GUESTS } from '@/components/constants/constants';
 import { DatePickerRef } from '@/components/datePicker/customFormToDatePicker';
 import CustomTextBlock from '@/components/divItem/customTextBlock';
 import Modal from '@/components/modal/modal';
 import CustomText from '@/components/text/customText';
 import PriceWithUnit from '@/components/text/priceWithUnit';
+import { formatDateRange } from '@/helper/formatDateRange';
 import { LocationItem } from '@/types/location';
 import { RoomItem } from '@/types/room';
-import clsx from 'clsx';
+import { format, subDays } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import { DateRange } from 'react-day-picker';
@@ -63,6 +67,12 @@ export default function BookingRoom({
 
   const [open, setOpen] = useState(false);
 
+  const quantity = () =>
+    Object.fromEntries(OPTIONS_GUESTS.map((item) => [item.id, item.min ?? 0]));
+
+  const [guestQuantities, setGuestQuantities] =
+    useState<Record<string, number>>(quantity);
+
   const handleBookingClick = () => {
     if (!dateRange?.from || !dateRange?.to || dateRange.from === dateRange.to) {
       datePickerRef.current?.openPopup();
@@ -77,9 +87,22 @@ export default function BookingRoom({
     setDays(0);
   };
 
+  const roomSummary = `${room.khach} khách - ${room.phongNgu} phòng ngủ - ${room.giuong} giường - ${room.phongTam} phòng tắm`;
   const price = room.giaTien;
   const sum = price * days;
   const subtotal = sum + SERVICE_FEE;
+
+  // refund
+  const refundDate = useMemo(() => {
+    if (!dateRange?.from) return null;
+    return format(subDays(dateRange?.from, 1), 'MMM dd, yyyy', {
+      locale: enUS,
+    });
+  }, [dateRange]);
+
+  const { adults, children } = guestQuantities;
+
+  const guestLabels = `${adults} adults${children ? `, ${children} children` : ''}`;
 
   return (
     <div className="max-w-sm sm:max-w-none sm:w-2/3 md:w-3/5 lg:flex-1 shadow-shadow3 rounded-xl h-fit">
@@ -90,7 +113,7 @@ export default function BookingRoom({
           classNameAmount="text-2xl"
           classNameUnit="font-medium text-gray-700"
         />
-        <div className="border border-gray-400 box-border rounded-xl group">
+        <div>
           <BookingDatePicker
             ref={datePickerRef}
             ignoreRefs={[bookingButtonRef]}
@@ -99,28 +122,29 @@ export default function BookingRoom({
             onChange={setDateRange}
             onReset={handleResetDate}
           />
-          <div className="h-[0.5px] w-full bg-gray-400 group-hover:bg-transparent"></div>
-          <GuestSelector />
+
+          <GuestSelector
+            guests={room.khach}
+            quantity={guestQuantities}
+            onQuantityChange={setGuestQuantities}
+          />
         </div>
 
-        <button
+        <Button
           ref={bookingButtonRef}
           onClick={handleBookingClick}
-          className={clsx(
-            'text-white font-medium md:text-lg cursor-pointer rounded-full w-full py-2 md:py-3 bg-gradient-to-r from-[#e61e4d] to-[#d70466]',
-            'hover:bg-[radial-gradient(_#e61e4d,_#d70466)] transition-all duration-300',
-          )}
+          className="btn-booking"
         >
           Booking
-        </button>
+        </Button>
         {days > 0 ? <BookingSumary days={days} price={room.giaTien} /> : ''}
       </div>
 
       <Modal isOpen={open} title="Booking" onClose={() => setOpen(false)}>
-        <div className="lg:flex lg:flex-row-reverse lg:gap-5 xl:gap-10">
-          <div className="flex-1 shadow-shadow3 p-5 rounded-2xl">
+        <div className="model-booking">
+          <div className="flex-1 p-5">
             <div className="flex justify-center items-center gap-3 xl:gap-4 2xl:gap-5">
-              <div className="relative h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 xl:w-30 xl:h-30">
+              <div className="relative h-24 w-24 sm:h-28 sm:w-28 xl:w-30 xl:h-30">
                 <Image
                   src={loc.hinhAnh}
                   alt="Logo"
@@ -131,7 +155,7 @@ export default function BookingRoom({
               <div className="flex-1">
                 <CustomText
                   heading="h6"
-                  className="line-clamp-3 lg:text-lg"
+                  className="line-clamp-2 lg:text-lg"
                   title={room.tenPhong}
                 >
                   {room.tenPhong}
@@ -142,23 +166,24 @@ export default function BookingRoom({
                     3.5 (75)
                   </span>
                 </div>
+                <p className="text-sm font-medium">{roomSummary}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 divide-y divide-gray-200 [&>*]:p-3 items-center">
               <CustomTextBlock
                 title="Free cancellation"
-                text="Cancel before Oct 30 for a full refund."
+                text={`Cancel before ${refundDate} for a full refund.`}
                 textClass="text-sm"
               />
               <CustomTextBlock
                 title="Your travel"
-                text="Từ ngày"
+                text={formatDateRange(dateRange, enUS)}
                 textClass="text-sm"
               />
               <CustomTextBlock
                 title="Guest"
-                text="1 guest"
+                text={guestLabels}
                 textClass="text-sm"
               />
               <div className="flex justify-between">

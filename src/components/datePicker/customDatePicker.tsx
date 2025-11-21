@@ -1,3 +1,4 @@
+import { Button } from '@/components/button/button';
 import { usePopup } from '@/hooks/usePopup';
 import { CustomDatePickerProps } from '@/types/typeCustomDatePicker';
 import clsx from 'clsx';
@@ -6,7 +7,6 @@ import { Calendar } from 'lucide-react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
-import Button from '../button/button';
 import './datePicker.css';
 
 export function RenderLabel(props: {
@@ -80,7 +80,7 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
       {open && (
         <div
           ref={popupRef}
-          className="absolute bottom-16 w-full rounded-lg border border-gray-300 bg-white shadow-shadow4"
+          className="absolute bottom-16 right-0 max-w-[360px] sm:w-full sm:max-w-none rounded-lg border border-gray-300 bg-white shadow-shadow4"
         >
           {mode === 'single' ? (
             <DayPicker

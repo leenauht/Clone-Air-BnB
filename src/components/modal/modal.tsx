@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 
 import { useBobyScrollLock } from '@/hooks/useBodyScrollLock';
 import { useCreatePortal } from '@/hooks/useCreatePortal';
-import { X } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
 
 import CustomText from '../text/customText';
-import './style.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -47,26 +46,32 @@ export default function Modal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full h-screen md:h-auto md:w-3/5 lg:w-2/5 xl:w-1/3 shadow-shadow3 bg-white md:rounded-xl overflow-y-auto"
+        className="w-full h-[100dvh] overflow-y-auto lg:w-1/2 lg:h-auto lg:rounded-xl xl:w-2/5 2xl:w-1/3 shadow-shadow3 bg-white overflow-hidden"
       >
         {/* Header */}
-        <div className="flex justify-end items-center px-4 py-2 border-gray-200 border-b">
+        <header className="header-title">
+          <button
+            onClick={handleClose}
+            className="cursor-pointer bg-gray-100 hover:bg-gray-300 p-1 rounded-full block lg:hidden"
+          >
+            <ArrowLeft className="w-5 h-5 text-gray-700" />
+          </button>
           {title && (
             <CustomText
               heading="p"
               bold
-              className="flex-1 h-12 justify-center items-center flex text-xl"
+              className="flex-1 justify-center items-center flex text-xl"
             >
               {title}
             </CustomText>
           )}
           <button
             onClick={handleClose}
-            className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+            className="cursor-pointer hover:bg-gray-200 p-1 rounded-full hidden lg:block"
           >
             <X className="w-5 h-5" />
           </button>
-        </div>
+        </header>
         {/* Body */}
         {children}
       </div>

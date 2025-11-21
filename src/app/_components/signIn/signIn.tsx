@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import Button from '@/components/button/button';
-import { ICONS } from '@/components/icons/icon';
+import { Button } from '@/components/button/button';
 import Modal from '@/components/modal/modal';
 import { toastError, toastSuccess } from '@/helper/toastHelper';
 import { useMutationCustom } from '@/hooks/useMutationCustom';
@@ -76,27 +75,30 @@ export default function SignIn({ open, onClose, signUp }: SignInProps) {
 
   return (
     <Modal isOpen={open} onClose={onClose} title="Sign in">
-      <form onSubmit={handleSubmit}>
-        <div className="max-h-[90vh] sm:max-h-[60vh] overflow-y-auto p-5 space-y-0.5 sm:space-y-2">
-          <SignInFormFiled
-            form={form}
-            errors={errors}
-            onChange={handleChange}
-          />
-          <p className="text-right">
-            <Button variant="link" onClick={signUp} className="text-sm">
-              Bạn chưa có tài khoản? Đăng ký ngay.
+      <form onSubmit={handleSubmit} className="auth-form">
+        <div className="p-5">
+          <div className="space-y-0.5 sm:space-y-2">
+            <SignInFormFiled
+              form={form}
+              errors={errors}
+              onChange={handleChange}
+            />
+            <div className="flex justify-end pb-4">
+              <Button variant="link" onClick={signUp} className="text-sm">
+                Don&apos;t have an account? Sign up now.
+              </Button>
+            </div>
+          </div>
+          <div className="py-5 px-8">
+            <Button
+              variant="primary"
+              disabled={isPending}
+              type="submit"
+              className="w-full"
+            >
+              Sign in
             </Button>
-          </p>
-        </div>
-        <div className="py-5 px-8">
-          <Button
-            disabled={isPending}
-            type="submit"
-            className="w-full flex justify-center !rounded-full py-2 px-4"
-          >
-            {isPending ? <ICONS.Loading width={24} height={24} /> : 'Sign in'}
-          </Button>
+          </div>
         </div>
       </form>
     </Modal>

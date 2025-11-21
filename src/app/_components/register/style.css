@@ -1,0 +1,7 @@
+.auth-form {
+  @apply overflow-hidden mx-auto;
+
+  @apply sm:max-w-4/5 md:max-w-3/5 lg:max-w-full;
+
+  @apply md:shadow-shadow4 md:rounded-xl lg:shadow-none;
+}

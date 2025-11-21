@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { Button } from '@/components/button/button';
 import { toastInfo } from '@/helper/toastHelper';
 import { usePopup } from '@/hooks/usePopup';
 import { DateFormToPickerProps } from '@/types/typeDateFormToPicker';
@@ -8,7 +9,6 @@ import { differenceInDays, format } from 'date-fns';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
-import Button from '../button/button';
 import CustomTextBlock from '../divItem/customTextBlock';
 import './datePicker.css';
 
@@ -135,8 +135,12 @@ const CustomFormToDatePicker = React.forwardRef<
     HTMLButtonElement,
     HTMLDivElement
   >((isOpen) => {
-    if (!isOpen && value?.from && value?.from === value?.to) {
-      toastInfo(noti);
+    if (isOpen) return;
+    const { from, to } = value || {};
+    if (!from && !to) {
+      toastInfo(noti.from);
+    } else if (from && from === to) {
+      toastInfo(noti.to);
     }
   }, ignoreRefs);
 
@@ -214,7 +218,11 @@ const CustomFormToDatePicker = React.forwardRef<
             >
               Reset
             </Button>
-            <Button onClick={closePopup} className="!px-3 !py-1 text-sm">
+            <Button
+              variant="primary"
+              onClick={closePopup}
+              className="!px-3 !py-1 text-sm"
+            >
               Confirm
             </Button>
           </footer>

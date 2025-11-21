@@ -15,3 +15,40 @@ export const API_TOKEN = {
   TOKEN_CYBERSOFT:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJOT0RFSlMgNTAiLCJIZXRIYW5TdHJpbmciOiIxMC8xMC8yMDI1IiwiSGV0SGFuVGltZSI6IjE3NjAwNTQ0MDAwMDAiLCJuYmYiOjE3NDA4NzM2MDAsImV4cCI6MTc2MDIyNzIwMH0.mMbbQrfpocDbm-PEesfDTdZug1iAejOCCrKEFpq4pr8',
 };
+
+export const OPTIONS_GUESTS = [
+  {
+    id: 'adults',
+    label: {
+      title: 'Adults',
+      text: 'Age 13+',
+    },
+    min: 1,
+  },
+  {
+    id: 'children',
+    label: {
+      title: 'Children',
+      text: 'Ages 2-12',
+    },
+    min: 0,
+  },
+  {
+    id: 'infants',
+    label: {
+      title: 'Infants',
+      text: 'Under 2',
+    },
+    min: 0,
+    max: 5,
+  },
+  {
+    id: 'pets',
+    label: {
+      title: 'Pets',
+      text: 'Bringing a service animal?',
+    },
+    min: 0,
+    max: 1,
+  },
+];
